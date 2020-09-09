@@ -5,5 +5,5 @@ import java.io.BufferedReader;
 @FunctionalInterface
 public interface ParseSjava {
 
-    int parse(BufferedReader reader, int lineNumber);
+    void parse(BufferedReader reader, int lineNumber);
 }
