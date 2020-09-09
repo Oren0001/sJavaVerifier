@@ -15,7 +15,7 @@ public class Sjavac {
             String line;
             int lineNumber = 1;
             while ((line = reader.readLine()) != null) {
-
+gi
             }
 
         } catch (IndexOutOfBoundsException e) {
