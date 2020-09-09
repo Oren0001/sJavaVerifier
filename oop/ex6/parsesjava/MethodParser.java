@@ -1,7 +1,10 @@
 package oop.ex6.parsesjava;
 
+<<<<<<< HEAD
 import MethodLines;
 
+=======
+>>>>>>> d007d5a37dd0a0aa54b68d77bfaf14a5e928a4f1
 import java.util.*;
 
 /**

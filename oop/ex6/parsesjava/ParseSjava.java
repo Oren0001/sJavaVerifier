@@ -1,9 +1,10 @@
 package oop.ex6.parsesjava;
 
-import java.io.BufferedReader;
+import oop.ex6.main.IllegalLineException;
 
+import java.io.BufferedReader;
 @FunctionalInterface
 public interface ParseSjava {
 
-    void parse(BufferedReader reader, int lineNumber);
+    void parse(String lineToRead) throws IllegalLineException;
 }
