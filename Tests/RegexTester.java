@@ -4,7 +4,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 public class RegexTester {
 
-
     /**
      * Abbreviated print.
      * @param obj Any object.
@@ -53,11 +52,9 @@ public class RegexTester {
         return m;
     }
 
-
     public static void main(String[] args) {
-        String s = "void method_name (type1 parameter1, type2 parameter2, type3 parameter3) {";
-        Matcher m = regexFind("\\) *\\{ *$",
-                s);
-        print(s.subSequence(0, 4));
+        String s = "     return    ";
+        Matcher m = regexFind(" *return *", s);
     }
+
 }
