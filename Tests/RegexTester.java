@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 public class RegexTester {
 
-    private void regexFind(String pattern, String s) {
+    private static void regexFind(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
         while (m.find())
@@ -12,7 +12,7 @@ public class RegexTester {
     }
 
 
-    private void regexMatch(String pattern, String s) {
+    private static void regexMatch(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
         if (m.matches())
@@ -20,7 +20,7 @@ public class RegexTester {
     }
 
 
-    private void regexLookingAt(String pattern, String s) {
+    private static void regexLookingAt(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
         if (m.lookingAt())
@@ -28,14 +28,20 @@ public class RegexTester {
     }
 
 
-    private Matcher m(String pattern, String s) {
+    private static Matcher m(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
         return m;
     }
 
-
     public static void main(String[] args) {
+//        regexLookingAt("[a-zA-Z_][a-zA-Z0-9_]+[a-zA-Z0-9]",
+//        "___8");
+        regexLookingAt("\".*\"",
+                       "\"fdfdf 55 *( \"");
+
+        //regexFind(" *final (int|String|Double|char|boolean) *(\\D_+[^_]|\\D[^_]+) = *", " final String  9 = ");
 
     }
+
 }

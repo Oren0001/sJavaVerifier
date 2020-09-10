@@ -2,38 +2,45 @@ package oop.ex6.main;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Sjavac {
 
 	public static void main(String[] args) {
-		try (Reader file = new FileReader(args[0])) {
-			if (args.length > 1) {
-				throw new IndexOutOfBoundsException();
-			}
-			if (!args[0].endsWith(".sjava")) {
-				throw new FileNotFoundException();
-			}
-
-			BufferedReader reader = new BufferedReader(file);
-			String line;
-			int lineNumber = 1;
-			ArrayList<Method> methodsArray = new ArrayList<Method>();
-			SjavacReader sjavacReader = new SjavacReader();
-			while ((line = reader.readLine()) != null) {
-				Method method = sjavacReader.readLine(reader, line);
-				if (method != null) {
-					methodsArray.add(method);
-				}
-			}
-		} catch (IndexOutOfBoundsException e) {
+		if (args.length != 1) {
+			System.out.println(2);
 			System.err.print("ERROR: Wrong usage. Should receive only one argument\n");
-		} catch (FileNotFoundException e) {
+			return;
+		}
+		if (!args[0].endsWith(".sjava")) {
+			System.out.println(2);
 			System.err.print("ERROR: Not a sjava file\n");
-		} catch (IOException e) {
-			System.err.print("ERROR: Problem while accessing sjava file\n");
+			return;
+		}
+		File sjavaCode = new File(args[0]);
+		try {
+			Scanner scannedCode = new Scanner(sjavaCode);
+			SjavacReader sjavacReader = new SjavacReader();
+			ArrayList<Method> methodsArray = new ArrayList<Method>();
+			while (scannedCode.hasNextLine()) {
+					Method method = sjavacReader.readLine(scannedCode, scannedCode.nextLine());
+					if (method != null) {
+						methodsArray.add(method);
+					}
+				}
+		} catch (FileNotFoundException fileNotFoundException) {
+			System.out.println(2);
+			System.err.println("ERROR: File not found\n");
+			return;
 		} catch (IllegalLineException illegalLineException) {
 			System.out.println("1");
 			return;
 		}
 	}
+
+
+
+
+
 }
