@@ -20,6 +20,7 @@ public class RegexTester {
     }
 
 
+
     private static void regexLookingAt(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
@@ -33,15 +34,16 @@ public class RegexTester {
         Matcher m = p.matcher(s);
         return m;
     }
-
     public static void main(String[] args) {
-//        regexLookingAt("[a-zA-Z_][a-zA-Z0-9_]+[a-zA-Z0-9]",
-//        "___8");
-        regexLookingAt("\".*\"",
-                       "\"fdfdf 55 *( \"");
+       String omer= "  final      int     abdalla= 578.9;";
+       String newOmer=omer.replaceAll(" +", " ");
+        System.out.println(omer);
+        System.out.println(newOmer);
 
-        //regexFind(" *final (int|String|Double|char|boolean) *(\\D_+[^_]|\\D[^_]+) = *", " final String  9 = ");
-
+        //       String[] split=omer.split(" +");
+//        for (String string : split) {
+//            System.out.println(string);
+//        }
     }
 
 }

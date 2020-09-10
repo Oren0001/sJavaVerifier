@@ -2,7 +2,6 @@ package oop.ex6.main;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Sjavac {
