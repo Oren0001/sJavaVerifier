@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class Method {
 
-	private ArrayList<String> methodLinesArray;
+	private ArrayList<String> methodLines;
 
-	public Method(ArrayList<String> methodLinesArray){
-		this.methodLinesArray = methodLinesArray;
+	public Method(ArrayList<String> methodLines){
+		this.methodLines = methodLines;
 	}
 
-	public ArrayList<String> getMethodLinesArray() {
-		return methodLinesArray;
+	public ArrayList<String> getLines() {
+		return methodLines;
 	}
+
 }

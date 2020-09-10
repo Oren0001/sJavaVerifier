@@ -1,14 +1,20 @@
 package oop.ex6.parsesjava;
 
-import java.io.BufferedReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+
 
 public class GlobalVariableParser implements ParseSjava {
 
+	private String line;
+
+	public GlobalVariableParser(String lineToParse) {
+		line = lineToParse;
+	}
+
+
 	@Override
-	public void parse(String lineToRead) throws IllegalGlobalVariableException {
-throw new IllegalGlobalVariableException();
+	public void parse() throws IllegalGlobalVariableException {
+		throw new IllegalGlobalVariableException();
 	}
 }
 

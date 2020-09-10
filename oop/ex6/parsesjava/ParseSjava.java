@@ -2,9 +2,15 @@ package oop.ex6.parsesjava;
 
 import oop.ex6.main.IllegalLineException;
 
-import java.io.BufferedReader;
+/**
+ * Represents a sjava parser which is able to parse different components of the sjava file.
+ */
 @FunctionalInterface
 public interface ParseSjava {
 
-    void parse(String lineToRead) throws IllegalLineException;
+    /**
+     * Parses different components of the sjava file.
+     * @throws IllegalLineException If a line of the sjava file is illegal.
+     */
+    void parse() throws IllegalLineException;
 }

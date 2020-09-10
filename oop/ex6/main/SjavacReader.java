@@ -15,8 +15,8 @@ public class SjavacReader {
 		Method method=null;
 		if (isEmptyLine(lineToRead)) {
 		} else if (isGlobalVariable(lineToRead)) {
-			GlobalVariableParser globalVariableParser = new GlobalVariableParser();
-			globalVariableParser.parse(lineToRead);
+			GlobalVariableParser globalVariableParser = new GlobalVariableParser(lineToRead);
+			globalVariableParser.parse();
 		} else if (isMethod(lineToRead)) {
 			method = new Method(copyMethodIntoArray(reader, lineToRead));
 		} else {
