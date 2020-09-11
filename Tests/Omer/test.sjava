@@ -1,1 +1,2 @@
-String    a=gg;
+int i1, i2 = 6;
+char c='Z', f;

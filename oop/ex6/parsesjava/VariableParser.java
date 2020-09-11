@@ -123,7 +123,7 @@ public class VariableParser implements ParseSjava {
 	}
 
 	private void checkValue() throws IllegalLineException {
-		Pattern pattern = Pattern.compile("[\\S]*[^;&\\s&,]");
+		Pattern pattern = Pattern.compile("[^;&\\s&,]+");
 		Matcher matcher = pattern.matcher(lineToRead);
 		if (!matcher.lookingAt()) {
 			throw new IllegalLineException();
@@ -195,7 +195,7 @@ public class VariableParser implements ParseSjava {
 	}
 
 	private void checkMultipleVariables() throws IllegalLineException {
-		Pattern pattern = Pattern.compile(" *, +");
+		Pattern pattern = Pattern.compile(" *, *");
 		Matcher matcher = pattern.matcher(lineToRead);
 		if (!matcher.lookingAt()) {
 			throw new IllegalLineException();
