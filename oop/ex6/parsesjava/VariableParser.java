@@ -13,7 +13,7 @@ public class VariableParser implements ParseSjava {
 	public static final int TYPE_AFTER_FINAL = 1;
 	public static final String INT = "int";
 	public static final String DOUBLE = "double";
-	public static final String STRING = "string";
+	public static final String STRING = "String";
 	public static final String CHAR = "char";
 	public static final String BOOLEAN = "boolean";
 	public static final String TRUE = "true";
@@ -40,6 +40,7 @@ public class VariableParser implements ParseSjava {
 
 	@Override
 	public void parse() throws IllegalLineException {
+		variablesArray.add(new Variable());
 		checkIfFinal();
 		checkType();
 		if (!isOnlyAssignment) {
@@ -81,7 +82,6 @@ public class VariableParser implements ParseSjava {
 			checkIfExistSuchVariable();
 			return;
 		}
-		variablesArray.add(new Variable());
 		lineToRead = lineToRead.substring(matcher1.end());
 		if (isFinal) {
 			variablesArray.get(currentVariableNumber).setFinal(true);
@@ -183,6 +183,8 @@ public class VariableParser implements ParseSjava {
 				throw new IllegalLineException();
 			}
 			break;
+		default:
+			throw new IllegalLineException();
 		}
 	}
 

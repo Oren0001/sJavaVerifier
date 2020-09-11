@@ -25,7 +25,7 @@ public class TestRunner {
             "entered in the right format.\n Test number MUST be three digits in between 001 and 506" +
             " (including).\n Examples: 001, 011, 106";
 
-    private static final String TEST_PREFIX = "Ex6/Tests/tests/";
+    private static final String TEST_PREFIX = "src/Tests/tests/";
 
     private static final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
@@ -37,7 +37,7 @@ public class TestRunner {
 
     private static final Pattern filePattern = Pattern.compile(SJAVAC_PATTERN);
 
-    private static final File testResults = new File("Ex6/Tests/sjavac_tests.txt");
+    private static final File testResults = new File("src/Tests/sjavac_tests.txt");
 
     private Matcher curMatcher;
 
@@ -92,7 +92,7 @@ public class TestRunner {
     @Test
     public void runSpecificTest(){
 ////////////////////////////////CHANGE TO RUN SPECIFIC TEST/////////////////////////////////////////
-        String test = "001";  ///
+        String test = "005";  ///
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         curMatcher = testNumberPattern.matcher(test);
         assertTrue(WRONG_TEST_MSG ,curMatcher.matches());

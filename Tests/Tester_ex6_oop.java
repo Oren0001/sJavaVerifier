@@ -19,9 +19,9 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class Tester_ex6_oop {
-	private static Path pathToFiles = Paths.get("Ex6/Tests", "tester_files");
+	private static Path pathToFiles = Paths.get("src/Tests", "tester_files");
 	private static Path pathToTests = Paths.get(pathToFiles.toString(), "tests");
-	private static Path pathToUserTests = Paths.get(pathToTests.toString(), "specificTests");
+	private static Path pathToUserTests = Paths.get(pathToTests.toString(), "src/Tests/Tester_files/tests/SchoolTests/test001.sjava");
 	private static Path pathToOutputFile = Paths.get(pathToFiles.toString(), "user_output.txt");
 	private static Path pathToSchoolSolution = Paths.get(pathToFiles.toString(), "school_solution.jar");
 //	private static Path pathToMainClass = Paths.get("oop", "ex5", "main", "Sjava.java");
