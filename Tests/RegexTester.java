@@ -35,6 +35,7 @@ public class RegexTester {
     }
 
 
+
     private static Matcher regexLookingAt(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
@@ -52,9 +53,11 @@ public class RegexTester {
         return m;
     }
 
+
     public static void main(String[] args) {
         String s = "     return    ";
         Matcher m = regexFind(" *return *", s);
+
     }
 
 }

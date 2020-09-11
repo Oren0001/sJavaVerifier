@@ -1,21 +1,22 @@
 package oop.ex6.main;
 
-import oop.ex6.parsesjava.GlobalVariableParser;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
+import oop.ex6.parsesjava.VariableParser;
+import oop.ex6.parsesjava.Variable;
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SjavacReader {
 
-	Stack<Character> bracketStack = new Stack<Character>();
+	private static Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
+	private Stack<Character> bracketStack;
 
 	public Method readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		Method method = null;
 		if (isEmptyLine(lineToRead)) {
 		} else if (isGlobalVariable(lineToRead)) {
-			GlobalVariableParser globalVariableParser = new GlobalVariableParser(lineToRead);
+			VariableParser globalVariableParser = new VariableParser(lineToRead, globalVariableMap);
 			globalVariableParser.parse();
 		} else if (isMethod(lineToRead)) {
 			method = new Method(copyMethodIntoArray(scannedCode, lineToRead));
@@ -25,7 +26,6 @@ public class SjavacReader {
 		return method;
 	}
 
-	//possessive??
 	private boolean isEmptyLine(String lineToRead) {
 		Pattern globalVariablePattern = Pattern.compile(" *");
 		Matcher matcher = globalVariablePattern.matcher(lineToRead);
@@ -33,19 +33,19 @@ public class SjavacReader {
 	}
 
 	private boolean isGlobalVariable(String lineToRead) {
-		Pattern globalVariablePattern = Pattern.compile("; *$");
+		Pattern globalVariablePattern = Pattern.compile(".*; *");
 		Matcher matcher = globalVariablePattern.matcher(lineToRead);
 		return (matcher.find());
 	}
 
 	private boolean isMethod(String lineToRead) {
-		Pattern globalVariablePattern = Pattern.compile("\\{ *$");
+		Pattern globalVariablePattern = Pattern.compile(".*\\{ *");
 		Matcher matcher = globalVariablePattern.matcher(lineToRead);
-		return (matcher.find());
+		return (matcher.matches());
 	}
 
 	private ArrayList<String> copyMethodIntoArray(Scanner scannedCode, String lastLine) {
-		bracketStack.push('{');
+		resetStack();
 		ArrayList<String> methodsLinesArray = new ArrayList<String>();
 		methodsLinesArray.add(lastLine);
 		while (scannedCode.hasNextLine()) {
@@ -56,7 +56,6 @@ public class SjavacReader {
 				break;
 			}
 		}
-		resetStack();
 		return methodsLinesArray;
 	}
 
