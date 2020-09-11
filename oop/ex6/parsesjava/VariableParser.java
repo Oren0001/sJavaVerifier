@@ -28,14 +28,14 @@ public class VariableParser implements ParseSjava {
 	private Map<String, Variable> variablesMap;
 	private ArrayList<Variable> variablesArray = new ArrayList<Variable>();
 
-	public VariableParser(String lineToRead, Map<String, Variable> variableMap) throws IllegalLineException {
+	public VariableParser(String lineToRead, Map<String, Variable> variablesMap) throws IllegalLineException {
 		this.lineToRead = lineToRead;
 		String lineWithOutSpaces = lineToRead.replaceAll(" +", " ");
 		if (lineWithOutSpaces.startsWith(" ")) {
 			lineWithOutSpaces = lineWithOutSpaces.substring(1);
 		}
 		this.splitLineArray = lineWithOutSpaces.split(" ");
-		this.variablesMap = variableMap;
+		this.variablesMap = variablesMap;
 	}
 
 	@Override
