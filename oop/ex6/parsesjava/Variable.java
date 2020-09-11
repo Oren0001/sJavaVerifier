@@ -6,7 +6,6 @@ public class Variable {
 	private String type;
 	private String value;
 	private boolean isFinal;
-	private boolean isInitialized;
 
 	public String getValue() {
 		return value;
@@ -38,13 +37,5 @@ public class Variable {
 
 	public void setFinal(boolean status) {
 		isFinal = status;
-	}
-
-	public boolean isInitialized() {
-		return isInitialized;
-	}
-
-	public void setInitialized(boolean status) {
-		isInitialized = status;
 	}
 }

@@ -10,14 +10,15 @@ import java.util.regex.Pattern;
 public class SjavacReader {
 
 	private static Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
+	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
+	private Method method;
 
 	public Method readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
-		Method method = null;
 		if (isEmptyLine(lineToRead)) {
 		} else if (isGlobalVariable(lineToRead)) {
-			VariableParser globalVariableParser = new VariableParser(lineToRead, globalVariableMap);
-			globalVariableParser.parse();
+			variableParser = new VariableParser(lineToRead, globalVariableMap);
+			variableParser.parse();
 		} else if (isMethod(lineToRead)) {
 			method = new Method(copyMethodIntoArray(scannedCode, lineToRead));
 		} else {
@@ -56,6 +57,7 @@ public class SjavacReader {
 				break;
 			}
 		}
+		methodsLinesArray.add("}");
 		return methodsLinesArray;
 	}
 

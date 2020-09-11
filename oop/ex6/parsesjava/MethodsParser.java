@@ -16,7 +16,8 @@ public class MethodsParser implements ParseSjava {
     private HashMap<String, Variable> globalVariables;
     private Deque<HashMap<String, Variable>> variablesStack;
     private HashMap<String, Variable[]> methodsParameters;
-//    private ArrayList<MethodCall> methodsCall;
+    private ArrayList<MethodCall> methodsCalls;
+    private int lineNumber = 0;
 
 
     /**
@@ -40,12 +41,20 @@ public class MethodsParser implements ParseSjava {
     public void parse() throws IllegalLineException {
         for (Method method: methods) {
             ArrayList<String> lines = method.getLines();
-            checkDefinition(lines.get(0));
+            checkDefinition(lines.get(lineNumber));
             parseMethodLines(lines);
         }
-//        for (String methodCallName: methodsCall) {
-
-//        }
+        for (MethodCall methodCall: methodsCalls) {
+            if (!methodsParameters.containsKey(methodCall.name))
+                throw new IllegalLineException();
+            Variable[] methodVariables = methodsParameters.get(methodCall.name);
+            if (methodVariables.length != methodCall.parameters.length)
+                throw new IllegalLineException();
+            for (int i=0; i<methodVariables.length; i++) {
+                if (methodVariables[i].getType() != methodCall.parameters[i])
+                    throw new IllegalLineException();
+            }
+        }
     }
 
 
@@ -71,17 +80,21 @@ public class MethodsParser implements ParseSjava {
         for(int i=0; i<parameters.length; i++) {
             varParser = new VariableParser(parameters[i], variables);
             varParser.parse();
-            methodParameters[i] = variablesStack.getLast().get(parameters[i]);
+            String[] parameterSplit = parameters[i].split(" ");
+            String parameterName = parameterSplit[parameterSplit.length - 1];
+            methodParameters[i] = variablesStack.getLast().get(parameterName);
         }
         methodsParameters.put(methodName, methodParameters);
     }
 
 
     private void parseMethodLines(ArrayList<String> lines) throws IllegalLineException {
-        for (int i=1; i< lines.size(); i++) {
-            String line = lines.get(i);
-            if (!checkSemicolonSuffix(line))
+        lineNumber++;
+        while (lineNumber < lines.size()) {
+            String line = lines.get(lineNumber);
+            if (!checkSemicolonSuffix(line) || !checkIfBlock(line));
                 throw new IllegalLineException();
+//            lineNumber++;
         }
     }
 
@@ -153,7 +166,7 @@ public class MethodsParser implements ParseSjava {
             return "boolean";
         else if (value.startsWith("'") && value.endsWith("'"))
             return "char";
-        else
+//        else if ()
             return null;
     }
 
@@ -197,19 +210,25 @@ public class MethodsParser implements ParseSjava {
                 parameters[i] = paramType;
             }
         }
-        class MethodCalls {
 
-        }
-//        methodsCall
+        MethodCall methodCall = new MethodCall();
+        methodCall.name = methodName;
+        methodCall.parameters = parameters;
+        methodsCalls.add(methodCall);
         return false;
     }
 
 
-    private class MethodCalls {
-        private String methodCallName;
+    private class MethodCall {
+        private String name;
         private String[] parameters;
     }
 
+
+    private boolean checkIfBlock(String line) {
+
+        return false;
+    }
 
 
 }

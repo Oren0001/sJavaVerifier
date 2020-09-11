@@ -36,6 +36,7 @@ public class Sjavac {
 			System.out.println("1");
 			return;
 		}
+		System.out.println("0");
 	}
 
 
