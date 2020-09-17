@@ -1,8 +1,11 @@
 package oop.ex6.main;
 
+import oop.ex6.parsesjava.MethodsParser;
+import oop.ex6.parsesjava.Variable;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class Sjavac {
 
@@ -28,15 +31,17 @@ public class Sjavac {
 						methodsArray.add(method);
 					}
 				}
+			MethodsParser methodsParser = new MethodsParser(methodsArray, sjavacReader.globalVariableMap);
+			methodsParser.parse();
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(2);
 			System.err.println("ERROR: File not found\n");
 			return;
 		} catch (IllegalLineException illegalLineException) {
-			System.out.println("1");
+			System.out.println(1);
 			return;
 		}
-		System.out.println("0");
+		System.out.println(0);
 	}
 
 

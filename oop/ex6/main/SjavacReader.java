@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class SjavacReader {
 
-	private static Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
+	Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
 	private Method method;

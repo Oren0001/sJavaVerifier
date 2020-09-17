@@ -47,7 +47,7 @@ public class RegexTester {
     }
 
 
-    private static Matcher m(String pattern, String s) {
+    private static Matcher matcher(String pattern, String s) {
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(s);
         return m;
@@ -55,15 +55,10 @@ public class RegexTester {
 
 
     public static void main(String[] args) {
-        String line = "void foo (sdfsdfsdf";
-        Pattern p = Pattern.compile("void [a-zA-Z]+[_0-9]* *\\(");
-        Matcher m = p.matcher(line);
-        if (m.lookingAt()) {
-            String[] matches = line.substring(0, m.end() - 1).split(" ");
-            print(matches.length);
-            for (String match : matches)
-                print(match);
-        }
+        String s = "123abcd4545";
+        Matcher m = regexMatch("(123)abcd(4545)", s);
+        if (m.matches())
+            print(s.indexOf(m.group(2).length()));
     }
 
 }
