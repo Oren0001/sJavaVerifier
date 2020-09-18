@@ -39,7 +39,7 @@ public class RegexTester {
 	}
 
 	public static void main(String[] args) {
-regexMatch("\".*\"", "\"dd\"");
+regexFind("(..+?)\\+", "trtrtr");
 
 	}
 }

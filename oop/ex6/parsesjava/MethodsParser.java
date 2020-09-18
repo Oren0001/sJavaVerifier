@@ -40,7 +40,7 @@ public class MethodsParser implements ParseSjava {
     @Override
     public void parse() throws IllegalLineException {
         for (Method method: methods) {
-            ArrayList<String> lines = method.getLines();
+            List<String> lines = method.getLines();
             checkDefinition(lines.get(lineNumber));
             parseMethodLines(lines);
         }
@@ -88,7 +88,7 @@ public class MethodsParser implements ParseSjava {
     }
 
 
-    private void parseMethodLines(ArrayList<String> lines) throws IllegalLineException {
+    private void parseMethodLines(List<String> lines) throws IllegalLineException {
         lineNumber++;
         while (lineNumber < lines.size()) {
             String line = lines.get(lineNumber);
