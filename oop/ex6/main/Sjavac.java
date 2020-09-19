@@ -18,8 +18,7 @@ public class Sjavac {
 		}
 		File sjavaCode = new File(args[0]);
 		try (Scanner scannedCode = new Scanner(sjavaCode);) {
-			SjavacReader sjavacReader = new SjavacReader();
-			List<Method> methodsList = new ArrayList<Method>();
+			SjavacReader sjavacReader = SjavacReader.getInstance();
 			while (scannedCode.hasNextLine()) {
 				sjavacReader.readLine(scannedCode, scannedCode.nextLine());
 			}

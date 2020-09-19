@@ -13,6 +13,19 @@ public class SjavacReader {
 	private Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
+	private static SjavacReader sjavacReader = null;
+
+	private SjavacReader() {};
+
+	public static SjavacReader getInstance() {
+		if (sjavacReader == null) {
+			sjavacReader = new SjavacReader();
+			return sjavacReader;
+		} else {
+			return sjavacReader;
+		}
+
+	}
 
 	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		if (isEmptyLine(lineToRead)) {
