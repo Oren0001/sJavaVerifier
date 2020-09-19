@@ -15,9 +15,14 @@ import java.util.Scanner;
 public class OmerTests {
 
 	public static void main(String args[]) throws IllegalLineException, FileNotFoundException {
-		String[] test= new String[1];
-		test[0]="src/Tests/Omer/test.sjava";
-		Sjavac sjavac= new Sjavac();
+		String[] test = new String[1];
+		Sjavac sjavac = new Sjavac();
+
+		test[0] = "src/Tests/tests/test001.sjava";
+		sjavac.main(test);
+		sjavac = new Sjavac();
+
+		test[0] = "src/Tests/tests/test002.sjava";
 		sjavac.main(test);
 
 	}

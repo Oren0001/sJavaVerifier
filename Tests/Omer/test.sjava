@@ -1,2 +1,2 @@
-int i1, i2 = 6;
-char c='Z', f;
+int a,b;
+a =5, b=7

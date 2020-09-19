@@ -9,22 +9,34 @@ import java.util.regex.Pattern;
 
 public class SjavacReader {
 
-	Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
+	private List<Method> methodsList = new LinkedList<Method>();
+	private Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
-	private Method method;
+	private static SjavacReader sjavacReader = null;
 
-	public Method readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
+	private SjavacReader() {};
+
+	public static SjavacReader getInstance() {
+		if (sjavacReader == null) {
+			sjavacReader = new SjavacReader();
+			return sjavacReader;
+		} else {
+			return sjavacReader;
+		}
+
+	}
+
+	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		if (isEmptyLine(lineToRead)) {
 		} else if (isGlobalVariable(lineToRead)) {
 			variableParser = new VariableParser(lineToRead, globalVariableMap);
 			variableParser.parse();
 		} else if (isMethod(lineToRead)) {
-			method = new Method(copyMethodIntoArray(scannedCode, lineToRead));
+			methodsList.add(new Method(copyMethodIntoList(scannedCode, lineToRead)));
 		} else {
 			throw new IllegalLineException();
 		}
-		return method;
 	}
 
 	private boolean isEmptyLine(String lineToRead) {
@@ -36,7 +48,7 @@ public class SjavacReader {
 	private boolean isGlobalVariable(String lineToRead) {
 		Pattern globalVariablePattern = Pattern.compile(".*; *");
 		Matcher matcher = globalVariablePattern.matcher(lineToRead);
-		return (matcher.find());
+		return (matcher.matches());
 	}
 
 	private boolean isMethod(String lineToRead) {
@@ -45,20 +57,20 @@ public class SjavacReader {
 		return (matcher.matches());
 	}
 
-	private ArrayList<String> copyMethodIntoArray(Scanner scannedCode, String lastLine) {
+	private List<String> copyMethodIntoList(Scanner scannedCode, String lastLine) {
 		resetStack();
-		ArrayList<String> methodsLinesArray = new ArrayList<String>();
-		methodsLinesArray.add(lastLine);
+		List<String> methodsLinesList = new ArrayList<String>();
+		methodsLinesList.add(lastLine);
 		while (scannedCode.hasNextLine()) {
 			lastLine = scannedCode.nextLine();
 			if (!isEndOfMethod(lastLine)) {
-				methodsLinesArray.add(lastLine);
+				methodsLinesList.add(lastLine);
 			} else {
 				break;
 			}
 		}
-		methodsLinesArray.add("}");
-		return methodsLinesArray;
+		methodsLinesList.add("}");
+		return methodsLinesList;
 	}
 
 	private boolean isEndOfMethod(String lastLine) {
@@ -79,6 +91,14 @@ public class SjavacReader {
 	private void resetStack() {
 		bracketStack = new Stack<Character>();
 		bracketStack.push('{');
+	}
+
+	public Map<String, Variable> getGlobalVariableMap() {
+		return globalVariableMap;
+	}
+
+	public List<Method> getMethodsList() {
+		return methodsList;
 	}
 }
 

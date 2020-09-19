@@ -6,14 +6,15 @@ import java.util.*;
 
 public class Method {
 
-	private ArrayList<String> methodLinesArray;
+	private List<String> methodLinesArray;
 	private List<Variable> methodParameters = new ArrayList<>();
 
-	public Method(ArrayList<String> methodLinesArray) {
+
+	public Method(List<String> methodLinesArray) {
 		this.methodLinesArray = methodLinesArray;
 	}
 
-	public ArrayList<String> getLines() {
+	public List<String> getLines() {
 		return methodLinesArray;
 	}
 
