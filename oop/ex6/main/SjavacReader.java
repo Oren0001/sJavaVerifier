@@ -9,22 +9,21 @@ import java.util.regex.Pattern;
 
 public class SjavacReader {
 
-	Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
+	private List<Method> methodsList = new LinkedList<Method>();
+	private Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
 
-	public Method readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
-		Method method=null;
+	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		if (isEmptyLine(lineToRead)) {
 		} else if (isGlobalVariable(lineToRead)) {
 			variableParser = new VariableParser(lineToRead, globalVariableMap);
 			variableParser.parse();
 		} else if (isMethod(lineToRead)) {
-			method = new Method(copyMethodIntoList(scannedCode, lineToRead));
+			methodsList.add(new Method(copyMethodIntoList(scannedCode, lineToRead)));
 		} else {
 			throw new IllegalLineException();
 		}
-		return method;
 	}
 
 	private boolean isEmptyLine(String lineToRead) {
@@ -79,6 +78,14 @@ public class SjavacReader {
 	private void resetStack() {
 		bracketStack = new Stack<Character>();
 		bracketStack.push('{');
+	}
+
+	public Map<String, Variable> getGlobalVariableMap() {
+		return globalVariableMap;
+	}
+
+	public List<Method> getMethodsList() {
+		return methodsList;
 	}
 }
 

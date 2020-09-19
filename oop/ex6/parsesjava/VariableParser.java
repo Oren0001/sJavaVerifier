@@ -21,8 +21,8 @@ public class VariableParser implements ParseSjava {
 	private static final String FALSE = "false";
 	private static final String LEGAL_NAME= " *[a-zA-Z_][a-zA-Z0-9]+[\\w]*| *[a-zA-Z][\\w]*";
 	private static final String LEGAL_TYPE=" *(int|String|double|char|boolean) +";
-	private static final String LEGAL_DOUBLE=" *[a-zA-Z_][a-zA-Z0-9]+[\\w]*| *[a-zA-Z][\\w]*";
-
+	private static final String LEGAL_INT="-?\\d+";
+	private static final String LEGAL_DOUBLE="-?(\\d*\\.\\d+|\\d+\\.\\d*)|"+LEGAL_INT;
 
 	private int currentVariableNumber;
 	private boolean isFinal;
@@ -151,7 +151,7 @@ public class VariableParser implements ParseSjava {
 		Matcher matcher;
 		switch (type) {
 		case INT:
-			pattern = Pattern.compile("-?\\d+");
+			pattern = Pattern.compile(LEGAL_INT);
 			matcher = pattern.matcher(value);
 			if (!matcher.matches()) {
 				throw new IllegalLineException();

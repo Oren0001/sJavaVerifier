@@ -18,8 +18,10 @@ public class OmerTests {
 		String[] test = new String[1];
 		Sjavac sjavac = new Sjavac();
 
-			test[0] = "src/Tests/tests/test001.sjava";
-			sjavac.main(test);
+		test[0] = "src/Tests/tests/test001.sjava";
+		sjavac.main(test);
+		sjavac = new Sjavac();
+
 		test[0] = "src/Tests/tests/test002.sjava";
 		sjavac.main(test);
 
