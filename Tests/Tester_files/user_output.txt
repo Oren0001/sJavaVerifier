@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-16:32:52
-=======
-16:36:35
->>>>>>> 622a3d5314c64cb936f9736241f98eb3651d9e4b
+16:48:46
 
 school solution#User solution#result#Test name
 
 0		0		passed		\BaraksTests\if\01.sjava		
-1		0		failed		\BaraksTests\if\02.sjava		##################################
+1		1		passed		\BaraksTests\if\02.sjava		
 0		0		passed		\BaraksTests\if\03.sjava		
 0		0		passed		\BaraksTests\if\04.sjava		
 0		0		passed		\BaraksTests\if\05.sjava		
@@ -16,75 +12,70 @@ school solution#User solution#result#Test name
 0		0		passed		\BaraksTests\if\08.sjava		
 0		0		passed		\BaraksTests\if\09.sjava		
 0		0		passed		\BaraksTests\if\10.sjava		
-0		0		passed		\BaraksTests\if\11.sjava		
-1		0		failed		\BaraksTests\if\12.sjava		##################################
-1		0		failed		\BaraksTests\if\13.sjava		##################################
+0		1		failed		\BaraksTests\if\11.sjava		##################################
+1		1		passed		\BaraksTests\if\12.sjava		
+1		1		passed		\BaraksTests\if\13.sjava		
 0		0		passed		\BaraksTests\if\14.sjava		
-1		0		failed		\BaraksTests\if\15.sjava		##################################
-1		0		failed		\BaraksTests\if\16.sjava		##################################
-1		0		failed		\BaraksTests\if\17.sjava		##################################
-1		0		failed		\BaraksTests\if\18.sjava		##################################
-1		0		failed		\BaraksTests\if\22.sjava		##################################
-1		0		failed		\BaraksTests\if\23.sjava		##################################
-1		0		failed		\BaraksTests\if\24.sjava		##################################
-1		0		failed		\BaraksTests\if\25.sjava		##################################
-1		0		failed		\BaraksTests\if\26.sjava		##################################
-1		0		failed		\BaraksTests\if\27.sjava		##################################
-1		0		failed		\BaraksTests\if\28.sjava		##################################
+1		1		passed		\BaraksTests\if\15.sjava		
+1		1		passed		\BaraksTests\if\16.sjava		
+1		1		passed		\BaraksTests\if\17.sjava		
+1		1		passed		\BaraksTests\if\18.sjava		
+1		1		passed		\BaraksTests\if\22.sjava		
+1		1		passed		\BaraksTests\if\23.sjava		
+1		1		passed		\BaraksTests\if\24.sjava		
+1		1		passed		\BaraksTests\if\25.sjava		
+1		1		passed		\BaraksTests\if\26.sjava		
+1		1		passed		\BaraksTests\if\27.sjava		
+1		1		passed		\BaraksTests\if\28.sjava		
 0		0		passed		\BaraksTests\if\29.sjava		
-0		0		passed		\BaraksTests\if\30.sjava		
-<<<<<<< HEAD
-1		0		failed		\BaraksTests\if\31.sjava		##################################
-=======
+0		1		failed		\BaraksTests\if\30.sjava		##################################
 1		1		passed		\BaraksTests\if\31.sjava		
->>>>>>> 622a3d5314c64cb936f9736241f98eb3651d9e4b
 0		0		passed		\BaraksTests\methods\01.sjava		
-1		0		failed		\BaraksTests\methods\02.sjava		##################################
-0		0		passed		\BaraksTests\methods\03.sjava		
-0		0		passed		\BaraksTests\methods\04.sjava		
-<<<<<<< HEAD
+1		1		passed		\BaraksTests\methods\02.sjava		
+0		1		failed		\BaraksTests\methods\03.sjava		##################################
+0		1		failed		\BaraksTests\methods\04.sjava		##################################
 0		0		passed		\BaraksTests\methods\06.sjava		
 0		0		passed		\BaraksTests\methods\07.sjava		
-1		0		failed		\BaraksTests\methods\08.sjava		##################################
-1		0		failed		\BaraksTests\methods\09.sjava		##################################
-1		0		failed		\BaraksTests\methods\10.sjava		##################################
-1		0		failed		\BaraksTests\methods\11.sjava		##################################
+1		1		passed		\BaraksTests\methods\08.sjava		
+1		1		passed		\BaraksTests\methods\09.sjava		
+1		1		passed		\BaraksTests\methods\10.sjava		
+1		1		passed		\BaraksTests\methods\11.sjava		
 1		0		failed		\BaraksTests\methods\12.sjava		##################################
-1		0		failed		\BaraksTests\methods\13.sjava		##################################
+1		1		passed		\BaraksTests\methods\13.sjava		
 0		0		passed		\BaraksTests\methods\14.sjava		
-1		0		failed		\BaraksTests\methods\16.sjava		##################################
-1		0		failed		\BaraksTests\methods\17.sjava		##################################
+1		1		passed		\BaraksTests\methods\16.sjava		
+1		1		passed		\BaraksTests\methods\17.sjava		
 0		0		passed		\BaraksTests\methods\18.sjava		
-1		0		failed		\BaraksTests\methods\19.sjava		##################################
-1		0		failed		\BaraksTests\methods\20.sjava		##################################
-1		0		failed		\BaraksTests\methods\21.sjava		##################################
-1		0		failed		\BaraksTests\methods\22.sjava		##################################
-1		0		failed		\BaraksTests\methods\23.sjava		##################################
-1		0		failed		\BaraksTests\methods\24.sjava		##################################
+1		1		passed		\BaraksTests\methods\19.sjava		
+1		1		passed		\BaraksTests\methods\20.sjava		
+1		1		passed		\BaraksTests\methods\21.sjava		
+1		1		passed		\BaraksTests\methods\22.sjava		
+1		1		passed		\BaraksTests\methods\23.sjava		
+1		1		passed		\BaraksTests\methods\24.sjava		
 0		0		passed		\BaraksTests\methods\25.sjava		
-1		0		failed		\BaraksTests\methods\26.sjava		##################################
-0		0		passed		\BaraksTests\methods\27.sjava		
-1		0		failed		\BaraksTests\methods\28.sjava		##################################
+1		1		passed		\BaraksTests\methods\26.sjava		
+0		1		failed		\BaraksTests\methods\27.sjava		##################################
+1		1		passed		\BaraksTests\methods\28.sjava		
 0		0		passed		\BaraksTests\methods\29.sjava		
-1		0		failed		\BaraksTests\methods\31.sjava		##################################
+1		1		passed		\BaraksTests\methods\31.sjava		
 0		0		passed		\BaraksTests\methods\32.sjava		
 0		0		passed		\BaraksTests\methods\33.sjava		
 0		0		passed		\BaraksTests\methods\34.sjava		
-1		0		failed		\BaraksTests\methods\35.sjava		##################################
-1		0		failed		\BaraksTests\methods\37.sjava		##################################
+1		1		passed		\BaraksTests\methods\35.sjava		
+1		1		passed		\BaraksTests\methods\37.sjava		
 0		0		passed		\BaraksTests\return\01.sjava		
 0		0		passed		\BaraksTests\return\02.sjava		
 1		1		passed		\BaraksTests\return\03.sjava		
 1		1		passed		\BaraksTests\return\04.sjava		
-1		0		failed		\BaraksTests\return\05.sjava		##################################
-1		0		failed		\BaraksTests\return\06.sjava		##################################
+1		1		passed		\BaraksTests\return\05.sjava		
+1		1		passed		\BaraksTests\return\06.sjava		
 0		0		passed		\BaraksTests\return\07.sjava		
 0		0		passed		\BaraksTests\return\08.sjava		
 0		0		passed		\BaraksTests\return\09.sjava		
 1		0		failed		\BaraksTests\return\10.sjava		##################################
 0		0		passed		\BaraksTests\return\11.sjava		
-1		0		failed		\BaraksTests\return\12.sjava		##################################
-1		0		failed		\BaraksTests\return\13.sjava		##################################
+1		1		passed		\BaraksTests\return\12.sjava		
+1		1		passed		\BaraksTests\return\13.sjava		
 0		0		passed		\BaraksTests\return\14.sjava		
 0		1		failed		\BaraksTests\structure\01.sjava		##################################
 1		1		passed		\BaraksTests\structure\02.sjava		
@@ -94,23 +85,23 @@ school solution#User solution#result#Test name
 0		1		failed		\BaraksTests\structure\06.sjava		##################################
 0		0		passed		\BaraksTests\structure\07.sjava		
 0		0		passed		\BaraksTests\structure\08.sjava		
-1		0		failed		\BaraksTests\structure\09.sjava		##################################
+1		1		passed		\BaraksTests\structure\09.sjava		
 1		1		passed		\BaraksTests\structure\10.sjava		
-1		0		failed		\BaraksTests\structure\11.sjava		##################################
+1		1		passed		\BaraksTests\structure\11.sjava		
 1		1		passed		\BaraksTests\structure\12.sjava		
 1		1		passed		\BaraksTests\structure\13.sjava		
 1		1		passed		\BaraksTests\structure\14.sjava		
 1		0		failed		\BaraksTests\structure\15.sjava		##################################
-1		0		failed		\BaraksTests\structure\16.sjava		##################################
+1		1		passed		\BaraksTests\structure\16.sjava		
 1		1		passed		\BaraksTests\structure\17.sjava		
-1		0		failed		\BaraksTests\structure\18.sjava		##################################
+1		1		passed		\BaraksTests\structure\18.sjava		
 1		0		failed		\BaraksTests\structure\19.sjava		##################################
 1		1		passed		\BaraksTests\structure\20.sjava		
 1		1		passed		\BaraksTests\structure\21.sjava		
-1		0		failed		\BaraksTests\structure\22.sjava		##################################
+1		1		passed		\BaraksTests\structure\22.sjava		
 1		1		passed		\BaraksTests\structure\23.sjava		
-1		0		failed		\BaraksTests\structure\24.sjava		##################################
-1		0		failed		\BaraksTests\structure\25.sjava		##################################
+1		1		passed		\BaraksTests\structure\24.sjava		
+1		1		passed		\BaraksTests\structure\25.sjava		
 0		0		passed		\BaraksTests\variables\01.sjava		
 0		0		passed		\BaraksTests\variables\02.sjava		
 1		1		passed		\BaraksTests\variables\03.sjava		
@@ -179,18 +170,18 @@ school solution#User solution#result#Test name
 0		0		passed		\BaraksTests\variables\66.sjava		
 1		1		passed		\BaraksTests\variables\67.sjava		
 1		1		passed		\BaraksTests\variables\68.sjava		
-0		0		passed		\BaraksTests\variables\69.sjava		
-0		0		passed		\BaraksTests\variables\70.sjava		
-1		0		failed		\BaraksTests\variables\71.sjava		##################################
-1		0		failed		\BaraksTests\variables\72.sjava		##################################
-1		0		failed		\BaraksTests\variables\73.sjava		##################################
-0		0		passed		\BaraksTests\variables\74.sjava		
-0		0		passed		\BaraksTests\variables\75.sjava		
-0		0		passed		\BaraksTests\variables\76.sjava		
-0		0		passed		\BaraksTests\variables\77.sjava		
-0		0		passed		\BaraksTests\variables\78.sjava		
-1		0		failed		\BaraksTests\variables\79.sjava		##################################
-0		0		passed		\BaraksTests\variables\80.sjava		
+0		1		failed		\BaraksTests\variables\69.sjava		##################################
+0		1		failed		\BaraksTests\variables\70.sjava		##################################
+1		1		passed		\BaraksTests\variables\71.sjava		
+1		1		passed		\BaraksTests\variables\72.sjava		
+1		1		passed		\BaraksTests\variables\73.sjava		
+0		1		failed		\BaraksTests\variables\74.sjava		##################################
+0		1		failed		\BaraksTests\variables\75.sjava		##################################
+0		1		failed		\BaraksTests\variables\76.sjava		##################################
+0		1		failed		\BaraksTests\variables\77.sjava		##################################
+0		1		failed		\BaraksTests\variables\78.sjava		##################################
+1		1		passed		\BaraksTests\variables\79.sjava		
+0		1		failed		\BaraksTests\variables\80.sjava		##################################
 1		1		passed		\BaraksTests\variables\81.sjava		
 0		0		passed		\BaraksTests\variables\82.sjava		
 0		1		failed		\BaraksTests\variables\83.sjava		##################################
@@ -207,7 +198,7 @@ school solution#User solution#result#Test name
 1		1		passed		\BaraksTests\variables\94.sjava		
 1		1		passed		\BaraksTests\variables\95.sjava		
 0		0		passed		\BaraksTests\while\01.sjava		
-1		0		failed		\BaraksTests\while\02.sjava		##################################
+1		1		passed		\BaraksTests\while\02.sjava		
 0		0		passed		\BaraksTests\while\03.sjava		
 0		0		passed		\BaraksTests\while\04.sjava		
 0		0		passed		\BaraksTests\while\05.sjava		
@@ -216,21 +207,21 @@ school solution#User solution#result#Test name
 0		0		passed		\BaraksTests\while\08.sjava		
 0		0		passed		\BaraksTests\while\09.sjava		
 0		0		passed		\BaraksTests\while\10.sjava		
-0		0		passed		\BaraksTests\while\11.sjava		
-1		0		failed		\BaraksTests\while\12.sjava		##################################
-1		0		failed		\BaraksTests\while\13.sjava		##################################
+0		1		failed		\BaraksTests\while\11.sjava		##################################
+1		1		passed		\BaraksTests\while\12.sjava		
+1		1		passed		\BaraksTests\while\13.sjava		
 0		0		passed		\BaraksTests\while\14.sjava		
-1		0		failed		\BaraksTests\while\15.sjava		##################################
-1		0		failed		\BaraksTests\while\16.sjava		##################################
-1		0		failed		\BaraksTests\while\17.sjava		##################################
-1		0		failed		\BaraksTests\while\18.sjava		##################################
-1		0		failed		\BaraksTests\while\22.sjava		##################################
-1		0		failed		\BaraksTests\while\23.sjava		##################################
-1		0		failed		\BaraksTests\while\24.sjava		##################################
-1		0		failed		\BaraksTests\while\25.sjava		##################################
-1		0		failed		\BaraksTests\while\26.sjava		##################################
-1		0		failed		\BaraksTests\while\27.sjava		##################################
-1		0		failed		\BaraksTests\while\28.sjava		##################################
+1		1		passed		\BaraksTests\while\15.sjava		
+1		1		passed		\BaraksTests\while\16.sjava		
+1		1		passed		\BaraksTests\while\17.sjava		
+1		1		passed		\BaraksTests\while\18.sjava		
+1		1		passed		\BaraksTests\while\22.sjava		
+1		1		passed		\BaraksTests\while\23.sjava		
+1		1		passed		\BaraksTests\while\24.sjava		
+1		1		passed		\BaraksTests\while\25.sjava		
+1		1		passed		\BaraksTests\while\26.sjava		
+1		1		passed		\BaraksTests\while\27.sjava		
+1		1		passed		\BaraksTests\while\28.sjava		
 0		0		passed		\SchoolTests\test001.sjava		
 0		0		passed		\SchoolTests\test002.sjava		
 0		0		passed		\SchoolTests\test003.sjava		
@@ -294,11 +285,11 @@ school solution#User solution#result#Test name
 1		1		passed		\SchoolTests\test065.sjava		
 1		1		passed		\SchoolTests\test066.sjava		
 1		1		passed		\SchoolTests\test067.sjava		
-1		0		failed		\SchoolTests\test101.sjava		##################################
-1		0		failed		\SchoolTests\test102.sjava		##################################
-1		0		failed		\SchoolTests\test103.sjava		##################################
-1		0		failed		\SchoolTests\test104.sjava		##################################
-1		0		failed		\SchoolTests\test105.sjava		##################################
+1		1		passed		\SchoolTests\test101.sjava		
+1		1		passed		\SchoolTests\test102.sjava		
+1		1		passed		\SchoolTests\test103.sjava		
+1		1		passed		\SchoolTests\test104.sjava		
+1		1		passed		\SchoolTests\test105.sjava		
 0		0		passed		\SchoolTests\test106.sjava		
 0		0		passed		\SchoolTests\test107.sjava		
 0		0		passed		\SchoolTests\test108.sjava		
@@ -307,70 +298,70 @@ school solution#User solution#result#Test name
 0		0		passed		\SchoolTests\test111.sjava		
 0		0		passed		\SchoolTests\test112.sjava		
 0		0		passed		\SchoolTests\test113.sjava		
-1		0		failed		\SchoolTests\test114.sjava		##################################
-1		0		failed		\SchoolTests\test115.sjava		##################################
-1		0		failed		\SchoolTests\test116.sjava		##################################
+1		1		passed		\SchoolTests\test114.sjava		
+1		1		passed		\SchoolTests\test115.sjava		
+1		1		passed		\SchoolTests\test116.sjava		
 1		1		passed		\SchoolTests\test117.sjava		
 0		0		passed		\SchoolTests\test201.sjava		
 0		0		passed		\SchoolTests\test202.sjava		
 0		0		passed		\SchoolTests\test203.sjava		
 0		0		passed		\SchoolTests\test204.sjava		
-1		0		failed		\SchoolTests\test205.sjava		##################################
-1		0		failed		\SchoolTests\test206.sjava		##################################
-1		0		failed		\SchoolTests\test207.sjava		##################################
-1		0		failed		\SchoolTests\test208.sjava		##################################
+1		1		passed		\SchoolTests\test205.sjava		
+1		1		passed		\SchoolTests\test206.sjava		
+1		1		passed		\SchoolTests\test207.sjava		
+1		1		passed		\SchoolTests\test208.sjava		
 0		0		passed		\SchoolTests\test209.sjava		
 0		0		passed		\SchoolTests\test211.sjava		
 0		0		passed		\SchoolTests\test212.sjava		
 0		0		passed		\SchoolTests\test213.sjava		
 0		0		passed		\SchoolTests\test214.sjava		
 0		0		passed		\SchoolTests\test215.sjava		
-1		0		failed		\SchoolTests\test216.sjava		##################################
-1		0		failed		\SchoolTests\test217.sjava		##################################
-1		0		failed		\SchoolTests\test218.sjava		##################################
+1		1		passed		\SchoolTests\test216.sjava		
+1		1		passed		\SchoolTests\test217.sjava		
+1		1		passed		\SchoolTests\test218.sjava		
 0		0		passed		\SchoolTests\test219.sjava		
 0		0		passed		\SchoolTests\test221.sjava		
 0		0		passed		\SchoolTests\test222.sjava		
-1		0		failed		\SchoolTests\test223.sjava		##################################
-1		0		failed		\SchoolTests\test224.sjava		##################################
-1		0		failed		\SchoolTests\test225.sjava		##################################
-1		0		failed		\SchoolTests\test226.sjava		##################################
+1		1		passed		\SchoolTests\test223.sjava		
+1		1		passed		\SchoolTests\test224.sjava		
+1		1		passed		\SchoolTests\test225.sjava		
+1		1		passed		\SchoolTests\test226.sjava		
 0		0		passed		\SchoolTests\test227.sjava		
 0		0		passed		\SchoolTests\test231.sjava		
 0		0		passed		\SchoolTests\test232.sjava		
 0		0		passed		\SchoolTests\test233.sjava		
 0		0		passed		\SchoolTests\test234.sjava		
 0		0		passed		\SchoolTests\test235.sjava		
-1		0		failed		\SchoolTests\test236.sjava		##################################
-1		0		failed		\SchoolTests\test237.sjava		##################################
-1		0		failed		\SchoolTests\test238.sjava		##################################
+1		1		passed		\SchoolTests\test236.sjava		
+1		1		passed		\SchoolTests\test237.sjava		
+1		1		passed		\SchoolTests\test238.sjava		
 0		0		passed		\SchoolTests\test239.sjava		
 0		0		passed		\SchoolTests\test241.sjava		
 0		0		passed		\SchoolTests\test242.sjava		
 0		0		passed		\SchoolTests\test243.sjava		
-1		0		failed		\SchoolTests\test244.sjava		##################################
-1		0		failed		\SchoolTests\test245.sjava		##################################
-1		0		failed		\SchoolTests\test246.sjava		##################################
-1		0		failed		\SchoolTests\test247.sjava		##################################
-1		0		failed		\SchoolTests\test248.sjava		##################################
-1		0		failed		\SchoolTests\test249.sjava		##################################
-1		0		failed		\SchoolTests\test250.sjava		##################################
-0		0		passed		\SchoolTests\test251.sjava		
-1		0		failed		\SchoolTests\test252.sjava		##################################
-0		0		passed		\SchoolTests\test253.sjava		
-1		0		failed		\SchoolTests\test254.sjava		##################################
+1		1		passed		\SchoolTests\test244.sjava		
+1		1		passed		\SchoolTests\test245.sjava		
+1		1		passed		\SchoolTests\test246.sjava		
+1		1		passed		\SchoolTests\test247.sjava		
+1		1		passed		\SchoolTests\test248.sjava		
+1		1		passed		\SchoolTests\test249.sjava		
+1		1		passed		\SchoolTests\test250.sjava		
+0		1		failed		\SchoolTests\test251.sjava		##################################
+1		1		passed		\SchoolTests\test252.sjava		
+0		1		failed		\SchoolTests\test253.sjava		##################################
+1		1		passed		\SchoolTests\test254.sjava		
 0		0		passed		\SchoolTests\test255.sjava		
-1		0		failed		\SchoolTests\test257.sjava		##################################
-1		0		failed		\SchoolTests\test261.sjava		##################################
-1		0		failed		\SchoolTests\test262.sjava		##################################
-1		0		failed		\SchoolTests\test263.sjava		##################################
-1		0		failed		\SchoolTests\test264.sjava		##################################
-1		0		failed		\SchoolTests\test265.sjava		##################################
+1		1		passed		\SchoolTests\test257.sjava		
+1		1		passed		\SchoolTests\test261.sjava		
+1		1		passed		\SchoolTests\test262.sjava		
+1		1		passed		\SchoolTests\test263.sjava		
+1		1		passed		\SchoolTests\test264.sjava		
+1		1		passed		\SchoolTests\test265.sjava		
 0		0		passed		\SchoolTests\test266.sjava		
 0		0		passed		\SchoolTests\test267.sjava		
-1		0		failed		\SchoolTests\test268.sjava		##################################
+1		1		passed		\SchoolTests\test268.sjava		
 1		1		passed		\SchoolTests\test269.sjava		
-1		0		failed		\SchoolTests\test270.sjava		##################################
+1		1		passed		\SchoolTests\test270.sjava		
 0		1		failed		\SchoolTests\test271.sjava		##################################
 1		1		passed		\SchoolTests\test272.sjava		
 1		1		passed		\SchoolTests\test273.sjava		
@@ -380,17 +371,17 @@ school solution#User solution#result#Test name
 0		0		passed		\SchoolTests\test302.sjava		
 0		0		passed		\SchoolTests\test303.sjava		
 0		0		passed		\SchoolTests\test305.sjava		
-1		0		failed		\SchoolTests\test306.sjava		##################################
-1		0		failed		\SchoolTests\test307.sjava		##################################
-1		0		failed		\SchoolTests\test308.sjava		##################################
-1		0		failed		\SchoolTests\test309.sjava		##################################
-1		0		failed		\SchoolTests\test310.sjava		##################################
+1		1		passed		\SchoolTests\test306.sjava		
+1		1		passed		\SchoolTests\test307.sjava		
+1		1		passed		\SchoolTests\test308.sjava		
+1		1		passed		\SchoolTests\test309.sjava		
+1		1		passed		\SchoolTests\test310.sjava		
 0		0		passed		\SchoolTests\test311.sjava		
 0		0		passed		\SchoolTests\test312.sjava		
 0		0		passed		\SchoolTests\test313.sjava		
-1		0		failed		\SchoolTests\test314.sjava		##################################
+1		1		passed		\SchoolTests\test314.sjava		
 0		0		passed		\SchoolTests\test315.sjava		
-1		0		failed		\SchoolTests\test316.sjava		##################################
+1		1		passed		\SchoolTests\test316.sjava		
 0		0		passed		\SchoolTests\test321.sjava		
 0		0		passed		\SchoolTests\test322.sjava		
 0		0		passed		\SchoolTests\test323.sjava		
@@ -398,16 +389,16 @@ school solution#User solution#result#Test name
 0		0		passed		\SchoolTests\test325.sjava		
 0		0		passed		\SchoolTests\test326.sjava		
 0		0		passed		\SchoolTests\test327.sjava		
-1		0		failed		\SchoolTests\test328.sjava		##################################
+1		1		passed		\SchoolTests\test328.sjava		
 1		1		passed		\SchoolTests\test401.sjava		
-1		0		failed		\SchoolTests\test402.sjava		##################################
-1		0		failed		\SchoolTests\test403.sjava		##################################
+1		1		passed		\SchoolTests\test402.sjava		
+1		1		passed		\SchoolTests\test403.sjava		
 0		0		passed		\SchoolTests\test404.sjava		
 0		0		passed		\SchoolTests\test405.sjava		
-1		0		failed		\SchoolTests\test406.sjava		##################################
-1		0		failed		\SchoolTests\test407.sjava		##################################
-1		0		failed		\SchoolTests\test408.sjava		##################################
-1		0		failed		\SchoolTests\test409.sjava		##################################
+1		1		passed		\SchoolTests\test406.sjava		
+1		1		passed		\SchoolTests\test407.sjava		
+1		1		passed		\SchoolTests\test408.sjava		
+1		1		passed		\SchoolTests\test409.sjava		
 0		0		passed		\SchoolTests\test410.sjava		
 0		1		failed		\SchoolTests\test411.sjava		##################################
 0		0		passed		\SchoolTests\test412.sjava		
@@ -417,35 +408,35 @@ school solution#User solution#result#Test name
 1		1		passed		\SchoolTests\test416.sjava		
 1		1		passed		\SchoolTests\test417.sjava		
 0		0		passed		\SchoolTests\test418.sjava		
-1		0		failed		\SchoolTests\test420.sjava		##################################
-1		0		failed		\SchoolTests\test421.sjava		##################################
-1		0		failed		\SchoolTests\test422.sjava		##################################
-1		0		failed		\SchoolTests\test423.sjava		##################################
-0		0		passed		\SchoolTests\test425.sjava		
+1		1		passed		\SchoolTests\test420.sjava		
+1		1		passed		\SchoolTests\test421.sjava		
+1		1		passed		\SchoolTests\test422.sjava		
+1		1		passed		\SchoolTests\test423.sjava		
+0		1		failed		\SchoolTests\test425.sjava		##################################
 0		0		passed		\SchoolTests\test427.sjava		
 0		0		passed		\SchoolTests\test428.sjava		
-1		0		failed		\SchoolTests\test429.sjava		##################################
-1		0		failed		\SchoolTests\test430.sjava		##################################
-1		0		failed		\SchoolTests\test431.sjava		##################################
+1		1		passed		\SchoolTests\test429.sjava		
+1		1		passed		\SchoolTests\test430.sjava		
+1		1		passed		\SchoolTests\test431.sjava		
 0		0		passed		\SchoolTests\test432.sjava		
 0		0		passed		\SchoolTests\test433.sjava		
-1		0		failed		\SchoolTests\test434.sjava		##################################
-1		0		failed		\SchoolTests\test435.sjava		##################################
-1		0		failed		\SchoolTests\test436.sjava		##################################
+1		1		passed		\SchoolTests\test434.sjava		
+1		1		passed		\SchoolTests\test435.sjava		
+1		1		passed		\SchoolTests\test436.sjava		
 0		0		passed		\SchoolTests\test437.sjava		
 0		0		passed		\SchoolTests\test438.sjava		
-1		0		failed		\SchoolTests\test439.sjava		##################################
-1		0		failed		\SchoolTests\test440.sjava		##################################
-1		0		failed		\SchoolTests\test441.sjava		##################################
+1		1		passed		\SchoolTests\test439.sjava		
+1		1		passed		\SchoolTests\test440.sjava		
+1		1		passed		\SchoolTests\test441.sjava		
 1		1		passed		\SchoolTests\test442.sjava		
 0		0		passed		\SchoolTests\test451.sjava		
-1		0		failed		\SchoolTests\test452.sjava		##################################
-1		0		failed		\SchoolTests\test453.sjava		##################################
-1		0		failed		\SchoolTests\test454.sjava		##################################
-1		0		failed		\SchoolTests\test455.sjava		##################################
-1		0		failed		\SchoolTests\test456.sjava		##################################
+1		1		passed		\SchoolTests\test452.sjava		
+1		1		passed		\SchoolTests\test453.sjava		
+1		1		passed		\SchoolTests\test454.sjava		
+1		1		passed		\SchoolTests\test455.sjava		
+1		1		passed		\SchoolTests\test456.sjava		
 1		1		passed		\SchoolTests\test457.sjava		
-1		0		failed		\SchoolTests\test458.sjava		##################################
+1		1		passed		\SchoolTests\test458.sjava		
 1		1		passed		\SchoolTests\test459.sjava		
 1		1		passed		\SchoolTests\test460.sjava		
 0		0		passed		\SchoolTests\test461.sjava		
@@ -454,24 +445,22 @@ school solution#User solution#result#Test name
 1		1		passed		\SchoolTests\test464.sjava		
 0		0		passed		\SchoolTests\test465.sjava		
 0		0		passed		\SchoolTests\test466.sjava		
-1		0		failed		\SchoolTests\test467.sjava		##################################
-1		0		failed		\SchoolTests\test468.sjava		##################################
+1		1		passed		\SchoolTests\test467.sjava		
+1		1		passed		\SchoolTests\test468.sjava		
 0		0		passed		\SchoolTests\test469.sjava		
-1		0		failed		\SchoolTests\test470.sjava		##################################
-1		0		failed		\SchoolTests\test471.sjava		##################################
+1		1		passed		\SchoolTests\test470.sjava		
+1		1		passed		\SchoolTests\test471.sjava		
 0		0		passed		\SchoolTests\test472.sjava		
 0		0		passed		\SchoolTests\test473.sjava		
 1		0		failed		\SchoolTests\test474.sjava		##################################
-1		0		failed		\SchoolTests\test475.sjava		##################################
-1		0		failed		\SchoolTests\test476.sjava		##################################
-1		0		failed		\SchoolTests\test477.sjava		##################################
+1		1		passed		\SchoolTests\test475.sjava		
+1		1		passed		\SchoolTests\test476.sjava		
+1		1		passed		\SchoolTests\test477.sjava		
 0		1		failed		\SchoolTests\test501.sjava		##################################
 1		1		passed		\SchoolTests\test502.sjava		
 1		1		passed		\SchoolTests\test503.sjava		
 1		1		passed		\SchoolTests\test504.sjava		
 0		0		passed		\SchoolTests\test505.sjava		
 
-passed 300 out of 459 tests.
+passed 425 out of 459 tests.
 
-=======
->>>>>>> 622a3d5314c64cb936f9736241f98eb3651d9e4b

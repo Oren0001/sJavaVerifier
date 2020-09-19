@@ -1,8 +1,8 @@
 package oop.ex6.main;
 
+import oop.ex6.parsesjava.MethodsParser;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Sjavac {
@@ -22,6 +22,11 @@ public class Sjavac {
 			while (scannedCode.hasNextLine()) {
 				sjavacReader.readLine(scannedCode, scannedCode.nextLine());
 			}
+
+			MethodsParser methodsParser = new MethodsParser(sjavacReader.getMethodsList(),
+					sjavacReader.getGlobalVariablesMap());
+			methodsParser.parse();
+
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(IO_ERROR);
 			System.err.println("ERROR: File not found\n");
