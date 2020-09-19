@@ -6,6 +6,7 @@ public class Variable {
 	private String type;
 	private String value;
 	private boolean isFinal;
+	private boolean isAssignment;
 
 	public String getValue() {
 		return value;
@@ -37,5 +38,13 @@ public class Variable {
 
 	public void setFinal(boolean status) {
 		isFinal = status;
+	}
+
+	public boolean isAssignment() {
+		return isAssignment;
+	}
+
+	public void setAssignment(boolean assignment) {
+		isAssignment = assignment;
 	}
 }

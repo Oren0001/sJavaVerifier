@@ -39,8 +39,8 @@ public class RegexTester {
 	}
 
 	public static void main(String[] args) {
-regexFind("(..+?)\\+", "trtrtr");
-
+		Matcher test=m("\t", "	");
+		System.out.println(test.matches());
 	}
 }
 
