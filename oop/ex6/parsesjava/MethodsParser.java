@@ -17,13 +17,14 @@ public class MethodsParser implements ParseSjava {
     private Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
     private Map<String, Variable[]> methodsParameters = new HashMap<>();
     private List<MethodCall> methodsCalls = new ArrayList<>();
-    private int lineNumber = 0;
+    private int lineNumber;
+    private boolean hasReturn;
 
     /**
      * Initializes a new methods parser.
      * @param methods an array list of Method classes.
      *                Each class wraps an array list of the method's lines.
-     * @param globalVariables a map from a variable's name to the variable's class.
+     * @param globalVariables a map from a global variable's name to it's class.
      */
     public MethodsParser(List<Method> methods, Map<String, Variable> globalVariables) {
         this.methods = methods;
@@ -39,9 +40,13 @@ public class MethodsParser implements ParseSjava {
     @Override
     public void parse() throws IllegalLineException {
         for (Method method: methods) {
+            lineNumber = 0;
+            hasReturn = false;
             List<String> lines = method.getLines();
             checkDefinition(lines.get(lineNumber));
             parseMethodLines(lines);
+            if (!hasReturn)
+                throw new IllegalLineException();
         }
         if (variablesStack.size() != 1)
             throw new IllegalLineException();
@@ -60,12 +65,13 @@ public class MethodsParser implements ParseSjava {
 
 
     private void checkDefinition(String def) throws IllegalLineException {
-        Pattern p1 = Pattern.compile("void [a-zA-Z]+[_0-9]*[ \t]*\\(");
+        Pattern p1 = Pattern.compile("[ \t]*void[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*\\(");
         Matcher m1 = p1.matcher(def);
         if (!m1.lookingAt())
             throw new IllegalLineException();
-        String[] matches = def.substring(0, m1.end() - 1).split(" ");
-        String methodName = matches[1];
+        String methodName = m1.group(1);
+//        if (methodsParameters.get(methodName) != null)
+//            throw new IllegalLineException();
 
         Pattern p2 = Pattern.compile("\\)[ \t]*\\{[ \t]*$");
         Matcher m2 = p2.matcher(def);
@@ -107,9 +113,8 @@ public class MethodsParser implements ParseSjava {
                 else
                     return;
             }
-            else if (!checkSemicolonSuffix(line) && !checkIfWhileBlock(lines, line)) {
+            else if (!checkSemicolonSuffix(line) && !checkIfWhileBlock(lines, line))
                 throw new IllegalLineException();
-            }
             lineNumber++;
         }
     }
@@ -121,7 +126,7 @@ public class MethodsParser implements ParseSjava {
         if (m.find()) {
             String beforeSemicolon = line.substring(0, m.start());
             return checkReturn(beforeSemicolon) || checkVariableDeclaration(line) ||
-                    checkMethodCall(beforeSemicolon);
+                    checkVariableAssignment(beforeSemicolon) || checkMethodCall(beforeSemicolon);
         }
         return false;
     }
@@ -130,7 +135,10 @@ public class MethodsParser implements ParseSjava {
     private boolean checkReturn(String line) {
         Pattern p = Pattern.compile("[ \t]*return[ \t]*");
         Matcher m = p.matcher(line);
-        return m.matches();
+        boolean result = m.matches();
+        if (result && variablesStack.size() == 2)
+            hasReturn = true;
+        return result;
     }
 
 
@@ -146,32 +154,24 @@ public class MethodsParser implements ParseSjava {
     }
 
 
-    private boolean checkVariableAssignment(String line) {
+    private boolean checkVariableAssignment(String line) throws IllegalLineException {
         Pattern p = Pattern.compile("[ \t]*(?:[a-zA-Z]|__)+\\w*[ \t]*=[ \t]*.*");
         Matcher m = p.matcher(line);
         if (m.matches()) {
             String[] lineSplit = line.split("=");
-            String varName = lineSplit[0].trim();
-            String varValue = lineSplit[1].trim();
-            String varType = getVariableType(varValue);
-            if (varType == null)
-                return false;
-            else {
-                for (Map<String, Variable> variables: variablesStack) {
-                    Variable var = variables.get(varName);
-                    if (var == null)
-                        continue;
-                    if (var.isFinal())
-                        return false;
-                    return isTypeMatch(var, varType);
-                }
+            String name = lineSplit[0].trim();
+            String value = lineSplit[1].trim();
+            String type = getType(value);
+            Variable variable = getVariable(name);
+            if (type == null || variable == null || variable.isFinal())
+                throw new IllegalLineException();
+            return isTypeMatch(variable.getType(), type);
             }
-        }
         return false;
     }
 
 
-    private String getVariableType(String value) {
+    private String getType(String value) {
         if (value.matches("-?\\d+"))
             return "int";
         else if (value.matches("-?(?:\\d+\\.?\\d*|\\d*\\.?\\d+)"))
@@ -182,55 +182,70 @@ public class MethodsParser implements ParseSjava {
             return "boolean";
         else if (value.startsWith("'") && value.endsWith("'"))
             return "char";
-        else {
-            for (Map<String, Variable> variables: variablesStack) {
-                Variable var = variables.get(value);
-                if (var == null)
-                    continue;
-                return var.getType();
-            }
+        else
             return null;
-        }
     }
 
 
-    private boolean isTypeMatch(Variable var, String varType) {
-        if (varType.equals("int") && (var.getType().equals("int") ||
-                var.getType().equals("double") || var.getType().equals("boolean")))
+    private Variable getVariable(String variableName) {
+        for (Map<String, Variable> variables: variablesStack) {
+            Variable var = variables.get(variableName);
+            if (var == null)
+                continue;
+            return var;
+        }
+        return null;
+    }
+
+
+    private boolean isTypeMatch(String variableType, String type) {
+        if (type.equals("int") && (variableType.equals("int") ||
+                variableType.equals("double") || variableType.equals("boolean")))
             return true;
-        else if (varType.equals("double") && (var.getType().equals("double") ||
-                var.getType().equals("boolean")))
+        else if (type.equals("double") && (variableType.equals("double") || variableType.equals("boolean")))
             return true;
-        else if (varType.equals("String") && var.getType().equals("String"))
+        else if (type.equals("String") && variableType.equals("String"))
             return true;
-        else if (varType.equals("boolean") && var.getType().equals("boolean"))
+        else if (type.equals("boolean") && variableType.equals("boolean"))
             return true;
         else
-            return varType.equals("char") && var.getType().equals("char");
+            return type.equals("char") && variableType.equals("char");
     }
 
 
-    private boolean checkMethodCall(String line) {
-        Pattern p = Pattern.compile("[ \t]*[a-zA-Z]+[_0-9]*[ \t]*\\(");
-        Matcher m = p.matcher(line);
-        if (!m.lookingAt())
+    private boolean checkMethodCall(String line) throws IllegalLineException {
+        Pattern p1 = Pattern.compile("[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*\\(");
+        Matcher m1 = p1.matcher(line);
+        if (!m1.lookingAt())
             return false;
-        String[] matches = line.substring(0, m.end() - 1).split(" ");
-        String methodName = matches[0];
+        String methodName = m1.group(1);
 
-        int parametersStart = m.end(); //the index of where the parameters start
-        int parametersEnd = line.lastIndexOf(")", line.length() - 1);
-        if (parametersEnd == -1)
-            return false;
-        String parametersString = line.substring(parametersStart, parametersEnd);
-        String[] parameters = parametersString.split(",[ \t]*");
+        Pattern p2 = Pattern.compile("\\)[ \t]*$");
+        Matcher m2 = p2.matcher(line);
+        if (!m2.find())
+            throw new IllegalLineException();
 
-        for (int i=0; i<parameters.length; i++) {
-            String paramType = getVariableType(parameters[i]);
-            if (paramType == null)
-                return false;
-            else {
-                parameters[i] = paramType;
+        String parametersString = line.substring(m1.end(), m2.start());
+        String[] parameters;
+        if (parametersString.equals(""))
+            parameters = new String[0];
+        else {
+            parameters = parametersString.split(",[ \t]*");
+            for (int i = 0; i < parameters.length; i++) {
+                String parameterType;
+                String parameter = parameters[i].trim();
+                Variable variable = getVariable(parameter);
+                if (variable != null) {
+                    if (variable.getValue() == null)
+                        return false;
+                    parameterType = variable.getType();
+                } else {
+                    String type = getType(parameter);
+                    if (type == null)
+                        return false;
+                    parameterType = type;
+                }
+                parameters[i] = parameterType;
             }
         }
 
@@ -238,7 +253,7 @@ public class MethodsParser implements ParseSjava {
         methodCall.name = methodName;
         methodCall.parameters = parameters;
         methodsCalls.add(methodCall);
-        return false;
+        return true;
     }
 
 
@@ -255,9 +270,8 @@ public class MethodsParser implements ParseSjava {
             return false;
         Pattern p2 = Pattern.compile("\\)[ \t]*\\{[ \t]*$");
         Matcher m2 = p2.matcher(line);
-        if (!m2.find()) {
+        if (!m2.find())
             throw new IllegalLineException();
-        }
         String conditions = line.substring(m1.end(), m2.start());
         checkCondition(conditions);
         variablesStack.addFirst(new HashMap<>());
@@ -270,9 +284,17 @@ public class MethodsParser implements ParseSjava {
         conditions = " " + conditions + " ";
         String[] matches = conditions.split("\\|\\||&&");
         for (String condition: matches) {
-            String type = getVariableType(condition);
-            if (!"boolean".equals(type) && !"int".equals(type) && !"double".equals(type))
-                throw new IllegalLineException();
+            String trimmedCondition = condition.trim();
+            Variable variable = getVariable(trimmedCondition);
+            if (variable != null) {
+                if (variable.getValue() == null || (!"boolean".equals(variable.getType()) &&
+                        !"int".equals(variable.getType()) && !"double".equals(variable.getType())))
+                    throw new IllegalLineException();
+            } else {
+                String type = getType(trimmedCondition);
+                if (!"boolean".equals(type) && !"int".equals(type) && !"double".equals(type))
+                    throw new IllegalLineException();
+            }
         }
     }
 
