@@ -55,10 +55,10 @@ public class RegexTester {
 
 
     public static void main(String[] args) {
-        String s = "123abcd4545";
-        Matcher m = regexMatch("(123)abcd(4545)", s);
-        if (m.matches())
-            print(s.indexOf(m.group(2).length()));
+        Matcher m = matcher("[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*\\(", "\t\tfoo2                (");
+        if (m.matches()) {
+            print(m.group(1) + "     " + m.group(1).length());
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 void foo() {
-int b = a;
+if (true {
 return;
 }
-int a = 5;
-
+}
