@@ -18,7 +18,7 @@ public class Sjavac {
 		}
 		File sjavaCode = new File(args[0]);
 		try (Scanner scannedCode = new Scanner(sjavaCode);) {
-			SjavacReader sjavacReader = SjavacReader.getInstance();
+			SjavacReader sjavacReader = new SjavacReader();
 			while (scannedCode.hasNextLine()) {
 				sjavacReader.readLine(scannedCode, scannedCode.nextLine());
 			}
@@ -46,6 +46,4 @@ public class Sjavac {
 		}
 		return true;
 	}
-
-
 }

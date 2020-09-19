@@ -10,27 +10,14 @@ import java.util.regex.Pattern;
 public class SjavacReader {
 
 	private List<Method> methodsList = new LinkedList<Method>();
-	private Map<String, Variable> globalVariableMap = new HashMap<String, Variable>();
+	private Map<String, Variable> globalVariablesMap = new HashMap<String, Variable>();
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
-	private static SjavacReader sjavacReader = null;
-
-	private SjavacReader() {};
-
-	public static SjavacReader getInstance() {
-		if (sjavacReader == null) {
-			sjavacReader = new SjavacReader();
-			return sjavacReader;
-		} else {
-			return sjavacReader;
-		}
-
-	}
 
 	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		if (isEmptyLine(lineToRead)) {
 		} else if (isGlobalVariable(lineToRead)) {
-			variableParser = new VariableParser(lineToRead, globalVariableMap);
+			variableParser = new VariableParser(lineToRead, globalVariablesMap);
 			variableParser.parse();
 		} else if (isMethod(lineToRead)) {
 			methodsList.add(new Method(copyMethodIntoList(scannedCode, lineToRead)));
@@ -93,8 +80,8 @@ public class SjavacReader {
 		bracketStack.push('{');
 	}
 
-	public Map<String, Variable> getGlobalVariableMap() {
-		return globalVariableMap;
+	public Map<String, Variable> getGlobalVariablesMap() {
+		return globalVariablesMap;
 	}
 
 	public List<Method> getMethodsList() {

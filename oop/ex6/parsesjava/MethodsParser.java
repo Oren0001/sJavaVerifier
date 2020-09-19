@@ -12,13 +12,12 @@ import java.util.regex.Pattern;
  */
 public class MethodsParser implements ParseSjava {
 
-    private ArrayList<Method> methods;
+    private List<Method> methods;
     private Map<String, Variable> globalVariables;
     private Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
     private Map<String, Variable[]> methodsParameters = new HashMap<>();
-    private ArrayList<MethodCall> methodsCalls = new ArrayList<>();
+    private List<MethodCall> methodsCalls = new ArrayList<>();
     private int lineNumber = 0;
-
 
     /**
      * Initializes a new methods parser.
@@ -26,7 +25,7 @@ public class MethodsParser implements ParseSjava {
      *                Each class wraps an array list of the method's lines.
      * @param globalVariables a map from a variable's name to the variable's class.
      */
-    public MethodsParser(ArrayList<Method> methods, Map<String, Variable> globalVariables) {
+    public MethodsParser(List<Method> methods, Map<String, Variable> globalVariables) {
         this.methods = methods;
         this.globalVariables = globalVariables;
         variablesStack.addFirst(globalVariables);
@@ -249,7 +248,7 @@ public class MethodsParser implements ParseSjava {
     }
 
 
-    private boolean checkIfWhileBlock(ArrayList<String> lines, String line) throws IllegalLineException{
+    private boolean checkIfWhileBlock(List<String> lines, String line) throws IllegalLineException{
         Pattern p1 = Pattern.compile("[ \t]*(?:if|while)[ \t]*\\(");
         Matcher m1 = p1.matcher(line);
         if (!m1.lookingAt())

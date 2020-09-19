@@ -19,8 +19,8 @@ public class VariableParser implements ParseSjava {
 	private static final String BOOLEAN = "boolean";
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
-	private static final String LEGAL_NAME= " *[a-zA-Z_][a-zA-Z0-9]+[\\w]*| *[a-zA-Z][\\w]*";
-	private static final String LEGAL_TYPE=" *(int|String|double|char|boolean) +";
+	private static final String LEGAL_NAME= "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
+	private static final String LEGAL_TYPE="[ \t]*(int|String|double|char|boolean) +";
 	private static final String LEGAL_INT="-?\\d+";
 	private static final String LEGAL_DOUBLE="-?(\\d*\\.\\d+|\\d+\\.\\d*)|"+LEGAL_INT;
 
@@ -70,7 +70,7 @@ public class VariableParser implements ParseSjava {
 	}
 
 	private void checkIfFinal() {
-		Pattern pattern = Pattern.compile(" *final +");
+		Pattern pattern = Pattern.compile("[ \t]*final +");
 		Matcher matcher = pattern.matcher(lineToRead);
 		if (matcher.lookingAt()) {
 			isFinal = true;
@@ -115,7 +115,7 @@ public class VariableParser implements ParseSjava {
 	}
 
 	private boolean checkIfAssignment() throws IllegalLineException {
-		Pattern pattern = Pattern.compile(" *= *");
+		Pattern pattern = Pattern.compile("[ \t]*=[ \t]*");
 		Matcher matcher = pattern.matcher(lineToRead);
 		if (matcher.lookingAt()) {
 			lineToRead = lineToRead.substring(matcher.end());
@@ -192,13 +192,13 @@ public class VariableParser implements ParseSjava {
 	}
 
 	private boolean isTheEnd() {
-		Pattern pattern = Pattern.compile(" *; *");
+		Pattern pattern = Pattern.compile("[ \t]*;[ \t]*");
 		Matcher matcher = pattern.matcher(lineToRead);
 		return matcher.lookingAt();
 	}
 
 	private void checkMultipleVariables() throws IllegalLineException {
-		Pattern pattern = Pattern.compile(" *, *");
+		Pattern pattern = Pattern.compile("[ \t]*,[ \t]*");
 		Matcher matcher = pattern.matcher(lineToRead);
 		if (!matcher.lookingAt()) {
 			throw new IllegalLineException();
