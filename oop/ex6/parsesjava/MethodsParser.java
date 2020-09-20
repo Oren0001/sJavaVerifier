@@ -43,44 +43,39 @@ public class MethodsParser implements ParseSjava {
             lineNumber = 0;
             hasReturn = false;
             List<String> lines = method.getLines();
-            checkDefinition(lines.get(lineNumber));
+            isSignatureValid(lines.get(lineNumber));
             parseMethodLines(lines);
             if (!hasReturn)
                 throw new IllegalLineException();
-        }
-        if (variablesStack.size() != 1)
-            throw new IllegalLineException();
-        for (MethodCall methodCall: methodsCalls) {
-            if (!methodsParameters.containsKey(methodCall.name))
+            if (variablesStack.size() != 1)
                 throw new IllegalLineException();
-            Variable[] methodVariables = methodsParameters.get(methodCall.name);
-            if (methodVariables.length != methodCall.parameters.length)
-                throw new IllegalLineException();
-            for (int i=0; i<methodVariables.length; i++) {
-                if (!methodVariables[i].getType().equals(methodCall.parameters[i]))
-                    throw new IllegalLineException();
-            }
         }
+        isMethodCallValid();
     }
 
 
-    private void checkDefinition(String def) throws IllegalLineException {
-        Pattern p1 = Pattern.compile("[ \t]*void[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*\\(");
-        Matcher m1 = p1.matcher(def);
+    /*
+     * Checks if a method's signature is valid or not.
+     * @param signature: The method's signature.
+     * @throws IllegalLineException if the methods signature is invalid.
+     */
+    private void isSignatureValid(String signature) throws IllegalLineException {
+        Pattern p1 = Pattern.compile("[ \t]*+void[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*+\\(");
+        Matcher m1 = p1.matcher(signature);
         if (!m1.lookingAt())
             throw new IllegalLineException();
         String methodName = m1.group(1);
-        if (methodsParameters.get(methodName) != null)
+        if (methodsParameters.get(methodName) != null) // makes sure there is no method overloading
             throw new IllegalLineException();
 
-        Pattern p2 = Pattern.compile("\\)[ \t]*\\{[ \t]*$");
-        Matcher m2 = p2.matcher(def);
+        Pattern p2 = Pattern.compile("\\)[ \t]*+\\{[ \t]*+$");
+        Matcher m2 = p2.matcher(signature);
         if (!m2.find())
             throw new IllegalLineException();
 
         HashMap<String, Variable> variables = new HashMap<>();
         variablesStack.addFirst(variables);
-        String parametersString = def.substring(m1.end(), m2.start());
+        String parametersString = signature.substring(m1.end(), m2.start());
         Variable[] methodParameters;
         if (parametersString.equals(""))
             methodParameters = new Variable[0];
@@ -146,9 +141,14 @@ public class MethodsParser implements ParseSjava {
         Pattern p = Pattern.compile("[ \t]*(?:int|double|String|boolean|char)[ \t]+");
         Matcher m = p.matcher(line);
         if (m.find()) {
-            VariableParser varParser = new VariableParser(line, variablesStack.peek());
-            varParser.parse();
-            return true;
+            for (Map<String, Variable> variables: variablesStack) {
+                try {
+                    VariableParser varParser = new VariableParser(line, variables);
+                    varParser.parse();
+                    return true;
+                } catch (IllegalLineException e) {}
+            }
+            throw new IllegalLineException();
         }
         return false;
     }
@@ -293,6 +293,25 @@ public class MethodsParser implements ParseSjava {
             } else {
                 String type = getType(trimmedCondition);
                 if (!"boolean".equals(type) && !"int".equals(type) && !"double".equals(type))
+                    throw new IllegalLineException();
+            }
+        }
+    }
+
+
+    /*
+     * Checks if methods calls match the methods of the sjava file.
+     * @throws IllegalLineException if methods calls are illegal.
+     */
+    private void isMethodCallValid() throws IllegalLineException {
+        for (MethodCall methodCall: methodsCalls) {
+            if (!methodsParameters.containsKey(methodCall.name))
+                throw new IllegalLineException();
+            Variable[] methodVariables = methodsParameters.get(methodCall.name);
+            if (methodVariables.length != methodCall.parameters.length)
+                throw new IllegalLineException();
+            for (int i=0; i<methodVariables.length; i++) {
+                if (!methodVariables[i].getType().equals(methodCall.parameters[i]))
                     throw new IllegalLineException();
             }
         }

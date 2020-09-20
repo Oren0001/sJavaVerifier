@@ -9,59 +9,74 @@ import java.util.regex.Pattern;
 
 public class SjavacReader {
 
-	private List<Method> methodsList = new LinkedList<Method>();
-	private Map<String, Variable> globalVariablesMap = new HashMap<String, Variable>();
+	private List<Method> methodsList;
+	private Map<String, Variable> globalVariablesMap;
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
+	private String lineToRead;
+
+	public SjavacReader() {
+		this.methodsList = new LinkedList<Method>();
+		this.globalVariablesMap = new HashMap<String, Variable>();
+	}
 
 	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
-		if (isEmptyLine(lineToRead)) {
-		} else if (isGlobalVariable(lineToRead)) {
+		this.lineToRead=lineToRead;
+		if (isEmptyLine() || isCommentLine()) {
+		} else if (isGlobalVariable()) {
 			variableParser = new VariableParser(lineToRead, globalVariablesMap);
 			variableParser.parse();
-		} else if (isMethod(lineToRead)) {
-			methodsList.add(new Method(copyMethodIntoList(scannedCode, lineToRead)));
+		} else if (isMethod()) {
+			methodsList.add(new Method(copyMethodIntoList(scannedCode)));
 		} else {
 			throw new IllegalLineException();
 		}
 	}
 
-	private boolean isEmptyLine(String lineToRead) {
-		Pattern globalVariablePattern = Pattern.compile(" *");
+	private boolean isEmptyLine() {
+		Pattern emptyLinePattern = Pattern.compile("[ \t]*");
+		Matcher matcher = emptyLinePattern.matcher(lineToRead);
+		return (matcher.matches());
+	}
+
+	private boolean isCommentLine() {
+		Pattern commentPattern = Pattern.compile("//.*");
+		Matcher matcher = commentPattern.matcher(lineToRead);
+		return (matcher.matches());
+	}
+
+	private boolean isGlobalVariable() {
+		Pattern globalVariablePattern = Pattern.compile(".*;[ \t]*");
 		Matcher matcher = globalVariablePattern.matcher(lineToRead);
 		return (matcher.matches());
 	}
 
-	private boolean isGlobalVariable(String lineToRead) {
-		Pattern globalVariablePattern = Pattern.compile(".*; *");
-		Matcher matcher = globalVariablePattern.matcher(lineToRead);
+	private boolean isMethod() {
+		Pattern methodPattern = Pattern.compile(".*\\{[ \t]*");
+		Matcher matcher = methodPattern.matcher(lineToRead);
 		return (matcher.matches());
 	}
 
-	private boolean isMethod(String lineToRead) {
-		Pattern globalVariablePattern = Pattern.compile(".*\\{ *");
-		Matcher matcher = globalVariablePattern.matcher(lineToRead);
-		return (matcher.matches());
-	}
-
-	private List<String> copyMethodIntoList(Scanner scannedCode, String lastLine) {
+	private List<String> copyMethodIntoList(Scanner scannedCode) {
 		resetStack();
 		List<String> methodsLinesList = new ArrayList<String>();
-		methodsLinesList.add(lastLine);
+		methodsLinesList.add(lineToRead);
 		while (scannedCode.hasNextLine()) {
-			lastLine = scannedCode.nextLine();
-			if (!isEndOfMethod(lastLine)) {
-				methodsLinesList.add(lastLine);
+			lineToRead = scannedCode.nextLine();
+			if (!isEndOfMethod() && !isEmptyLine() && !isCommentLine()) {
+				methodsLinesList.add(lineToRead);
 			} else {
 				break;
 			}
 		}
-		methodsLinesList.add("}");
+		if (bracketStack.empty()) {
+			methodsLinesList.add("}");
+		}
 		return methodsLinesList;
 	}
 
-	private boolean isEndOfMethod(String lastLine) {
-		char[] charArray = lastLine.toCharArray();
+	private boolean isEndOfMethod() {
+		char[] charArray = lineToRead.toCharArray();
 		for (char currentCharacter : charArray) {
 			if (currentCharacter == '{') {
 				bracketStack.push(currentCharacter);

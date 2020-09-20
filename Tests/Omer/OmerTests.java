@@ -8,9 +8,7 @@ import oop.ex6.parsesjava.VariableParser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class OmerTests {
 
@@ -18,12 +16,7 @@ public class OmerTests {
 		String[] test = new String[1];
 		Sjavac sjavac = new Sjavac();
 
-		test[0] = "src/Tests/tests/test001.sjava";
+		test[0] = "src/Tests/Omer/test.sjava";
 		sjavac.main(test);
-		sjavac = new Sjavac();
-
-		test[0] = "src/Tests/tests/test002.sjava";
-		sjavac.main(test);
-
 	}
 }

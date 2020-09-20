@@ -19,10 +19,10 @@ public class VariableParser implements ParseSjava {
 	private static final String BOOLEAN = "boolean";
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
-	private static final String LEGAL_NAME= "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
-	private static final String LEGAL_TYPE="[ \t]*(int|String|double|char|boolean) +";
-	private static final String LEGAL_INT="-?\\d+";
-	private static final String LEGAL_DOUBLE="-?(\\d*\\.\\d+|\\d+\\.\\d*)|"+LEGAL_INT;
+	private static final String LEGAL_NAME = "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
+	private static final String LEGAL_TYPE = "[ \t]*(int|String|double|char|boolean) +";
+	private static final String LEGAL_INT = "-?\\d+";
+	private static final String LEGAL_DOUBLE = "-?(\\d*\\.\\d+|\\d+\\.\\d*)|" + LEGAL_INT;
 
 	private int currentVariableNumber;
 	private boolean isFinal;
@@ -31,16 +31,14 @@ public class VariableParser implements ParseSjava {
 	private String lineToRead;
 	private String[] splitLineArray;
 	private Map<String, Variable> variablesMap;
-	private List<Variable> variablesList = new ArrayList<Variable>();
+	private List<Variable> variablesList;
 
 	public VariableParser(String lineToRead, Map<String, Variable> variablesMap) throws IllegalLineException {
 		this.lineToRead = lineToRead;
-		String lineWithOutSpaces = lineToRead.replaceAll(" +", " ");
-		if (lineWithOutSpaces.startsWith(" ")) {
-			lineWithOutSpaces = lineWithOutSpaces.substring(1);
-		}
-		this.splitLineArray = lineWithOutSpaces.split(" ");
+		this.splitLineArray = splitSpaces(lineToRead);
 		this.variablesMap = variablesMap;
+		this.variablesList = new ArrayList<Variable>();
+		this.currentVariableNumber = 0;
 	}
 
 	@Override
@@ -59,6 +57,7 @@ public class VariableParser implements ParseSjava {
 			} else {
 				checkTypeValueCompatibility(variablesList.get(currentVariableNumber).getType(),
 											variablesList.get(currentVariableNumber).getValue());
+				variablesList.get(currentVariableNumber).setAssignment(true);
 			}
 		}
 		while (!isTheEnd()) {
@@ -67,6 +66,16 @@ public class VariableParser implements ParseSjava {
 		if (!isOnlyAssignment) {
 			addVariablesIntoMap(variablesMap);
 		}
+	}
+
+	private String[] splitSpaces(String lineToSplit) {
+		String lineWithOutSpaces = lineToRead.replaceAll("[ |\t]+", " ");
+		Pattern spacesPattern = Pattern.compile(" |\t");
+		Matcher spacesMatcher = spacesPattern.matcher(lineWithOutSpaces);
+		if (spacesMatcher.lookingAt()) {
+			lineWithOutSpaces = lineWithOutSpaces.substring(spacesMatcher.end());
+		}
+		return lineWithOutSpaces.split(" ");
 	}
 
 	private void checkIfFinal() {
@@ -194,7 +203,7 @@ public class VariableParser implements ParseSjava {
 	private boolean isTheEnd() {
 		Pattern pattern = Pattern.compile("[ \t]*;[ \t]*");
 		Matcher matcher = pattern.matcher(lineToRead);
-		return matcher.lookingAt();
+		return matcher.matches();
 	}
 
 	private void checkMultipleVariables() throws IllegalLineException {
@@ -228,18 +237,6 @@ public class VariableParser implements ParseSjava {
 		}
 	}
 
-	private void addVariablesIntoMap(Map<String, Variable> variableMap) throws IllegalLineException {
-		for (Variable variable : variablesList) {
-			if (variable != null && !variableMap.containsKey(variable.getName())) {
-				variableMap.put(variable.getName(), variable);
-			} else if (isOnlyAssignment) {
-				return;
-			} else {
-				throw new IllegalLineException();
-			}
-		}
-	}
-
 	private void checkIfExistSuchVariable() throws IllegalLineException {
 		Pattern pattern = Pattern.compile(LEGAL_NAME);
 		Matcher matcher = pattern.matcher(lineToRead);
@@ -258,7 +255,7 @@ public class VariableParser implements ParseSjava {
 	private void checkIfReferenceValid(String value) throws IllegalLineException {
 		String variableType;
 		String valueType = variablesMap.get(value).getType();
-		if (variablesMap.containsKey(value) && variablesMap.get(value).getValue()!=null) {
+		if (variablesMap.containsKey(value) && variablesMap.get(value).getValue() != null) {
 			if (!isOnlyAssignment) {
 				variableType = variablesList.get(currentVariableNumber).getType();
 			} else {
@@ -278,6 +275,18 @@ public class VariableParser implements ParseSjava {
 			}
 		}
 		throw new IllegalLineException();
+	}
+
+	private void addVariablesIntoMap(Map<String, Variable> variableMap) throws IllegalLineException {
+		for (Variable variable : variablesList) {
+			if (variable != null && !variableMap.containsKey(variable.getName())) {
+				variableMap.put(variable.getName(), variable);
+			} else if (isOnlyAssignment) {
+				return;
+			} else {
+				throw new IllegalLineException();
+			}
+		}
 	}
 }
 
