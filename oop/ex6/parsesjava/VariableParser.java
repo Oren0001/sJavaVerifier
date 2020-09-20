@@ -255,7 +255,7 @@ public class VariableParser extends ParseSjava {
 	private void checkIfReferenceValid(String value) throws IllegalLineException {
 		String variableType;
 		String valueType = variablesMap.get(value).getType();
-		if (variablesMap.containsKey(value) && variablesMap.get(value).getValue() != null) {
+		if (variablesMap.containsKey(value) && variablesMap.get(value).isAssignment()) {
 			if (!isOnlyAssignment) {
 				variableType = variablesList.get(currentVariableNumber).getType();
 			} else {

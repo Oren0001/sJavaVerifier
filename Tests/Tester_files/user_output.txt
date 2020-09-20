@@ -1,4 +1,4 @@
-17:25:34
+20:06:07
 
 school solution#User solution#result#Test name
 
@@ -201,7 +201,7 @@ java.lang.NullPointerException
 1		1		passed		\BaraksTests\variables\63.sjava		
 1		1		passed		\BaraksTests\variables\64.sjava		
 1		1		passed		\BaraksTests\variables\65.sjava		
-0		0		passed		\BaraksTests\variables\66.sjava		
+0		1		failed		\BaraksTests\variables\66.sjava		##################################
 1		1		passed		\BaraksTests\variables\67.sjava		
 1		1		passed		\BaraksTests\variables\68.sjava		
 0		0		passed		\BaraksTests\variables\69.sjava		
@@ -382,7 +382,7 @@ java.lang.NullPointerException
 1		1		passed		\SchoolTests\test250.sjava		
 0		0		passed		\SchoolTests\test251.sjava		
 1		1		passed		\SchoolTests\test252.sjava		
-0		1		failed		\SchoolTests\test253.sjava		##################################
+0		0		passed		\SchoolTests\test253.sjava		
 1		1		passed		\SchoolTests\test254.sjava		
 0		0		passed		\SchoolTests\test255.sjava		
 1		1		passed		\SchoolTests\test257.sjava		

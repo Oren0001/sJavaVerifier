@@ -181,6 +181,7 @@ public class MethodsParser extends ParseSjava {
         return false;
     }
 
+
     private boolean checkVariableAssignment(String line) throws IllegalLineException {
         Pattern p = Pattern.compile("[ \t]*+(?:[a-zA-Z]|__)++\\w*+[ \t]*+=[ \t]*+.*+");
         Matcher m = p.matcher(line);
