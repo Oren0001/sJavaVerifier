@@ -10,11 +10,12 @@ public abstract class SjavaParser {
 
 	private static final String LEGAL_INT = "-?\\d+";
 	private static final String LEGAL_DOUBLE = "-?(?:\\d+\\.?\\d*|\\d*\\.?\\d+)";
-protected static final String INT = "int";
+	protected static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
+	protected static final String INT = "int";
 	protected static final String DOUBLE = "double";
+	protected static final String BOOLEAN = "boolean";
 	private static final String STRING = "String";
 	private static final String CHAR = "char";
-	protected static final String BOOLEAN = "boolean";
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 
@@ -24,11 +25,23 @@ protected static final String INT = "int";
 	 */
 	protected abstract void parse() throws IllegalLineException;
 
+	/**
+	 *
+	 * @param variableName
+	 * @return
+	 * @throws IllegalLineException
+	 */
 	protected abstract Variable getReference(String variableName) throws IllegalLineException;
 
-		protected boolean isTypeMatch(String variableType, String type) {
+	/**
+	 *
+	 * @param variableType
+	 * @param type
+	 * @return
+	 */
+	protected boolean isTypeMatch(String variableType, String type) {
 		if (type.equals(INT) && (variableType.equals(INT) ||
-								   variableType.equals(DOUBLE) || variableType.equals(BOOLEAN))) {
+								 variableType.equals(DOUBLE) || variableType.equals(BOOLEAN))) {
 			return true;
 		} else if (type.equals(DOUBLE) &&
 				   (variableType.equals(DOUBLE) || variableType.equals(BOOLEAN))) {

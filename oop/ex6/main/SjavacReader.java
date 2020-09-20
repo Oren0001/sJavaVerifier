@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ */
 public class SjavacReader {
 
 	private List<Method> methodsList;
@@ -15,11 +18,19 @@ public class SjavacReader {
 	private Stack<Character> bracketStack;
 	private String lineToRead;
 
+	/**
+	 *
+	 */
 	public SjavacReader() {
 		this.methodsList = new LinkedList<Method>();
 		this.globalVariablesMap = new HashMap<String, Variable>();
 	}
 
+	/**
+	 * @param scannedCode
+	 * @param lineToRead
+	 * @throws IllegalLineException
+	 */
 	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		this.lineToRead = lineToRead;
 		if (isEmptyLine() || isCommentLine()) {
@@ -31,6 +42,20 @@ public class SjavacReader {
 		} else {
 			throw new IllegalLineException();
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Map<String, Variable> getGlobalVariablesMap() {
+		return globalVariablesMap;
+	}
+
+	/**
+	 * @return
+	 */
+	public List<Method> getMethodsList() {
+		return methodsList;
 	}
 
 	private boolean isEmptyLine() {
@@ -95,14 +120,6 @@ public class SjavacReader {
 	private void resetStack() {
 		bracketStack = new Stack<Character>();
 		bracketStack.push('{');
-	}
-
-	public Map<String, Variable> getGlobalVariablesMap() {
-		return globalVariablesMap;
-	}
-
-	public List<Method> getMethodsList() {
-		return methodsList;
 	}
 }
 

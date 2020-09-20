@@ -50,12 +50,12 @@ public class MethodsParser extends SjavaParser {
 			List<String> lines = method.getLines();
 			isSignatureValid(lines.get(lineNumber));
 			parseMethodLines(lines);
-            if (!hasReturn) {
-                throw new IllegalLineException();
-            }
-            if (variablesStack.size() != 1) {
-                throw new IllegalLineException();
-            }
+			if (!hasReturn) {
+				throw new IllegalLineException();
+			}
+			if (variablesStack.size() != 1) {
+				throw new IllegalLineException();
+			}
 		}
 		isMethodCallValid();
 	}
@@ -69,20 +69,20 @@ public class MethodsParser extends SjavaParser {
 	private void isSignatureValid(String signature) throws IllegalLineException {
 		Pattern p1 = Pattern.compile("[ \t]*+void[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*+\\(");
 		Matcher m1 = p1.matcher(signature);
-        if (!m1.lookingAt()) {
-            throw new IllegalLineException();
-        }
+		if (!m1.lookingAt()) {
+			throw new IllegalLineException();
+		}
 		String methodName = m1.group(1);
-        if (methodsParameters.get(methodName) != null) // makes sure there is no method overloading
-        {
-            throw new IllegalLineException();
-        }
+		if (methodsParameters.get(methodName) != null) // makes sure there is no method overloading
+		{
+			throw new IllegalLineException();
+		}
 
 		Pattern p2 = Pattern.compile("\\)[ \t]*+\\{[ \t]*+$");
 		Matcher m2 = p2.matcher(signature);
-        if (!m2.find()) {
-            throw new IllegalLineException();
-        }
+		if (!m2.find()) {
+			throw new IllegalLineException();
+		}
 
 		String parameters = signature.substring(m1.end(), m2.start());
 		Variable[] methodParameters = getMethodParameters(parameters);
@@ -99,20 +99,20 @@ public class MethodsParser extends SjavaParser {
 		HashMap<String, Variable> variables = new HashMap<>();
 		variablesStack.addFirst(variables);
 		Variable[] methodParameters;
-        if (parameters.equals("")) {
-            methodParameters = new Variable[0];
-        } else {
-            String[] parametersArray = parameters.split(",[ \t]*");
-            methodParameters = new Variable[parametersArray.length];
-            VariableParser varParser;
-            for (int i = 0; i < parametersArray.length; i++) {
-                varParser = new VariableParser(parametersArray[i] + ";", variables);
-                varParser.parse();
-                String[] parameterSplit = parametersArray[i].split(" ");
-                String parameterName = parameterSplit[parameterSplit.length - 1];
-                methodParameters[i] = variables.get(parameterName);
-            }
-        }
+		if (parameters.equals("")) {
+			methodParameters = new Variable[0];
+		} else {
+			String[] parametersArray = parameters.split(",[ \t]*");
+			methodParameters = new Variable[parametersArray.length];
+			VariableParser varParser;
+			for (int i = 0; i < parametersArray.length; i++) {
+				varParser = new VariableParser(parametersArray[i] + ";", variables);
+				varParser.parse();
+				String[] parameterSplit = parametersArray[i].split(" ");
+				String parameterName = parameterSplit[parameterSplit.length - 1];
+				methodParameters[i] = variables.get(parameterName);
+			}
+		}
 		return methodParameters;
 	}
 
@@ -130,8 +130,8 @@ public class MethodsParser extends SjavaParser {
 				variablesStack.removeFirst();
 				return;
 			} else if (!checkSemicolonSuffix(line) && !checkIfWhileBlock(lines, line)) {
-                throw new IllegalLineException();
-            }
+				throw new IllegalLineException();
+			}
 			lineNumber++;
 		}
 	}
@@ -163,15 +163,15 @@ public class MethodsParser extends SjavaParser {
 		Pattern p = Pattern.compile("[ \t]*+return[ \t]*+");
 		Matcher m = p.matcher(line);
 		boolean result = m.matches();
-        if (result && variablesStack.size() == 2) {
-            hasReturn = true;
-        }
+		if (result && variablesStack.size() == 2) {
+			hasReturn = true;
+		}
 		return result;
 	}
 
 
 	private boolean checkVariableDeclaration(String line) throws IllegalLineException {
-		Pattern p = Pattern.compile("[ \t]*+(?:int|double|String|boolean|char)[ \t]++");
+		Pattern p = Pattern.compile(LEGAL_TYPE);
 		Matcher m = p.matcher(line);
 		if (m.find()) {
 			for (Map<String, Variable> variables : variablesStack) {
@@ -196,9 +196,9 @@ public class MethodsParser extends SjavaParser {
 			String value = lineSplit[1].trim();
 			String type = getType(value);
 			Variable variable = getReference(name);
-            if (type == null || variable == null || variable.isFinal()) {
-                throw new IllegalLineException();
-            }
+			if (type == null || variable == null || variable.isFinal()) {
+				throw new IllegalLineException();
+			}
 			return isTypeMatch(variable.getType(), type);
 		}
 		return false;
@@ -212,9 +212,9 @@ public class MethodsParser extends SjavaParser {
 	protected Variable getReference(String variableName) {
 		for (Map<String, Variable> variables : variablesStack) {
 			Variable var = variables.get(variableName);
-            if (var == null) {
-                continue;
-            }
+			if (var == null) {
+				continue;
+			}
 			return var;
 		}
 		return null;
@@ -228,16 +228,16 @@ public class MethodsParser extends SjavaParser {
 	private boolean checkMethodCall(String line) throws IllegalLineException {
 		Pattern p1 = Pattern.compile("[ \t]*+([a-zA-Z]+[_0-9]*)[ \t]*+\\(");
 		Matcher m1 = p1.matcher(line);
-        if (!m1.lookingAt()) {
-            return false;
-        }
+		if (!m1.lookingAt()) {
+			return false;
+		}
 		String methodName = m1.group(1);
 
 		Pattern p2 = Pattern.compile("\\)[ \t]*$");
 		Matcher m2 = p2.matcher(line);
-        if (!m2.find()) {
-            throw new IllegalLineException();
-        }
+		if (!m2.find()) {
+			throw new IllegalLineException();
+		}
 
 		String parameters = line.substring(m1.end(), m2.start());
 		String[] parametersArray = getMethodCallParameters(parameters);
@@ -251,29 +251,29 @@ public class MethodsParser extends SjavaParser {
 
 	private String[] getMethodCallParameters(String parameters) throws IllegalLineException {
 		String[] parametersArray;
-        if (parameters.equals("")) {
-            parametersArray = new String[0];
-        } else {
-            parametersArray = parameters.split(",[ \t]*");
-            for (int i = 0; i < parametersArray.length; i++) {
-                String parameterType;
-                String parameter = parametersArray[i].trim();
-                Variable variable = getReference(parameter);
-                if (variable != null) {
-                    if (variable.getValue() == null) {
-                        throw new IllegalLineException();
-                    }
-                    parameterType = variable.getType();
-                } else {
-                    String type = getType(parameter);
-                    if (type == null) {
-                        throw new IllegalLineException();
-                    }
-                    parameterType = type;
-                }
-                parametersArray[i] = parameterType;
-            }
-        }
+		if (parameters.equals("")) {
+			parametersArray = new String[0];
+		} else {
+			parametersArray = parameters.split(",[ \t]*");
+			for (int i = 0; i < parametersArray.length; i++) {
+				String parameterType;
+				String parameter = parametersArray[i].trim();
+				Variable variable = getReference(parameter);
+				if (variable != null) {
+					if (variable.getValue() == null) {
+						throw new IllegalLineException();
+					}
+					parameterType = variable.getType();
+				} else {
+					String type = getType(parameter);
+					if (type == null) {
+						throw new IllegalLineException();
+					}
+					parameterType = type;
+				}
+				parametersArray[i] = parameterType;
+			}
+		}
 		return parametersArray;
 	}
 
@@ -287,14 +287,14 @@ public class MethodsParser extends SjavaParser {
 	private boolean checkIfWhileBlock(List<String> lines, String line) throws IllegalLineException {
 		Pattern p1 = Pattern.compile("[ \t]*(?:if|while)[ \t]*\\(");
 		Matcher m1 = p1.matcher(line);
-        if (!m1.lookingAt()) {
-            return false;
-        }
+		if (!m1.lookingAt()) {
+			return false;
+		}
 		Pattern p2 = Pattern.compile("\\)[ \t]*\\{[ \t]*$");
 		Matcher m2 = p2.matcher(line);
-        if (!m2.find()) {
-            throw new IllegalLineException();
-        }
+		if (!m2.find()) {
+			throw new IllegalLineException();
+		}
 		String conditions = line.substring(m1.end(), m2.start());
 		checkCondition(conditions);
 		variablesStack.addFirst(new HashMap<>());
@@ -310,16 +310,16 @@ public class MethodsParser extends SjavaParser {
 			String trimmedCondition = condition.trim();
 			Variable variable = getReference(trimmedCondition);
 			if (variable != null) {
-                if (variable.getValue() == null || (!"boolean".equals(variable.getType()) &&
-                                                    !"int".equals(variable.getType()) &&
-                                                    !"double".equals(variable.getType()))) {
-                    throw new IllegalLineException();
-                }
+				if (variable.getValue() == null || (!"boolean".equals(variable.getType()) &&
+													!"int".equals(variable.getType()) &&
+													!"double".equals(variable.getType()))) {
+					throw new IllegalLineException();
+				}
 			} else {
 				String type = getType(trimmedCondition);
-                if (!"boolean".equals(type) && !"int".equals(type) && !"double".equals(type)) {
-                    throw new IllegalLineException();
-                }
+				if (!"boolean".equals(type) && !"int".equals(type) && !"double".equals(type)) {
+					throw new IllegalLineException();
+				}
 			}
 		}
 	}
@@ -331,16 +331,17 @@ public class MethodsParser extends SjavaParser {
 	 */
 	private void isMethodCallValid() throws IllegalLineException {
 		for (MethodCall methodCall : methodsCalls) {
-            if (!methodsParameters.containsKey(methodCall.name)) {
-                throw new IllegalLineException();
-            }
+			if (!methodsParameters.containsKey(methodCall.name)) {
+				throw new IllegalLineException();
+			}
 			Variable[] methodVariables = methodsParameters.get(methodCall.name);
-            if (methodVariables.length != methodCall.parameters.length) {
-                throw new IllegalLineException();
-            }
+			if (methodVariables.length != methodCall.parameters.length) {
+				throw new IllegalLineException();
+			}
 			for (int i = 0; i < methodVariables.length; i++) {
-				if (!methodVariables[i].getType().equals(methodCall.parameters[i]))
+				if (!methodVariables[i].getType().equals(methodCall.parameters[i])) {
 					throw new IllegalLineException();
+				}
 			}
 		}
 	}

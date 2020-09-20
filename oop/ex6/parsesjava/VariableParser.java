@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ */
 public class VariableParser extends SjavaParser {
 
 	private static final int TYPE_WITHOUT_FINAL = 0;
 	private static final int TYPE_AFTER_FINAL = 1;
 	private static final String LEGAL_NAME = "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
-	private static final String LEGAL_TYPE = "[ \t]*(int|String|double|char|boolean)[ \t]+";
-
 	private int currentVariableNumber;
 	private boolean isFinal;
 	private boolean isOnlyAssignment;
@@ -24,6 +25,11 @@ public class VariableParser extends SjavaParser {
 	private Map<String, Variable> variablesMap;
 	private List<Variable> variablesList;
 
+	/**
+	 * @param lineToRead
+	 * @param variablesMap
+	 * @throws IllegalLineException
+	 */
 	public VariableParser(String lineToRead, Map<String, Variable> variablesMap) throws IllegalLineException {
 		this.lineToRead = lineToRead;
 		this.splitLineArray = splitSpaces(lineToRead);
@@ -32,6 +38,9 @@ public class VariableParser extends SjavaParser {
 		this.currentVariableNumber = 0;
 	}
 
+	/**
+	 * @throws IllegalLineException
+	 */
 	@Override
 	public void parse() throws IllegalLineException {
 		variablesList.add(new Variable());
@@ -159,8 +168,8 @@ public class VariableParser extends SjavaParser {
 				if (!isTypeMatch(variablesList.get(currentVariableNumber).getType(), type)) {
 					throw new IllegalLineException();
 				}
-			}else {
-					if (!isTypeMatch(variablesList.get(currentVariableNumber).getType(),
+			} else {
+				if (!isTypeMatch(variablesList.get(currentVariableNumber).getType(),
 								 getReference(value).getType())) {
 					throw new IllegalLineException();
 				}
