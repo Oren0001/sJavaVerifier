@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Goes over different methods, and tests whether or not they are legal.
  */
-public class MethodsParser implements ParseSjava {
+public class MethodsParser extends ParseSjava {
 
     private List<Method> methods;
     private final Map<String, Variable> globalVariables;

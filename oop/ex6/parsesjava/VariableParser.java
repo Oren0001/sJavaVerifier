@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class VariableParser implements ParseSjava {
+public class VariableParser extends ParseSjava {
 
 	private static final int TYPE_WITHOUT_FINAL = 0;
 	private static final int TYPE_AFTER_FINAL = 1;
@@ -20,7 +20,7 @@ public class VariableParser implements ParseSjava {
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 	private static final String LEGAL_NAME = "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
-	private static final String LEGAL_TYPE = "[ \t]*(int|String|double|char|boolean) +";
+	private static final String LEGAL_TYPE = "[ \t]*(int|String|double|char|boolean)[ \t]+";
 	private static final String LEGAL_INT = "-?\\d+";
 	private static final String LEGAL_DOUBLE = "-?(\\d*\\.\\d+|\\d+\\.\\d*)|" + LEGAL_INT;
 
@@ -79,7 +79,7 @@ public class VariableParser implements ParseSjava {
 	}
 
 	private void checkIfFinal() {
-		Pattern pattern = Pattern.compile("[ \t]*final +");
+		Pattern pattern = Pattern.compile("[ \t]*final[ \t]+");
 		Matcher matcher = pattern.matcher(lineToRead);
 		if (matcher.lookingAt()) {
 			isFinal = true;

@@ -6,12 +6,11 @@ import oop.ex6.main.IllegalLineException;
 /**
  * Represents a sjava parser which is able to parse different components of the sjava file.
  */
-@FunctionalInterface
-public interface ParseSjava {
+public abstract class ParseSjava {
 
     /**
      * Parses different components of the sjava file.
      * @throws IllegalLineException If a line of the sjava file is illegal.
      */
-    void parse() throws IllegalLineException;
+    protected abstract void parse() throws IllegalLineException;
 }
