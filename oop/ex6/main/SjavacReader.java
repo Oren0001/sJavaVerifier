@@ -61,10 +61,14 @@ public class SjavacReader {
 		resetStack();
 		List<String> methodsLinesList = new ArrayList<String>();
 		methodsLinesList.add(lineToRead);
-		while (scannedCode.hasNextLine() && !isEndOfMethod()) {
+		while (scannedCode.hasNextLine()) {
 			lineToRead = scannedCode.nextLine();
-			if (!isEmptyLine() && !isCommentLine()) {
-				methodsLinesList.add(lineToRead);
+			if (!isEndOfMethod()) {
+				if (!isEmptyLine() && !isCommentLine()) {
+					methodsLinesList.add(lineToRead);
+				}
+			} else {
+				break;
 			}
 		}
 		if (bracketStack.empty()) {
