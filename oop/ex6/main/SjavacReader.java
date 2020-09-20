@@ -21,7 +21,7 @@ public class SjavacReader {
 	}
 
 	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
-		this.lineToRead=lineToRead;
+		this.lineToRead = lineToRead;
 		if (isEmptyLine() || isCommentLine()) {
 		} else if (isGlobalVariable()) {
 			variableParser = new VariableParser(lineToRead, globalVariablesMap);
@@ -61,12 +61,10 @@ public class SjavacReader {
 		resetStack();
 		List<String> methodsLinesList = new ArrayList<String>();
 		methodsLinesList.add(lineToRead);
-		while (scannedCode.hasNextLine()) {
+		while (scannedCode.hasNextLine() && !isEndOfMethod()) {
 			lineToRead = scannedCode.nextLine();
-			if (!isEndOfMethod() && !isEmptyLine() && !isCommentLine()) {
+			if (!isEmptyLine() && !isCommentLine()) {
 				methodsLinesList.add(lineToRead);
-			} else {
-				break;
 			}
 		}
 		if (bracketStack.empty()) {

@@ -63,7 +63,6 @@ public class MethodsParser implements ParseSjava {
         }
     }
 
-
     private void checkDefinition(String def) throws IllegalLineException {
         Pattern p1 = Pattern.compile("[ \t]*void[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*\\(");
         Matcher m1 = p1.matcher(def);
@@ -153,7 +152,6 @@ public class MethodsParser implements ParseSjava {
         return false;
     }
 
-
     private boolean checkVariableAssignment(String line) throws IllegalLineException {
         Pattern p = Pattern.compile("[ \t]*(?:[a-zA-Z]|__)+\\w*[ \t]*=[ \t]*.*");
         Matcher m = p.matcher(line);
@@ -196,7 +194,6 @@ public class MethodsParser implements ParseSjava {
         }
         return null;
     }
-
 
     private boolean isTypeMatch(String variableType, String type) {
         if (type.equals("int") && (variableType.equals("int") ||
