@@ -104,7 +104,9 @@ public class MethodsParser implements ParseSjava {
                 varParser.parse();
                 String[] parameterSplit = parametersArray[i].split(" ");
                 String parameterName = parameterSplit[parameterSplit.length - 1];
-                methodParameters[i] = variables.get(parameterName);
+                Variable variable = variables.get(parameterName);
+                variable.setAssignment(true);
+                methodParameters[i] = variable;
             }
         }
         return methodParameters;
