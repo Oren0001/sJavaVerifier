@@ -70,8 +70,8 @@ public class MethodsParser implements ParseSjava {
         if (!m1.lookingAt())
             throw new IllegalLineException();
         String methodName = m1.group(1);
-//        if (methodsParameters.get(methodName) != null)
-//            throw new IllegalLineException();
+        if (methodsParameters.get(methodName) != null)
+            throw new IllegalLineException();
 
         Pattern p2 = Pattern.compile("\\)[ \t]*\\{[ \t]*$");
         Matcher m2 = p2.matcher(def);
