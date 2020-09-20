@@ -1,1 +1,4 @@
-int _;
+void foo() {
+
+return;
+}

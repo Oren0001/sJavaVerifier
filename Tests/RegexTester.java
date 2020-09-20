@@ -39,7 +39,7 @@ public class RegexTester {
 	}
 
 	public static void main(String[] args) {
-		Matcher test=m("\t", "	");
+		Matcher test=m("//.*", "//fdfd");
 		System.out.println(test.matches());
 	}
 }
