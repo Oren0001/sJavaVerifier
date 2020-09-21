@@ -43,6 +43,9 @@ public class Sjavac {
 		System.out.println(LEGAL_CODE);
 	}
 
+	/*
+	 *
+	 */
 	private static boolean inputValidity(String[] args) {
 		if (args.length != 1) {
 			System.out.println(INVALID_USAGE);
