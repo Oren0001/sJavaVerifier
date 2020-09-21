@@ -243,7 +243,6 @@ public class MethodsParser extends SjavaParser {
 		return null;
 	}
 
-
 	/*
 	 * @param line: A line of the method.
 	 * @return true if the line contains a valid method call, false otherwise.
@@ -340,7 +339,6 @@ public class MethodsParser extends SjavaParser {
 		return true;
 	}
 
-
 	/*
 	 * @param conditions of if\while block.
 	 * @throws IllegalLineException if the conditions are invalid.
@@ -365,7 +363,6 @@ public class MethodsParser extends SjavaParser {
 			}
 		}
 	}
-
 
 	/*
 	 * Checks if methods calls match the methods of the sjava file.

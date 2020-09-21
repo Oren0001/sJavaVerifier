@@ -239,7 +239,6 @@ public class VariableParser extends SjavaParser {
 		throw new IllegalLineException();
 	}
 
-
 	/*
 	 * This method add variable into the most inner map which the variable is not already contained.
 	 */
