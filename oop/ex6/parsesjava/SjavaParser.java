@@ -29,11 +29,11 @@ public abstract class SjavaParser {
 	protected abstract void parse() throws IllegalLineException;
 
 	/**
-	 * This method is given the name of a variable and returns the corresponding reference to it.
+	 * This method is given the name of a variable and returns it's corresponding Variable class.
 	 * @param variableName The name of the variable.
-	 * @return The appropriate reference to the variable name.
+	 * @return The Variable class which matches the variable name.
 	 */
-	protected abstract Variable getReference(String variableName);
+	protected abstract Variable getVariable(String variableName);
 
 	/**
 	 * This method checks whether two types are suitable. I.e. the first can be initialized in the second.

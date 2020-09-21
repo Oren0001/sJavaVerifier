@@ -52,11 +52,6 @@ public class Sjavac {
 			System.err.print("ERROR: Wrong usage. Should receive only one argument\n");
 			return false;
 		}
-		if (!args[0].endsWith(".sjava")) {
-			System.out.println(INVALID_USAGE);
-			System.err.print("ERROR: Not a sjava file\n");
-			return false;
-		}
 		return true;
 	}
 }

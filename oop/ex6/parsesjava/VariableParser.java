@@ -173,9 +173,9 @@ public class VariableParser extends SjavaParser {
 					throw new IllegalLineException();
 				}
 			} else {
-				if (getReference(value) == null || //The value is not a reference.
+				if (getVariable(value) == null || //The value is not a reference.
 					!isTypeMatch(variablesMap.get(assignmentVariableName).getType(),
-								 getReference(value).getType())) {
+								 getVariable(value).getType())) {
 					throw new IllegalLineException();
 				}
 			}
@@ -187,9 +187,9 @@ public class VariableParser extends SjavaParser {
 					throw new IllegalLineException();
 				}
 			} else {
-				if (getReference(value) == null || //The value is not a reference.
+				if (getVariable(value) == null || //The value is not a reference.
 					!isTypeMatch(variablesList.get(currentVariableNumber).getType(),
-								 getReference(value).getType())) {
+								 getVariable(value).getType())) {
 					throw new IllegalLineException();
 				}
 			}
@@ -200,7 +200,7 @@ public class VariableParser extends SjavaParser {
 	/*
 	 * This method is given the name of the variable and returns the corresponding reference to it.
 	 */
-	protected Variable getReference(String variableName) {
+	protected Variable getVariable(String variableName) {
 		if (variablesMap.containsKey(variableName) && isValidReference(variableName)) {
 			return variablesMap.get(variableName);
 		} else {
