@@ -5,6 +5,9 @@ import oop.ex6.parsesjava.MethodsParser;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class Sjavac {
 
 	private static final int LEGAL_CODE = 0;
@@ -12,6 +15,10 @@ public class Sjavac {
 	private static final int IO_ERROR = 2;
 	private static final int INVALID_USAGE = 2;
 
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		if (!inputValidity(args)) {
 			return;

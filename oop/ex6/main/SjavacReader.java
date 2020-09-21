@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * This class reads a line of sjava file and redirects it to the appropriate parser.
  */
 public class SjavacReader {
 
@@ -19,17 +19,19 @@ public class SjavacReader {
 	private String lineToRead;
 
 	/**
-	 *
+	 * Constructor.
 	 */
 	public SjavacReader() {
 		this.methodsList = new LinkedList<Method>();
 		this.globalVariablesMap = new HashMap<String, Variable>();
+		this.bracketStack=new Stack<Character>();
 	}
 
 	/**
-	 * @param scannedCode
-	 * @param lineToRead
-	 * @throws IllegalLineException
+	 * This methods gets a line of sjava file and redirects it to the appropriate parser.
+	 * @param scannedCode The file to read from.
+	 * @param lineToRead The line to decipher.
+	 * @throws IllegalLineException If the sjava file is invalid.
 	 */
 	public void readLine(Scanner scannedCode, String lineToRead) throws IllegalLineException {
 		this.lineToRead = lineToRead;
@@ -45,37 +47,49 @@ public class SjavacReader {
 	}
 
 	/**
-	 * @return
+	 * @return The global variable map of the sjava file.
 	 */
 	public Map<String, Variable> getGlobalVariablesMap() {
 		return globalVariablesMap;
 	}
 
 	/**
-	 * @return
+	 * @return the methods list of the sjava file.
 	 */
 	public List<Method> getMethodsList() {
 		return methodsList;
 	}
 
+	/*
+	 * @return true if the current line is an empty line.
+	 */
 	private boolean isEmptyLine() {
 		Pattern emptyLinePattern = Pattern.compile("[ \t]*");
 		Matcher matcher = emptyLinePattern.matcher(lineToRead);
 		return (matcher.matches());
 	}
 
+	/*
+	 * @return true if the current line is a comment line.
+	 */
 	private boolean isCommentLine() {
 		Pattern commentPattern = Pattern.compile("//.*");
 		Matcher matcher = commentPattern.matcher(lineToRead);
 		return (matcher.matches());
 	}
 
+	/*
+	 * @return true if the current line is a line of global variable.
+	 */
 	private boolean isGlobalVariable() {
 		Pattern globalVariablePattern = Pattern.compile(".*;[ \t]*");
 		Matcher matcher = globalVariablePattern.matcher(lineToRead);
 		return (matcher.matches());
 	}
 
+	/*
+	 * @return true if the current line is a start of a method.
+	 */
 	private boolean isMethod() {
 		Pattern methodPattern = Pattern.compile(".*\\{[ \t]*");
 		Matcher matcher = methodPattern.matcher(lineToRead);
@@ -102,6 +116,9 @@ public class SjavacReader {
 		return methodsLinesList;
 	}
 
+	/*
+	 * @return true if the current line is the last line of the method.
+	 */
 	private boolean isEndOfMethod() {
 		char[] charArray = lineToRead.toCharArray();
 		for (char currentCharacter : charArray) {
@@ -117,8 +134,11 @@ public class SjavacReader {
 		return false;
 	}
 
+	/*
+	 * This method reset the bracket stack.
+	 */
 	private void resetStack() {
-		bracketStack = new Stack<Character>();
+		bracketStack.clear();
 		bracketStack.push('{');
 	}
 }
