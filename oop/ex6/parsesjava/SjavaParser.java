@@ -1,6 +1,7 @@
 package oop.ex6.parsesjava;
 
 import oop.ex6.main.IllegalLineException;
+import java.util.*;
 
 
 /**
@@ -10,10 +11,13 @@ public abstract class SjavaParser {
 
 	private static final String LEGAL_INT = "-?\\d+";
 	private static final String LEGAL_DOUBLE = "-?(?:\\d+\\.?\\d*|\\d*\\.?\\d+)";
-	/**
-	 * This string symbolizes regex which identifies a correct type.
-	 */
+
+	/** This string symbolizes regex which identifies a correct type. */
 	protected static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
+
+	/** A stack of maps from a variable's name to it's class. Each map represents an independent scope. */
+	protected Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
+
 	private static final String INT = "int";
 	private static final String DOUBLE = "double";
 	private static final String BOOLEAN = "boolean";

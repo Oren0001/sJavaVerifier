@@ -2,7 +2,6 @@ package oop.ex6.parsesjava;
 
 import oop.ex6.main.IllegalLineException;
 import oop.ex6.main.Method;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,9 +16,6 @@ public class MethodsParser extends SjavaParser {
 	private List<MethodCall> methodsCalls = new ArrayList<>();
 	private int lineNumber;
 	private int returnAt;
-
-	/* A stack of maps from a variable's name to it's class. Each map represents an independent scope. */
-	private Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
 
 	/* A map from a method's name to an array of it's parameters */
 	private Map<String, Variable[]> methodsParameters = new HashMap<>();
