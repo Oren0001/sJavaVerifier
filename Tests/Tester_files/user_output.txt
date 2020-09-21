@@ -1,4 +1,4 @@
-20:06:07
+21:35:37
 
 school solution#User solution#result#Test name
 
@@ -204,18 +204,18 @@ java.lang.NullPointerException
 0		1		failed		\BaraksTests\variables\66.sjava		##################################
 1		1		passed		\BaraksTests\variables\67.sjava		
 1		1		passed		\BaraksTests\variables\68.sjava		
-0		0		passed		\BaraksTests\variables\69.sjava		
-0		0		passed		\BaraksTests\variables\70.sjava		
+0		1		failed		\BaraksTests\variables\69.sjava		##################################
+0		1		failed		\BaraksTests\variables\70.sjava		##################################
 1		1		passed		\BaraksTests\variables\71.sjava		
 1		1		passed		\BaraksTests\variables\72.sjava		
 1		1		passed		\BaraksTests\variables\73.sjava		
 0		0		passed		\BaraksTests\variables\74.sjava		
-0		0		passed		\BaraksTests\variables\75.sjava		
-0		0		passed		\BaraksTests\variables\76.sjava		
-0		0		passed		\BaraksTests\variables\77.sjava		
+0		1		failed		\BaraksTests\variables\75.sjava		##################################
+0		1		failed		\BaraksTests\variables\76.sjava		##################################
+0		1		failed		\BaraksTests\variables\77.sjava		##################################
 0		0		passed		\BaraksTests\variables\78.sjava		
 1		1		passed		\BaraksTests\variables\79.sjava		
-0		0		passed		\BaraksTests\variables\80.sjava		
+0		1		failed		\BaraksTests\variables\80.sjava		##################################
 1		1		passed		\BaraksTests\variables\81.sjava		
 0		0		passed		\BaraksTests\variables\82.sjava		
 0		0		passed		\BaraksTests\variables\83.sjava		
@@ -380,7 +380,7 @@ java.lang.NullPointerException
 1		1		passed		\SchoolTests\test248.sjava		
 1		1		passed		\SchoolTests\test249.sjava		
 1		1		passed		\SchoolTests\test250.sjava		
-0		0		passed		\SchoolTests\test251.sjava		
+0		1		failed		\SchoolTests\test251.sjava		##################################
 1		1		passed		\SchoolTests\test252.sjava		
 0		0		passed		\SchoolTests\test253.sjava		
 1		1		passed		\SchoolTests\test254.sjava		
@@ -429,10 +429,10 @@ java.lang.NullPointerException
 1		1		passed		\SchoolTests\test403.sjava		
 0		0		passed		\SchoolTests\test404.sjava		
 0		0		passed		\SchoolTests\test405.sjava		
-1		0		failed		\SchoolTests\test406.sjava		##################################
-1		0		failed		\SchoolTests\test407.sjava		##################################
-1		0		failed		\SchoolTests\test408.sjava		##################################
-1		0		failed		\SchoolTests\test409.sjava		##################################
+1		1		passed		\SchoolTests\test406.sjava		
+1		1		passed		\SchoolTests\test407.sjava		
+1		1		passed		\SchoolTests\test408.sjava		
+1		1		passed		\SchoolTests\test409.sjava		
 0		0		passed		\SchoolTests\test410.sjava		
 0		0		passed		\SchoolTests\test411.sjava		
 0		0		passed		\SchoolTests\test412.sjava		
@@ -496,5 +496,5 @@ java.lang.NullPointerException
 1		1		passed		\SchoolTests\test504.sjava		
 0		0		passed		\SchoolTests\test505.sjava		
 
-passed 449 out of 459 tests.
+passed 446 out of 459 tests.
 

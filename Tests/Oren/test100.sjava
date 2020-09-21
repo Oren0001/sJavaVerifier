@@ -1,5 +1,4 @@
-int a = 5;
-void foo(int c) {
-int b = c;
+void foo(int a) {
+int a;
 return;
 }
