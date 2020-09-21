@@ -66,11 +66,7 @@ public class VariableParser extends SjavaParser {
 	 */
 	private String[] splitBetweenSpaces() {
 		String lineWithOutSpaces = lineToParse.replaceAll("[ |\t]+", " ");
-		Pattern spacesPattern = Pattern.compile(" |\t");
-		Matcher spacesMatcher = spacesPattern.matcher(lineWithOutSpaces);
-		if (spacesMatcher.lookingAt()) {
-			lineWithOutSpaces = lineWithOutSpaces.substring(spacesMatcher.end());
-		}
+		lineWithOutSpaces=lineWithOutSpaces.trim();
 		return lineWithOutSpaces.split(" ");
 	}
 
