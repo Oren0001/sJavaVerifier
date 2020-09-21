@@ -16,7 +16,7 @@ public class MethodsParser extends SjavaParser {
 	private final Map<String, Variable> globalVariables;
 	private List<MethodCall> methodsCalls = new ArrayList<>();
 	private int lineNumber;
-	private boolean hasReturn;
+	private int returnAt;
 
 	/* A stack of maps from a variable's name to it's class. Each map represents an independent scope. */
 	private Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
@@ -46,11 +46,11 @@ public class MethodsParser extends SjavaParser {
 	public void parse() throws IllegalLineException {
 		for (Method method : methods) {
 			lineNumber = 0;
-			hasReturn = false;
+			returnAt = 0;
 			List<String> lines = method.getLines();
 			isSignatureValid(lines.get(lineNumber));
 			parseMethodLines(lines);
-			if (!hasReturn)
+			if (returnAt != lines.size() - 2)
 				throw new IllegalLineException();
 			if (variablesStack.size() != 1)
 				throw new IllegalLineException();
@@ -93,7 +93,7 @@ public class MethodsParser extends SjavaParser {
 		HashMap<String, Variable> variables = new HashMap<>();
 		variablesStack.addFirst(variables);
 		Variable[] methodParameters;
-		if (parameters.equals(""))
+		if (parameters.matches("[ \t]*"))
 			methodParameters = new Variable[0];
 		else {
 			String[] parametersArray = parameters.split(",[ \t]*");
@@ -105,7 +105,9 @@ public class MethodsParser extends SjavaParser {
 				String[] parameterSplit = parametersArray[i].split(" ");
 				String parameterName = parameterSplit[parameterSplit.length - 1];
 				Variable variable = variables.get(parameterName);
-				variable.setAssignment(true);
+				if (variable == null)
+					throw new IllegalLineException();
+				variable.setWasAssignment(true);
 				methodParameters[i] = variable;
 			}
 		}
@@ -143,8 +145,8 @@ public class MethodsParser extends SjavaParser {
 		Matcher m = p.matcher(line);
 		if (m.find()) {
 			String beforeSemicolon = line.substring(0, m.start());
-			return checkReturn(beforeSemicolon) || checkVariableDeclaration(line) ||
-				   checkVariableAssignment(beforeSemicolon) || checkMethodCall(beforeSemicolon);
+			return checkReturn(beforeSemicolon) || checkMethodCall(beforeSemicolon) ||
+					checkDeclaration(beforeSemicolon) || checkAssignment(beforeSemicolon);
 		}
 		return false;
 	}
@@ -157,47 +159,64 @@ public class MethodsParser extends SjavaParser {
 	private boolean checkReturn(String line) {
 		Pattern p = Pattern.compile("[ \t]*+return[ \t]*+");
 		Matcher m = p.matcher(line);
-		boolean result = m.matches();
-		if (result && variablesStack.size() == 2)
-			hasReturn = true;
-		return result;
-	}
-
-
-	private boolean checkVariableDeclaration(String line) throws IllegalLineException {
-		Pattern p = Pattern.compile(LEGAL_TYPE);
-		Matcher m = p.matcher(line);
-		if (m.find()) {
-			VariableParser varParser = new VariableParser(line, variablesStack.peek());
-			varParser.parse();
+		if (m.matches()) {
+			returnAt = lineNumber;
 			return true;
-
-//			for (Map<String, Variable> variables : variablesStack) {
-//				try {
-//					System.out.println(111111);
-//					VariableParser varParser = new VariableParser(line, variables);
-//					varParser.parse();
-//					return true;
-//				} catch (IllegalLineException e) {}
-//			}
-//			throw new IllegalLineException();
 		}
 		return false;
 	}
 
 
-	private boolean checkVariableAssignment(String line) throws IllegalLineException {
+	private boolean checkDeclaration(String line) throws IllegalLineException {
+		Pattern p = Pattern.compile(LEGAL_TYPE);
+		Matcher m = p.matcher(line);
+		if (m.find()) {
+			int assignmentIndex = line.indexOf("=", m.end());
+			if (assignmentIndex != -1) {
+				String value = line.substring(assignmentIndex + 1).trim();
+				Variable content = getVariable(value);
+				if (content != null) {
+					if (!content.wasAssignment())
+						throw new IllegalLineException();
+					line = line.substring(0, assignmentIndex) + ";";
+					VariableParser varParser = new VariableParser(line, variablesStack.peek());
+					varParser.parse();
+					String variableName = line.substring(m.end(), assignmentIndex).trim();
+					Variable reference = variablesStack.peek().get(variableName);
+					if (!isTypeMatch(reference.getType(), content.getType()))
+						throw new IllegalLineException();
+					reference.setValue(value);
+					return true;
+				}
+				else if (getType(value) != null) {}
+				else throw new IllegalLineException();
+			}
+			VariableParser varParser = new VariableParser(line + ";", variablesStack.peek());
+			varParser.parse();
+			return true;
+		}
+		return false;
+	}
+
+
+	private boolean checkAssignment(String line) throws IllegalLineException {
 		Pattern p = Pattern.compile("[ \t]*+(?:[a-zA-Z]|__)++\\w*+[ \t]*+=[ \t]*+.*+");
 		Matcher m = p.matcher(line);
 		if (m.matches()) {
 			String[] lineSplit = line.split("=");
 			String name = lineSplit[0].trim();
 			String value = lineSplit[1].trim();
-			String type = getType(value);
-			Variable variable = getReference(name);
-			if (type == null || variable == null || variable.isFinal())
+			String valueType = getType(value);
+			if (valueType == null) {
+				Variable content = getVariable(value);
+				if (content == null || !content.wasAssignment())
+					throw new IllegalLineException();
+				valueType = content.getType();
+			}
+			Variable reference = getVariable(name);
+			if (reference == null || reference.isFinal())
 				throw new IllegalLineException();
-			return isTypeMatch(variable.getType(), type);
+			return isTypeMatch(reference.getType(), valueType);
 		}
 		return false;
 	}
@@ -208,7 +227,7 @@ public class MethodsParser extends SjavaParser {
 	 * @param variableName: A variable's name to look for.
 	 * @return a Variable class object which matches the variable's name.
 	 */
-	protected Variable getReference(String variableName) {
+	protected Variable getVariable(String variableName) {
 		for (Map<String, Variable> variables : variablesStack) {
 			Variable var = variables.get(variableName);
 			if (var == null)
@@ -255,9 +274,9 @@ public class MethodsParser extends SjavaParser {
 			for (int i = 0; i < parametersArray.length; i++) {
 				String parameterType;
 				String parameter = parametersArray[i].trim();
-				Variable variable = getReference(parameter);
+				Variable variable = getVariable(parameter);
 				if (variable != null) {
-					if (!variable.isAssignment())
+					if (!variable.wasAssignment())
 						throw new IllegalLineException();
 					parameterType = variable.getType();
 				} else {
@@ -300,9 +319,9 @@ public class MethodsParser extends SjavaParser {
 		String[] matches = conditions.split("\\|\\||&&");
 		for (String condition : matches) {
 			String trimmedCondition = condition.trim();
-			Variable variable = getReference(trimmedCondition);
+			Variable variable = getVariable(trimmedCondition);
 			if (variable != null) {
-				if (!variable.isAssignment() || (!"boolean".equals(variable.getType()) &&
+				if (!variable.wasAssignment() || (!"boolean".equals(variable.getType()) &&
 					!"int".equals(variable.getType()) && !"double".equals(variable.getType()))) {
 					throw new IllegalLineException();
 				}

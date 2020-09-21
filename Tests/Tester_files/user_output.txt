@@ -1,4 +1,4 @@
-21:35:37
+13:39:15
 
 school solution#User solution#result#Test name
 
@@ -32,49 +32,15 @@ school solution#User solution#result#Test name
 1		1		passed		\BaraksTests\if\31.sjava		
 0		0		passed		\BaraksTests\methods\01.sjava		
 1		1		passed		\BaraksTests\methods\02.sjava		
-0		1		failed		\BaraksTests\methods\03.sjava		##################################
-0		1		failed		\BaraksTests\methods\04.sjava		##################################
+0		0		passed		\BaraksTests\methods\03.sjava		
+0		0		passed		\BaraksTests\methods\04.sjava		
 0		0		passed		\BaraksTests\methods\06.sjava		
 0		0		passed		\BaraksTests\methods\07.sjava		
 1		1		passed		\BaraksTests\methods\08.sjava		
 1		1		passed		\BaraksTests\methods\09.sjava		
 1		1		passed		\BaraksTests\methods\10.sjava		
 1		1		passed		\BaraksTests\methods\11.sjava		
-
-while testing \BaraksTests\methods\12.sjava, Your program printed something that is not '1' or '0' or '2'.
-The prints were:
-
-java.lang.NullPointerException
-	at oop.ex6.parsesjava.MethodsParser.getMethodParameters(MethodsParser.java:108)
-	at oop.ex6.parsesjava.MethodsParser.isSignatureValid(MethodsParser.java:82)
-	at oop.ex6.parsesjava.MethodsParser.parse(MethodsParser.java:51)
-	at oop.ex6.main.Sjavac.main(Sjavac.java:27)
-	at Tests.Oren.Tester_ex6.runTestWithOnUser(Tester_ex6.java:303)
-	at Tests.Oren.Tester_ex6.doOneTest(Tester_ex6.java:208)
-	at Tests.Oren.Tester_ex6.runAllTests(Tester_ex6.java:101)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
-	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
-	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
-	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
-	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:220)
-	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:53)
-
+1		1		passed		\BaraksTests\methods\12.sjava		
 1		1		passed		\BaraksTests\methods\13.sjava		
 0		0		passed		\BaraksTests\methods\14.sjava		
 1		1		passed		\BaraksTests\methods\16.sjava		
@@ -106,7 +72,7 @@ java.lang.NullPointerException
 0		0		passed		\BaraksTests\return\07.sjava		
 0		0		passed		\BaraksTests\return\08.sjava		
 0		0		passed		\BaraksTests\return\09.sjava		
-1		0		failed		\BaraksTests\return\10.sjava		##################################
+1		1		passed		\BaraksTests\return\10.sjava		
 0		0		passed		\BaraksTests\return\11.sjava		
 1		1		passed		\BaraksTests\return\12.sjava		
 1		1		passed		\BaraksTests\return\13.sjava		
@@ -154,7 +120,7 @@ java.lang.NullPointerException
 0		0		passed		\BaraksTests\variables\16.sjava		
 1		1		passed		\BaraksTests\variables\17.sjava		
 1		1		passed		\BaraksTests\variables\18.sjava		
-0		1		failed		\BaraksTests\variables\19.sjava		##################################
+0		0		passed		\BaraksTests\variables\19.sjava		
 0		0		passed		\BaraksTests\variables\20.sjava		
 0		0		passed		\BaraksTests\variables\21.sjava		
 0		0		passed		\BaraksTests\variables\22.sjava		
@@ -201,21 +167,21 @@ java.lang.NullPointerException
 1		1		passed		\BaraksTests\variables\63.sjava		
 1		1		passed		\BaraksTests\variables\64.sjava		
 1		1		passed		\BaraksTests\variables\65.sjava		
-0		1		failed		\BaraksTests\variables\66.sjava		##################################
+0		0		passed		\BaraksTests\variables\66.sjava		
 1		1		passed		\BaraksTests\variables\67.sjava		
 1		1		passed		\BaraksTests\variables\68.sjava		
-0		1		failed		\BaraksTests\variables\69.sjava		##################################
-0		1		failed		\BaraksTests\variables\70.sjava		##################################
+0		0		passed		\BaraksTests\variables\69.sjava		
+0		0		passed		\BaraksTests\variables\70.sjava		
 1		1		passed		\BaraksTests\variables\71.sjava		
 1		1		passed		\BaraksTests\variables\72.sjava		
 1		1		passed		\BaraksTests\variables\73.sjava		
 0		0		passed		\BaraksTests\variables\74.sjava		
-0		1		failed		\BaraksTests\variables\75.sjava		##################################
-0		1		failed		\BaraksTests\variables\76.sjava		##################################
-0		1		failed		\BaraksTests\variables\77.sjava		##################################
+0		0		passed		\BaraksTests\variables\75.sjava		
+0		0		passed		\BaraksTests\variables\76.sjava		
+0		0		passed		\BaraksTests\variables\77.sjava		
 0		0		passed		\BaraksTests\variables\78.sjava		
 1		1		passed		\BaraksTests\variables\79.sjava		
-0		1		failed		\BaraksTests\variables\80.sjava		##################################
+0		0		passed		\BaraksTests\variables\80.sjava		
 1		1		passed		\BaraksTests\variables\81.sjava		
 0		0		passed		\BaraksTests\variables\82.sjava		
 0		0		passed		\BaraksTests\variables\83.sjava		
@@ -380,7 +346,7 @@ java.lang.NullPointerException
 1		1		passed		\SchoolTests\test248.sjava		
 1		1		passed		\SchoolTests\test249.sjava		
 1		1		passed		\SchoolTests\test250.sjava		
-0		1		failed		\SchoolTests\test251.sjava		##################################
+0		0		passed		\SchoolTests\test251.sjava		
 1		1		passed		\SchoolTests\test252.sjava		
 0		0		passed		\SchoolTests\test253.sjava		
 1		1		passed		\SchoolTests\test254.sjava		
@@ -496,5 +462,5 @@ java.lang.NullPointerException
 1		1		passed		\SchoolTests\test504.sjava		
 0		0		passed		\SchoolTests\test505.sjava		
 
-passed 446 out of 459 tests.
+passed 459 out of 459 tests.
 
