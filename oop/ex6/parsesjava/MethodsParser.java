@@ -144,10 +144,17 @@ public class MethodsParser extends SjavaParser {
 		Matcher m = p.matcher(line);
 		if (m.find()) {
 			String beforeSemicolon = line.substring(0, m.start());
-			return checkReturn(beforeSemicolon) || checkMethodCall(beforeSemicolon) ||
-				   checkDeclaration(beforeSemicolon) || checkAssignment(beforeSemicolon);
+			return checkReturn(beforeSemicolon) || checkMethodCall(beforeSemicolon) || checkVariable(line);
+//				   checkDeclaration(beforeSemicolon) || checkAssignment(beforeSemicolon);
 		}
 		return false;
+	}
+
+
+	private boolean checkVariable(String line) throws IllegalLineException{
+		VariableParser varParser = new VariableParser(line);
+		varParser.parse();
+		return true;
 	}
 
 
@@ -166,65 +173,65 @@ public class MethodsParser extends SjavaParser {
 	}
 
 
-	private boolean checkDeclaration(String line) throws IllegalLineException {
-		Pattern p = Pattern.compile(LEGAL_TYPE);
-		Matcher m = p.matcher(line);
-		if (m.find()) {
-			int assignmentIndex = line.indexOf("=", m.end());
-			if (assignmentIndex != -1) {
-				String value = line.substring(assignmentIndex + 1).trim();
-				Variable content = getVariable(value);
-				if (content != null) {
-					if (!content.wasAssignment()) {
-						throw new IllegalLineException();
-					}
-					line = line.substring(0, assignmentIndex) + ";";
-					//					VariableParser varParser = new VariableParser(line, variablesStack
-					//					.peek());
-					//					varParser.parse();
-					String variableName = line.substring(m.end(), assignmentIndex).trim();
-					Variable reference = getVariablesStack().peek().get(variableName);
-					if (!isTypeMatch(reference.getType(), content.getType())) {
-						throw new IllegalLineException();
-					}
-					reference.setValue(value);
-					return true;
-				} else if (getType(value) != null) {
-				} else {
-					throw new IllegalLineException();
-				}
-			}
-			//			VariableParser varParser = new VariableParser(line + ";", variablesStack.peek());
-			//			varParser.parse();
-			return true;
-		}
-		return false;
-	}
+//	private boolean checkDeclaration(String line) throws IllegalLineException {
+//		Pattern p = Pattern.compile(LEGAL_TYPE);
+//		Matcher m = p.matcher(line);
+//		if (m.find()) {
+//			int assignmentIndex = line.indexOf("=", m.end());
+//			if (assignmentIndex != -1) {
+//				String value = line.substring(assignmentIndex + 1).trim();
+//				Variable content = getVariable(value);
+//				if (content != null) {
+//					if (!content.wasAssignment()) {
+//						throw new IllegalLineException();
+//					}
+//					line = line.substring(0, assignmentIndex) + ";";
+//					//					VariableParser varParser = new VariableParser(line, variablesStack
+//					//					.peek());
+//					//					varParser.parse();
+//					String variableName = line.substring(m.end(), assignmentIndex).trim();
+//					Variable reference = getVariablesStack().peek().get(variableName);
+//					if (!isTypeMatch(reference.getType(), content.getType())) {
+//						throw new IllegalLineException();
+//					}
+//					reference.setValue(value);
+//					return true;
+//				} else if (getType(value) != null) {
+//				} else {
+//					throw new IllegalLineException();
+//				}
+//			}
+//			//			VariableParser varParser = new VariableParser(line + ";", variablesStack.peek());
+//			//			varParser.parse();
+//			return true;
+//		}
+//		return false;
+//	}
 
 
-	private boolean checkAssignment(String line) throws IllegalLineException {
-		Pattern p = Pattern.compile("[ \t]*+(?:[a-zA-Z]|__)++\\w*+[ \t]*+=[ \t]*+.*+");
-		Matcher m = p.matcher(line);
-		if (m.matches()) {
-			String[] lineSplit = line.split("=");
-			String name = lineSplit[0].trim();
-			String value = lineSplit[1].trim();
-			String valueType = getType(value);
-			if (valueType == null) {
-				Variable content = getVariable(value);
-				if (content == null || !content.wasAssignment()) {
-					throw new IllegalLineException();
-				}
-				valueType = content.getType();
-			}
-			Variable reference = getVariable(name);
-			if (reference == null || reference.isFinal()) {
-				throw new IllegalLineException();
-			}
-			return isTypeMatch(reference.getType(), valueType);
-		}
-		return false;
-	}
+//	private boolean checkAssignment(String line) throws IllegalLineException {
+//		Pattern p = Pattern.compile("[ \t]*+(?:[a-zA-Z]|__)++\\w*+[ \t]*+=[ \t]*+.*+");
+//		Matcher m = p.matcher(line);
+//		if (m.matches()) {
+//			String[] lineSplit = line.split("=");
+//			String name = lineSplit[0].trim();
+//			String value = lineSplit[1].trim();
+//			String valueType = getType(value);
+//			if (valueType == null) {
+//				Variable content = getVariable(value);
+//				if (content == null || !content.wasAssignment()) {
+//					throw new IllegalLineException();
+//				}
+//				valueType = content.getType();
+//			}
+//			Variable reference = getVariable(name);
+//			if (reference == null || reference.isFinal()) {
+//				throw new IllegalLineException();
+//			}
+//			return isTypeMatch(reference.getType(), valueType);
+//		}
+//		return false;
+//	}
 
 
 	/*
