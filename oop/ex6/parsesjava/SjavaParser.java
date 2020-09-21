@@ -1,6 +1,7 @@
 package oop.ex6.parsesjava;
 
 import oop.ex6.main.IllegalLineException;
+
 import java.util.*;
 
 
@@ -15,8 +16,10 @@ public abstract class SjavaParser {
 	/** This string symbolizes regex which identifies a correct type. */
 	protected static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
 
-	/** A stack of maps from a variable's name to it's class. Each map represents an independent scope. */
-	protected Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
+	// A stack of maps from a variable's name to it's class. Each map represents an independent scope.
+	private Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
+
+	private Map<String, Variable> globalVariablesMap = new HashMap<String, Variable>();
 
 	private static final String INT = "int";
 	private static final String DOUBLE = "double";
@@ -25,6 +28,16 @@ public abstract class SjavaParser {
 	private static final String CHAR = "char";
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
+
+	/**
+	 * @return The variables stack initialize with the global variables map.
+	 */
+	public Deque<Map<String, Variable>> getVariablesStack() {
+		if (variablesStack.isEmpty()) {
+			variablesStack.push(globalVariablesMap);
+		}
+		return this.variablesStack;
+	}
 
 	/**
 	 * Parses different components of the sjava file.
@@ -37,8 +50,15 @@ public abstract class SjavaParser {
 	 * @param variableName The name of the variable.
 	 * @return The Variable class which matches the variable name.
 	 */
-	protected abstract Variable getVariable(String variableName);
-
+	protected Variable getVariable(String variableName) {
+		for (Map<String, Variable> variables : variablesStack) {
+			Variable var = variables.get(variableName);
+			if (var == null)
+				continue;
+			return var;
+		}
+		return null;
+	}
 	/**
 	 * This method checks whether two types are suitable. I.e. the first can be initialized in the second.
 	 * @param variableType The first variable type to check.

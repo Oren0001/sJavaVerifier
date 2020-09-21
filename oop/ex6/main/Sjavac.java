@@ -29,8 +29,7 @@ public class Sjavac {
 			while (scannedCode.hasNextLine()) {
 				sjavacReader.readLine(scannedCode, scannedCode.nextLine());
 			}
-			MethodsParser methodsParser = new MethodsParser(sjavacReader.getMethodsList(),
-															sjavacReader.getGlobalVariablesMap());
+			MethodsParser methodsParser = new MethodsParser(sjavacReader.getMethodsList());
 			methodsParser.parse();
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(IO_ERROR);

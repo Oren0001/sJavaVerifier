@@ -4,7 +4,6 @@ import oop.ex6.main.IllegalLineException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,18 +21,15 @@ public class VariableParser extends SjavaParser {
 	private String assignmentVariableName;
 	private String lineToParse;
 	private String[] splitLineArray;
-	private Map<String, Variable> variablesMap;
 	private List<Variable> variablesList; //A list of the variables in the line.
 
 	/**
 	 * Constructor.
 	 * @param lineToParse The variable line to parse.
-	 * @param variablesMap The map to insert the variables into it.
 	 */
-	public VariableParser(String lineToParse, Map<String, Variable> variablesMap) {
+	public VariableParser(String lineToParse) {
 		this.lineToParse = lineToParse;
 		this.splitLineArray = splitBetweenSpaces();
-		this.variablesMap = variablesMap;
 		this.variablesList = new ArrayList<Variable>();
 	}
 
@@ -57,7 +53,7 @@ public class VariableParser extends SjavaParser {
 			multipleVariables();
 		}
 		if (!isOnlyInitialization) {
-			addVariableIntoMap(variablesMap);
+			addVariableIntoMap();
 		}
 	}
 
@@ -91,7 +87,8 @@ public class VariableParser extends SjavaParser {
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (!matcher.lookingAt()) {
 			isOnlyInitialization = true;
-			isAlreadyDeclared();
+			setVariableNameForAssignment();
+			isValidVariableForAssignment(getVariable(assignmentVariableName));
 			return;
 		}
 		lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
@@ -170,23 +167,9 @@ public class VariableParser extends SjavaParser {
 				throw new IllegalLineException();
 			}
 		} else { //Check if the value is a reference to another valid variable.
-			if (getVariable(value) == null ||
-				!isTypeMatch(theCurrentVariable().getType(),
-							 getVariable(value).getType()) || !getVariable(value).wasAssignment()) {
+			if (!isValidVariableForAssignment(getVariable(value))) {
 				throw new IllegalLineException();
 			}
-		}
-	}
-
-
-	/*
-	 * This method is given the name of the variable and returns the corresponding reference to it.
-	 */
-	protected Variable getVariable(String variableName) {
-		if (variablesMap.containsKey(variableName) && isValidReference(variableName)) {
-			return variablesMap.get(variableName);
-		} else {
-			return null;
 		}
 	}
 
@@ -217,7 +200,8 @@ public class VariableParser extends SjavaParser {
 			}
 			setName();
 		} else {
-			isAlreadyDeclared();
+			setVariableNameForAssignment();
+			isValidVariableForAssignment(getVariable(assignmentVariableName));
 		}
 		if (thereIsAssignment()) {
 			setValue();
@@ -226,50 +210,43 @@ public class VariableParser extends SjavaParser {
 	}
 
 	/*
-	 * This method checks if variable name is already declared.
+	 * This method checks if a variable is already declared.
 	 */
-	private void isAlreadyDeclared() throws IllegalLineException {
+	private boolean setVariableNameForAssignment() throws IllegalLineException {
 		Pattern pattern = Pattern.compile(LEGAL_NAME);
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (matcher.lookingAt()) {
 			//Extraction of the name from the line.
 			assignmentVariableName = lineToParse.substring(matcher.start(), matcher.end());
-			if (!variablesMap.containsKey(assignmentVariableName) ||
-				variablesMap.get(assignmentVariableName).isFinal()) {
-				throw new IllegalLineException();
-			}
 			lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
-		} else {
-			throw new IllegalLineException();
+			return true;
 		}
+		throw new IllegalLineException();
 	}
 
 	/*
-	 * This method checks if a reference is valid.
+	 * This method checks if a variable is valid.
 	 */
-	private boolean isValidReference(String value) {
-		String variableType;
-		String valueType = variablesMap.get(value).getType();
-		if (variablesMap.containsKey(value) && variablesMap.get(value).wasAssignment()) {
-			variableType = theCurrentVariable().getType();
-			if (!isTypeMatch(variableType, valueType)) {
-				return false;
+	private boolean isValidVariableForAssignment(Variable variableToCheck) throws IllegalLineException {
+		String valueType = theCurrentVariable().getType();
+		String variableToCheckType;
+		if (variableToCheck != null && variableToCheck.wasAssignment()) {
+			variableToCheckType = variableToCheck.getType();
+			if (isTypeMatch(variableToCheckType, valueType)) {
+				return true;
 			}
 		}
-		return true;
+		throw new IllegalLineException();
 	}
 
+
 	/*
-	 * This method add variable into the given map (if the variable is not already contained).
+	 * This method add variable into the most inner map which the variable is not already contained.
 	 */
-	private void addVariableIntoMap(Map<String, Variable> variableMap) throws IllegalLineException {
+	private void addVariableIntoMap() {
 		for (Variable variable : variablesList) {
-			if (variable != null && !variableMap.containsKey(variable.getName())) {
-				variableMap.put(variable.getName(), variable);
-			} else if (isOnlyInitialization) {
-				return;
-			} else {
-				throw new IllegalLineException();
+			if (variable != null && !getVariablesStack().peek().containsKey(variable.getName())) {
+				getVariablesStack().peek().put(variable.getName(), variable);
 			}
 		}
 	}
@@ -279,7 +256,7 @@ public class VariableParser extends SjavaParser {
 	 */
 	private Variable theCurrentVariable() {
 		if (isOnlyInitialization) {
-			return variablesMap.get(assignmentVariableName);
+			return getVariable(assignmentVariableName);
 		} else {
 			return variablesList.get(currentVariableNumber);
 		}

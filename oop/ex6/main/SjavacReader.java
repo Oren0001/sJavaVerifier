@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 public class SjavacReader {
 
 	private List<Method> methodsList;
-	private Map<String, Variable> globalVariablesMap;
 	private VariableParser variableParser;
 	private Stack<Character> bracketStack;
 	private String lineToRead;
@@ -23,7 +22,6 @@ public class SjavacReader {
 	 */
 	public SjavacReader() {
 		this.methodsList = new LinkedList<Method>();
-		this.globalVariablesMap = new HashMap<String, Variable>();
 		this.bracketStack=new Stack<Character>();
 	}
 
@@ -37,7 +35,7 @@ public class SjavacReader {
 		this.lineToRead = lineToRead;
 		if (isEmptyLine() || isCommentLine()) {
 		} else if (isGlobalVariable()) {
-			variableParser = new VariableParser(lineToRead, globalVariablesMap);
+			variableParser = new VariableParser(lineToRead);
 			variableParser.parse();
 		} else if (isMethod()) {
 			methodsList.add(new Method(copyMethodIntoList(scannedCode)));
@@ -46,12 +44,12 @@ public class SjavacReader {
 		}
 	}
 
-	/**
-	 * @return The global variable map of the sjava file.
-	 */
-	public Map<String, Variable> getGlobalVariablesMap() {
-		return globalVariablesMap;
-	}
+//	/**
+//	 * @return The global variable map of the sjava file.
+//	 */
+//	public Map<String, Variable> getGlobalVariablesMap() {
+//		return globalVariablesMap;
+//	}
 
 	/**
 	 * @return the methods list of the sjava file.
