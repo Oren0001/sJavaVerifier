@@ -64,18 +64,14 @@ public class SjavacReader {
 	 * @return true if the current line is an empty line.
 	 */
 	private boolean isEmptyLine() {
-		Pattern emptyLinePattern = Pattern.compile("[ \t]*");
-		Matcher matcher = emptyLinePattern.matcher(lineToRead);
-		return (matcher.matches());
+		return lineToRead.matches("[ \t]*");
 	}
 
 	/*
 	 * @return true if the current line is a comment line.
 	 */
 	private boolean isCommentLine() {
-		Pattern commentPattern = Pattern.compile("//.*");
-		Matcher matcher = commentPattern.matcher(lineToRead);
-		return (matcher.matches());
+		return lineToRead.matches("//.*");
 	}
 
 	/*

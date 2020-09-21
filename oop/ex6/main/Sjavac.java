@@ -13,15 +13,15 @@ public class Sjavac {
 	private static final int LEGAL_CODE = 0;
 	private static final int ILLEGAL_CODE = 1;
 	private static final int IO_ERROR = 2;
-	private static final int INVALID_USAGE = 2;
 
 	/**
-	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		if (!inputValidity(args)) {
-			return;
+		try {
+			inputValidityCheck(args);
+		} catch (InvalidUsageException invalidUsageException) {
+			System.out.println(invalidUsageException.getMessage());
 		}
 		File sjavaCode = new File(args[0]);
 		try (Scanner scannedCode = new Scanner(sjavaCode);) {
@@ -30,7 +30,7 @@ public class Sjavac {
 				sjavacReader.readLine(scannedCode, scannedCode.nextLine());
 			}
 			MethodsParser methodsParser = new MethodsParser(sjavacReader.getMethodsList(),
-					sjavacReader.getGlobalVariablesMap());
+															sjavacReader.getGlobalVariablesMap());
 			methodsParser.parse();
 		} catch (FileNotFoundException fileNotFoundException) {
 			System.out.println(IO_ERROR);
@@ -46,12 +46,9 @@ public class Sjavac {
 	/*
 	 *
 	 */
-	private static boolean inputValidity(String[] args) {
+	private static void inputValidityCheck(String[] args) throws InvalidUsageException {
 		if (args.length != 1) {
-			System.out.println(INVALID_USAGE);
-			System.err.print("ERROR: Wrong usage. Should receive only one argument\n");
-			return false;
+			throw new InvalidUsageException();
 		}
-		return true;
 	}
 }

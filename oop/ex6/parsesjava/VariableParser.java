@@ -13,17 +13,17 @@ import java.util.regex.Pattern;
  */
 public class VariableParser extends SjavaParser {
 
-	private static final int TYPE_WITHOUT_FINAL = 0;
+	private static final int TYPE_WITH_OUT_FINAL = 0;
 	private static final int TYPE_AFTER_FINAL = 1;
 	private static final String LEGAL_NAME = "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
 	private int currentVariableNumber;
 	private boolean isFinal;
-	private boolean isOnlyAssignment;
+	private boolean isOnlyInitialization;
 	private String assignmentVariableName;
 	private String lineToParse;
 	private String[] splitLineArray;
 	private Map<String, Variable> variablesMap;
-	private List<Variable> variablesList;
+	private List<Variable> variablesList; //A list of the variables in the line.
 
 	/**
 	 * Constructor.
@@ -46,7 +46,7 @@ public class VariableParser extends SjavaParser {
 		variablesList.add(new Variable());
 		checkIfFinal();
 		setType();
-		if (!isOnlyAssignment) {
+		if (!isOnlyInitialization) {
 			setName();
 		}
 		if (thereIsAssignment()) {
@@ -56,7 +56,7 @@ public class VariableParser extends SjavaParser {
 		while (!isTheEnd()) {
 			multipleVariables();
 		}
-		if (!isOnlyAssignment) {
+		if (!isOnlyInitialization) {
 			addVariableIntoMap(variablesMap);
 		}
 	}
@@ -66,11 +66,7 @@ public class VariableParser extends SjavaParser {
 	 */
 	private String[] splitBetweenSpaces() {
 		String lineWithOutSpaces = lineToParse.replaceAll("[ |\t]+", " ");
-		Pattern spacesPattern = Pattern.compile(" |\t");
-		Matcher spacesMatcher = spacesPattern.matcher(lineWithOutSpaces);
-		if (spacesMatcher.lookingAt()) {
-			lineWithOutSpaces = lineWithOutSpaces.substring(spacesMatcher.end());
-		}
+		lineWithOutSpaces = lineWithOutSpaces.trim();
 		return lineWithOutSpaces.split(" ");
 	}
 
@@ -94,7 +90,7 @@ public class VariableParser extends SjavaParser {
 		Pattern pattern = Pattern.compile(LEGAL_TYPE);
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (!matcher.lookingAt()) {
-			isOnlyAssignment = true;
+			isOnlyInitialization = true;
 			isAlreadyDeclared();
 			return;
 		}
@@ -102,7 +98,7 @@ public class VariableParser extends SjavaParser {
 		if (isFinal) {
 			variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_AFTER_FINAL]);
 		} else {
-			variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_WITHOUT_FINAL]);
+			variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_WITH_OUT_FINAL]);
 		}
 	}
 
@@ -110,20 +106,22 @@ public class VariableParser extends SjavaParser {
 	 * This method set the name of a variable.
 	 */
 	private void setName() throws IllegalLineException {
-		if (!isOnlyAssignment) {
+		if (!isOnlyInitialization) {
 			Pattern pattern = Pattern.compile(LEGAL_NAME);
 			Matcher matcher = pattern.matcher(lineToParse);
 			if (!matcher.lookingAt()) {
 				throw new IllegalLineException();
 			}
+			//Extraction of the name from the line.
 			String name = lineToParse.substring(matcher.start(), matcher.end());
+			// Check if the same name has already been declared in the same line
 			for (int i = 0; i < currentVariableNumber - 1; i++) {
 				if (variablesList.get(i) == null || variablesList.get(i).getName().equals(name)) {
 					throw new IllegalLineException();
 				}
 			}
 			variablesList.get(currentVariableNumber).setName(name);
-			lineToParse = lineToParse.substring(matcher.end());
+			lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 		}
 	}
 
@@ -134,9 +132,11 @@ public class VariableParser extends SjavaParser {
 		Pattern pattern = Pattern.compile("[ \t]*=[ \t]*");
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (matcher.lookingAt()) {
-			lineToParse = lineToParse.substring(matcher.end());
+			lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 			return true;
-		} else if (isFinal) {
+			//A final variable must be initialized in the same line.
+			//In addition there must be a declaration or initialization.
+		} else if (isFinal || isOnlyInitialization) {
 			throw new IllegalLineException();
 		} else {
 			return false;
@@ -152,50 +152,28 @@ public class VariableParser extends SjavaParser {
 		if (!matcher.lookingAt()) {
 			throw new IllegalLineException();
 		}
+		//Extraction of the value from the line.
 		String value = lineToParse.substring(matcher.start(), matcher.end());
-		if (isOnlyAssignment) {
-			variablesMap.get(assignmentVariableName).setValue(value);
-			variablesMap.get(assignmentVariableName).setWasAssignment(true);
-		} else {
-			variablesList.get(currentVariableNumber).setValue(value);
-			variablesList.get(currentVariableNumber).setWasAssignment(true);
-		}
-		lineToParse = lineToParse.substring(matcher.end());
+		theCurrentVariable().setValue(value);
+		theCurrentVariable().setWasAssignment(true);
+		lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 	}
 
 	/*
 	 * This method check if value is valid.
 	 */
 	private void checkValue() throws IllegalLineException {
-		String value;
-		String type;
-		if (isOnlyAssignment) {
-			value = variablesMap.get(assignmentVariableName).getValue();
-			type = getType(value);
-			if (type != null) { //The type of the value is valid and not reference.
-				if (!isTypeMatch(variablesMap.get(assignmentVariableName).getType(), type)) {
-					throw new IllegalLineException();
-				}
-			} else {
-				if (getVariable(value) == null || //The value is not a reference.
-					!isTypeMatch(variablesMap.get(assignmentVariableName).getType(),
-								 getVariable(value).getType())) {
-					throw new IllegalLineException();
-				}
+		String value = theCurrentVariable().getValue();
+		String type = getType(value);
+		if (type != null) { //The type of the value is valid and not reference to another variable.
+			if (!isTypeMatch(theCurrentVariable().getType(), type)) {
+				throw new IllegalLineException();
 			}
-		} else {
-			value = variablesList.get(currentVariableNumber).getValue();
-			type = getType(value);
-			if (type != null) { //The type of the value is valid and not reference.
-				if (!isTypeMatch(variablesList.get(currentVariableNumber).getType(), type)) {
-					throw new IllegalLineException();
-				}
-			} else {
-				if (getVariable(value) == null || //The value is not a reference.
-					!isTypeMatch(variablesList.get(currentVariableNumber).getType(),
-								 getVariable(value).getType())) {
-					throw new IllegalLineException();
-				}
+		} else { //Check if the value is a reference to another valid variable.
+			if (getVariable(value) == null ||
+				!isTypeMatch(theCurrentVariable().getType(),
+							 getVariable(value).getType()) || !getVariable(value).wasAssignment()) {
+				throw new IllegalLineException();
 			}
 		}
 	}
@@ -216,9 +194,7 @@ public class VariableParser extends SjavaParser {
 	 * This method checks if is the end of the line;
 	 */
 	private boolean isTheEnd() {
-		Pattern pattern = Pattern.compile("[ \t]*;[ \t]*");
-		Matcher matcher = pattern.matcher(lineToParse);
-		return matcher.matches();
+		return lineToParse.matches("[ \t]*;[ \t]*");
 	}
 
 	/*
@@ -230,14 +206,14 @@ public class VariableParser extends SjavaParser {
 		if (!matcher.lookingAt()) {
 			throw new IllegalLineException();
 		}
-		lineToParse = lineToParse.substring(matcher.end());
-		if (!isOnlyAssignment) {
+		lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
+		if (!isOnlyInitialization) {
 			currentVariableNumber++;
 			variablesList.add(new Variable());
 			if (isFinal) {
 				variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_AFTER_FINAL]);
 			} else {
-				variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_WITHOUT_FINAL]);
+				variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_WITH_OUT_FINAL]);
 			}
 			setName();
 		} else {
@@ -256,12 +232,13 @@ public class VariableParser extends SjavaParser {
 		Pattern pattern = Pattern.compile(LEGAL_NAME);
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (matcher.lookingAt()) {
+			//Extraction of the name from the line.
 			assignmentVariableName = lineToParse.substring(matcher.start(), matcher.end());
 			if (!variablesMap.containsKey(assignmentVariableName) ||
 				variablesMap.get(assignmentVariableName).isFinal()) {
 				throw new IllegalLineException();
 			}
-			lineToParse = lineToParse.substring(matcher.end());
+			lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 		} else {
 			throw new IllegalLineException();
 		}
@@ -274,17 +251,12 @@ public class VariableParser extends SjavaParser {
 		String variableType;
 		String valueType = variablesMap.get(value).getType();
 		if (variablesMap.containsKey(value) && variablesMap.get(value).wasAssignment()) {
-			if (!isOnlyAssignment) {
-				variableType = variablesList.get(currentVariableNumber).getType();
-			} else {
-				variableType = variablesMap.get(assignmentVariableName).getType();
+			variableType = theCurrentVariable().getType();
+			if (!isTypeMatch(variableType, valueType)) {
+				return false;
 			}
-			if (isTypeMatch(variableType, valueType)) {
-				;
-			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	/*
@@ -294,11 +266,22 @@ public class VariableParser extends SjavaParser {
 		for (Variable variable : variablesList) {
 			if (variable != null && !variableMap.containsKey(variable.getName())) {
 				variableMap.put(variable.getName(), variable);
-			} else if (isOnlyAssignment) {
+			} else if (isOnlyInitialization) {
 				return;
 			} else {
 				throw new IllegalLineException();
 			}
+		}
+	}
+
+	/*
+	 * This method return the current and relevant variable.
+	 */
+	private Variable theCurrentVariable() {
+		if (isOnlyInitialization) {
+			return variablesMap.get(assignmentVariableName);
+		} else {
+			return variablesList.get(currentVariableNumber);
 		}
 	}
 }
