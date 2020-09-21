@@ -82,7 +82,7 @@ public class VariableParser extends SjavaParser {
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (matcher.lookingAt()) {
 			isFinal = true;
-			lineToParse = lineToParse.substring(matcher.end());
+			lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 			variablesList.get(currentVariableNumber).setFinal(true);
 		}
 	}
@@ -91,16 +91,15 @@ public class VariableParser extends SjavaParser {
 	 * This method set the type of a variable.
 	 */
 	private void setType() throws IllegalLineException {
-		Pattern pattern1 = Pattern.compile(LEGAL_TYPE);
-		Matcher matcher1 = pattern1.matcher(lineToParse);
-		if (!matcher1.lookingAt()) {
+		Pattern pattern = Pattern.compile(LEGAL_TYPE);
+		Matcher matcher = pattern.matcher(lineToParse);
+		if (!matcher.lookingAt()) {
 			isOnlyAssignment = true;
 			isAlreadyDeclared();
 			return;
 		}
-		lineToParse = lineToParse.substring(matcher1.end());
+		lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 		if (isFinal) {
-			variablesList.get(currentVariableNumber).setFinal(true);
 			variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_AFTER_FINAL]);
 		} else {
 			variablesList.get(currentVariableNumber).setType(splitLineArray[TYPE_WITHOUT_FINAL]);
