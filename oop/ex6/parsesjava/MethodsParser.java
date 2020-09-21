@@ -121,7 +121,6 @@ public class MethodsParser extends SjavaParser {
 	 */
 	private void parseMethodLines(List<String> lines) throws IllegalLineException {
 		lineNumber++;
-		final int numOfBlocks = variablesStack.size();
 		while (lineNumber < lines.size()) {
 			String line = lines.get(lineNumber);
 			if (line.matches("[ \t]*+}[ \t]*+")) {
@@ -264,7 +263,11 @@ public class MethodsParser extends SjavaParser {
 		return true;
 	}
 
-
+	/*
+	 * @param parameters: A string of parameters which belong to a method call. E.g. "5, 'hello', a".
+	 * @return an array of valid method call parameters.
+	 * @throws IllegalLineException if the parameters are invalid.
+	 */
 	private String[] getMethodCallParameters(String parameters) throws IllegalLineException {
 		String[] parametersArray;
 		if (parameters.equals(""))
@@ -290,18 +293,27 @@ public class MethodsParser extends SjavaParser {
 	}
 
 
+	/*
+	 * Represents a method call which has a name and an array of parameters.
+	 */
 	private class MethodCall {
 		private String name;
 		private String[] parameters;
 	}
 
 
+	/*
+	 * @param lines: The lines of a methods.
+	 * @param line: A specific line of a method.
+	 * @return true if the if\while block is legal, false if the given line doesn't start an if\while block.
+	 * @throws IllegalLineException if the if\while block is invalid.
+	 */
 	private boolean checkIfWhileBlock(List<String> lines, String line) throws IllegalLineException {
-		Pattern p1 = Pattern.compile("[ \t]*(?:if|while)[ \t]*\\(");
+		Pattern p1 = Pattern.compile("[ \t]*+(?:if|while)[ \t]*+\\(");
 		Matcher m1 = p1.matcher(line);
 		if (!m1.lookingAt())
 			return false;
-		Pattern p2 = Pattern.compile("\\)[ \t]*\\{[ \t]*$");
+		Pattern p2 = Pattern.compile("\\)[ \t]*+\\{[ \t]*+$");
 		Matcher m2 = p2.matcher(line);
 		if (!m2.find())
 			throw new IllegalLineException();
@@ -314,6 +326,10 @@ public class MethodsParser extends SjavaParser {
 	}
 
 
+	/*
+	 * @param conditions of if\while block.
+	 * @throws IllegalLineException if the conditions are invalid.
+	 */
 	private void checkCondition(String conditions) throws IllegalLineException {
 		conditions = " " + conditions + " ";
 		String[] matches = conditions.split("\\|\\||&&");
