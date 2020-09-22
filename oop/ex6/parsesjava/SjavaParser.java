@@ -26,7 +26,7 @@ public abstract class SjavaParser {
 	protected static Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
 
 	/**
-	 *
+	 * This method reset the variable stack.
 	 */
 	public static void resetVariableStack(){
 		variablesStack= new ArrayDeque<>();
@@ -34,7 +34,7 @@ public abstract class SjavaParser {
 	}
 
 	/**
-	 *
+	 * Constructor which initializes the variables stack with a map (global variables map).
 	 */
 	protected SjavaParser() {
 		if (variablesStack.isEmpty()) {
@@ -60,7 +60,6 @@ public abstract class SjavaParser {
 		}
 		return null;
 	}
-
 
 	/**
 	 * This method checks whether two types are suitable. I.e. the second can be initialized in the first.
