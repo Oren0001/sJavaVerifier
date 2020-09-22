@@ -1,0 +1,8 @@
+void foo1(int a) {
+    return;
+}
+
+void foo2(int a) {
+    foo1(5);
+    return;
+}
