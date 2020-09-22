@@ -238,12 +238,12 @@ test503.sjava : 1
 test504.sjava : 1
 test505.sjava : 0
 totest01 : 1
-totest02 : 0
+totest02 : 1
 totest03 : 1
 totest04 : 1
-totest05 : 0
-totest06 : 0
-totest07 : 0
+totest05 : 1
+totest06 : 1
+totest07 : 1
 totest08 : 0
 totest09 : 1
 totest10 : 0

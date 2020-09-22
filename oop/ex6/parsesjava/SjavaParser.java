@@ -12,10 +12,6 @@ public abstract class SjavaParser {
 
 	private static final String LEGAL_INT = "-?\\d+";
 	private static final String LEGAL_DOUBLE = "-?(?:\\d+\\.?\\d*|\\d*\\.?\\d+)";
-
-	/** This string symbolizes regex which identifies a correct type. */
-	protected static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
-
 	private static final String INT = "int";
 	private static final String DOUBLE = "double";
 	private static final String BOOLEAN = "boolean";
@@ -24,17 +20,17 @@ public abstract class SjavaParser {
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 
-	// A stack of maps from a variable's name to it's class. Each map represents an independent scope.
+	/* A stack of maps from a variable's name to it's class. Each map represents an independent scope. */
 	protected static Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
 
 	protected SjavaParser() {
 		if (variablesStack.isEmpty()) {
-			variablesStack.add(new HashMap<String, Variable>());
+			variablesStack.add(new HashMap<>());
 		}
 	}
 
 	public static void resetVariableStack(){
-		variablesStack= new ArrayDeque<Map<String, Variable>>();
+		variablesStack= new ArrayDeque<>();
 		variablesStack.add(new HashMap<String, Variable>());
 	}
 
@@ -51,19 +47,12 @@ public abstract class SjavaParser {
 	 */
 	protected Variable getVariable(String variableName) {
 		for (Map<String, Variable> variables : variablesStack) {
-			//						Variable var = variables.get(variableName);
-			//						if (var == null)
-			//							continue;
-			//						return var;
-			//					}
-			//					return null;
-			//				}
-			if (variables.containsKey(variableName)) {
+			if (variables.containsKey(variableName))
 				return variables.get(variableName);
-			}
 		}
 		return null;
 	}
+
 
 	/**
 	 * This method checks whether two types are suitable. I.e. the second can be initialized in the first.

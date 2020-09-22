@@ -1,0 +1,17 @@
+int a;
+a = 2;
+
+void foo(int g) {
+    int a = 2, b, c = 1;
+    b = 0;
+
+    final int d = 12;
+
+    while (true && a || b && "") {
+        if (a) {
+            int b = 6;
+            a = b;
+        }
+    }
+    return;
+}

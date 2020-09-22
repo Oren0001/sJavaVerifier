@@ -9,7 +9,27 @@ public class Variable {
 	private String type;
 	private String value;
 	private boolean isFinal;
-	private boolean wasAssign;
+	private boolean isAssigned;
+
+	/**
+	 * A default constructor.
+	 */
+	public Variable() {}
+
+
+	/**
+	 * A copy constructor.
+	 * @param other A Variable object to copy.
+	 */
+	public Variable(Variable other) {
+		this();
+		this.name = other.name;
+		this.type = other.type;
+		this.value = other.value;
+		this.isFinal = other.isFinal;
+		this.isAssigned = other.isAssigned;
+	}
+
 
 	/**
 	 * @return the value of this variable.
@@ -72,17 +92,17 @@ public class Variable {
 	}
 
 	/**
-	 * @return true if this variable was assignment.
+	 * @return true if this variable is initialized.
 	 */
-	public boolean wasAssign() {
-		return wasAssign;
+	public boolean isAssigned() {
+		return isAssigned;
 	}
 
 	/**
-	 * Set whether this variable was assignment.
+	 * Sets if this variable was initialized or not.
 	 * @param status status to be set.
 	 */
-	public void setWasAssign(boolean status) {
-		wasAssign = status;
+	public void setIsAssigned(boolean status) {
+		isAssigned = status;
 	}
 }
