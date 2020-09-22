@@ -16,11 +16,6 @@ public abstract class SjavaParser {
 	/** This string symbolizes regex which identifies a correct type. */
 	protected static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
 
-	// A stack of maps from a variable's name to it's class. Each map represents an independent scope.
-	private Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
-
-	private Map<String, Variable> globalVariablesMap = new HashMap<String, Variable>();
-
 	private static final String INT = "int";
 	private static final String DOUBLE = "double";
 	private static final String BOOLEAN = "boolean";
@@ -29,14 +24,18 @@ public abstract class SjavaParser {
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 
-	/**
-	 * @return The variables stack initialize with the global variables map.
-	 */
-	public Deque<Map<String, Variable>> getVariablesStack() {
+	// A stack of maps from a variable's name to it's class. Each map represents an independent scope.
+	protected static Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
+
+	protected SjavaParser() {
 		if (variablesStack.isEmpty()) {
-			variablesStack.push(globalVariablesMap);
+			variablesStack.add(new HashMap<String, Variable>());
 		}
-		return this.variablesStack;
+	}
+
+	public static void resetVariableStack(){
+		variablesStack= new ArrayDeque<Map<String, Variable>>();
+		variablesStack.add(new HashMap<String, Variable>());
 	}
 
 	/**
@@ -52,32 +51,39 @@ public abstract class SjavaParser {
 	 */
 	protected Variable getVariable(String variableName) {
 		for (Map<String, Variable> variables : variablesStack) {
-			Variable var = variables.get(variableName);
-			if (var == null)
-				continue;
-			return var;
+			//						Variable var = variables.get(variableName);
+			//						if (var == null)
+			//							continue;
+			//						return var;
+			//					}
+			//					return null;
+			//				}
+			if (variables.containsKey(variableName)) {
+				return variables.get(variableName);
+			}
 		}
 		return null;
 	}
+
 	/**
-	 * This method checks whether two types are suitable. I.e. the first can be initialized in the second.
-	 * @param variableType The first variable type to check.
-	 * @param type The second variable type to check.
-	 * @return true if both types are suitable. I.e. the first can be initialized in the second.
+	 * This method checks whether two types are suitable. I.e. the second can be initialized in the first.
+	 * @param referenceType The first variable type to check.
+	 * @param contentType The second variable type to check.
+	 * @return true if both types are suitable. I.e. the second can be initialized in the first.
 	 */
-	protected boolean isTypeMatch(String variableType, String type) {
-		if (type.equals(INT) && (variableType.equals(INT) ||
-								 variableType.equals(DOUBLE) || variableType.equals(BOOLEAN))) {
+	protected boolean isTypeMatch(String referenceType, String contentType) {
+		if (contentType.equals(INT) && (referenceType.equals(INT) ||
+										referenceType.equals(DOUBLE) || referenceType.equals(BOOLEAN))) {
 			return true;
-		} else if (type.equals(DOUBLE) &&
-				   (variableType.equals(DOUBLE) || variableType.equals(BOOLEAN))) {
+		} else if (contentType.equals(DOUBLE) &&
+				   (referenceType.equals(DOUBLE) || referenceType.equals(BOOLEAN))) {
 			return true;
-		} else if (type.equals(STRING) && variableType.equals(STRING)) {
+		} else if (contentType.equals(STRING) && referenceType.equals(STRING)) {
 			return true;
-		} else if (type.equals(BOOLEAN) && variableType.equals(BOOLEAN)) {
+		} else if (contentType.equals(BOOLEAN) && referenceType.equals(BOOLEAN)) {
 			return true;
 		} else {
-			return type.equals(CHAR) && variableType.equals(CHAR);
+			return contentType.equals(CHAR) && referenceType.equals(CHAR);
 		}
 	}
 

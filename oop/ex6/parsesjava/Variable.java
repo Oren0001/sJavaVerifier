@@ -9,7 +9,7 @@ public class Variable {
 	private String type;
 	private String value;
 	private boolean isFinal;
-	private boolean wasAssignment;
+	private boolean wasAssign;
 
 	/**
 	 * @return the value of this variable.
@@ -74,15 +74,15 @@ public class Variable {
 	/**
 	 * @return true if this variable was assignment.
 	 */
-	public boolean wasAssignment() {
-		return wasAssignment;
+	public boolean wasAssign() {
+		return wasAssign;
 	}
 
 	/**
 	 * Set whether this variable was assignment.
 	 * @param status status to be set.
 	 */
-	public void setWasAssignment(boolean status) {
-		wasAssignment = status;
+	public void setWasAssign(boolean status) {
+		wasAssign = status;
 	}
 }

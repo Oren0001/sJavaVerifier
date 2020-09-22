@@ -29,7 +29,6 @@ public class MethodsParser extends SjavaParser {
 		this.methods = methods;
 	}
 
-
 	/**
 	 * Parses methods of the sjava file.
 	 * @throws IllegalLineException If a line of the sjava file is illegal.
@@ -45,7 +44,7 @@ public class MethodsParser extends SjavaParser {
 			if (returnAt != lines.size() - 2) {
 				throw new IllegalLineException();
 			}
-			if (getVariablesStack().size() != 1) {
+			if (variablesStack.size() != 1) {
 				throw new IllegalLineException();
 			}
 		}
@@ -89,24 +88,23 @@ public class MethodsParser extends SjavaParser {
 	 */
 	private Variable[] getMethodParameters(String parameters) throws IllegalLineException {
 		HashMap<String, Variable> variables = new HashMap<>();
-		getVariablesStack().addFirst(variables);
+		variablesStack.addFirst(variables);
 		Variable[] methodParameters;
 		if (parameters.matches("[ \t]*")) {
 			methodParameters = new Variable[0];
 		} else {
 			String[] parametersArray = parameters.split(",[ \t]*");
 			methodParameters = new Variable[parametersArray.length];
-			VariableParser varParser;
 			for (int i = 0; i < parametersArray.length; i++) {
-				varParser = new VariableParser(parametersArray[i] + ";");
-				varParser.parse();
+				VariableParser variableParser= new VariableParser(parametersArray[i] + ";");
+				variableParser.parse();
 				String[] parameterSplit = parametersArray[i].split(" ");
 				String parameterName = parameterSplit[parameterSplit.length - 1];
 				Variable variable = variables.get(parameterName);
 				if (variable == null) {
 					throw new IllegalLineException();
 				}
-				variable.setWasAssignment(true);
+				variable.setWasAssign(true);
 				methodParameters[i] = variable;
 			}
 		}
@@ -123,7 +121,7 @@ public class MethodsParser extends SjavaParser {
 		while (lineNumber < lines.size()) {
 			String line = lines.get(lineNumber);
 			if (line.matches("[ \t]*+}[ \t]*+")) {
-				getVariablesStack().removeFirst();
+				variablesStack.removeFirst();
 				return;
 			} else if (!checkSemicolonSuffix(line) && !checkIfWhileBlock(lines, line)) {
 				throw new IllegalLineException();
@@ -152,8 +150,8 @@ public class MethodsParser extends SjavaParser {
 
 
 	private boolean checkVariable(String line) throws IllegalLineException{
-		VariableParser varParser = new VariableParser(line);
-		varParser.parse();
+		VariableParser variableParser=new VariableParser(line);
+		variableParser.parse();
 		return true;
 	}
 
@@ -240,7 +238,7 @@ public class MethodsParser extends SjavaParser {
 	 * @return a Variable class object which matches the variable's name.
 	 */
 	protected Variable getVariable(String variableName) {
-		for (Map<String, Variable> variables : getVariablesStack()) {
+		for (Map<String, Variable> variables : variablesStack) {
 			Variable var = variables.get(variableName);
 			if (var == null) {
 				continue;
@@ -294,7 +292,7 @@ public class MethodsParser extends SjavaParser {
 				String parameter = parametersArray[i].trim();
 				Variable variable = getVariable(parameter);
 				if (variable != null) {
-					if (!variable.wasAssignment()) {
+					if (!variable.wasAssign()) {
 						throw new IllegalLineException();
 					}
 					parameterType = variable.getType();
@@ -341,7 +339,7 @@ public class MethodsParser extends SjavaParser {
 
 		String conditions = line.substring(m1.end(), m2.start());
 		checkCondition(conditions);
-		getVariablesStack().addFirst(new HashMap<>());
+		variablesStack.addFirst(new HashMap<>());
 		parseMethodLines(lines);
 		return true;
 	}
@@ -357,9 +355,9 @@ public class MethodsParser extends SjavaParser {
 			String trimmedCondition = condition.trim();
 			Variable variable = getVariable(trimmedCondition);
 			if (variable != null) {
-				if (!variable.wasAssignment() || (!"boolean".equals(variable.getType()) &&
-												  !"int".equals(variable.getType()) &&
-												  !"double".equals(variable.getType()))) {
+				if (!variable.wasAssign() || (!"boolean".equals(variable.getType()) &&
+											  !"int".equals(variable.getType()) &&
+											  !"double".equals(variable.getType()))) {
 					throw new IllegalLineException();
 				}
 			} else {

@@ -1,6 +1,7 @@
 package oop.ex6.main;
 
 import oop.ex6.parsesjava.MethodsParser;
+import oop.ex6.parsesjava.SjavaParser;
 
 import java.io.*;
 import java.util.Scanner;
@@ -26,6 +27,7 @@ public class Sjavac {
 		File sjavaCode = new File(args[0]);
 		try (Scanner scannedCode = new Scanner(sjavaCode);) {
 			SjavacReader sjavacReader = new SjavacReader();
+			SjavaParser.resetVariableStack();
 			while (scannedCode.hasNextLine()) {
 				sjavacReader.readLine(scannedCode, scannedCode.nextLine());
 			}
