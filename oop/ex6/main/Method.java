@@ -24,12 +24,4 @@ public class Method {
 	public List<String> getLines() {
 		return methodLinesArray;
 	}
-
-	/**
-	 * @return
-	 */
-	public List<Variable> getParameters() {
-		return methodParameters;
-	}
-
 }

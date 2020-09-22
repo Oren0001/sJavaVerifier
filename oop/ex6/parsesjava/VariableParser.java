@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class receives a variable line and parse it.
+ * This class receives a variable line and parse it and extricate from her the variables.
  */
 public class VariableParser extends SjavaParser {
 
@@ -23,27 +23,30 @@ public class VariableParser extends SjavaParser {
 	private String assignmentVariableName;
 	private String lineToParse;
 	private String[] splitLineArray;
-	private List<Variable> variablesList; //A list of the variables in the line.
+	private List<Variable> variablesList; //A list of the variables in the given line.
 
+	/**
+	 * Constructor.
+	 * @param lineToParse The line to parse and extricate from her the variables.
+	 */
 	public VariableParser(String lineToParse) {
 		this.lineToParse = lineToParse;
 		this.variablesList = new LinkedList<>();
-		this.splitLineArray = splitBetweenSpaces();
 	}
 
 	/**
-	 * This method parse the given line.
+	 * This method parse the variables from the given line.
 	 * @throws IllegalLineException If the line is invalid.
 	 */
 	@Override
 	public void parse() throws IllegalLineException {
-		this.variablesList.add(new Variable());
-		checkIfFinal();
+		restart();
+		checkAndSetFinal();
 		setType();
 		if (!isOnlyInitialization) {
 			setName();
 		}
-		if (!thereIsAssignment()) {
+		if (!thereIsAssignment(true)) {
 			if (theCurrentVariable().isFinal()) {
 				throw new IllegalLineException();
 			}
@@ -60,18 +63,26 @@ public class VariableParser extends SjavaParser {
 	}
 
 	/*
-	 * This method returns an array of all the words in a line (no spaces).
+	 * Restart the parser.
 	 */
-	private String[] splitBetweenSpaces() {
-		String lineWithOutSpaces = lineToParse.replaceAll("[ |\t]+", " ");
-		lineWithOutSpaces = lineWithOutSpaces.trim();
-		return lineWithOutSpaces.split(" ");
+	private void restart() {
+		removeAllRedundantSpaces();
+		this.splitLineArray = lineToParse.split(" ");
+		this.variablesList.add(new Variable());
+	}
+
+	/*
+	 * This method removes all redundant spaces from the given line.
+	 */
+	private void removeAllRedundantSpaces() {
+		lineToParse = lineToParse.replaceAll("[ |\t]+", " ");
+		lineToParse = lineToParse.trim();
 	}
 
 	/*
 	 * This method check if a variable is final, and if so, set him as final.
 	 */
-	private void checkIfFinal() {
+	private void checkAndSetFinal() {
 		Pattern pattern = Pattern.compile("[ \t]*final[ \t]+");
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (matcher.lookingAt()) {
@@ -90,7 +101,9 @@ public class VariableParser extends SjavaParser {
 		if (!matcher.lookingAt()) {
 			isOnlyInitialization = true;
 			setVariableNameForAssignment();
-			if (theCurrentVariable() == null || theCurrentVariable().isFinal()) {
+			//Conditions to continue if it is only initialization.
+			if (theCurrentVariable() == null || theCurrentVariable().isFinal() || isTheEnd() ||
+				!thereIsAssignment(false)) {
 				throw new IllegalLineException();
 			}
 			return;
@@ -124,15 +137,16 @@ public class VariableParser extends SjavaParser {
 		lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
 	}
 
-
 	/*
 	 * This method check if there is assignment.
 	 */
-	private boolean thereIsAssignment() throws IllegalLineException {
+	private boolean thereIsAssignment(boolean shortcut) {
 		Pattern pattern = Pattern.compile("[ \t]*=[ \t]*");
 		Matcher matcher = pattern.matcher(lineToParse);
 		if (matcher.lookingAt()) {
-			lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
+			if (shortcut == true) {
+				lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
+			}
 			return true;
 			//A final variable must be initialized in the same line.
 			//In addition there must be a declaration or initialization.
@@ -158,7 +172,7 @@ public class VariableParser extends SjavaParser {
 	}
 
 	/*
-	 * This method check if value is valid.
+	 * This method check if a value is valid.
 	 */
 	private void checkValue() throws IllegalLineException {
 		String value = theCurrentVariable().getValue();
@@ -181,6 +195,9 @@ public class VariableParser extends SjavaParser {
 		return lineToParse.matches("[ \t]*;[ \t]*");
 	}
 
+	/*
+	 *This method handles a situation where there are several variables in line.
+	 */
 	private void multipleVariables() throws IllegalLineException {
 		Pattern pattern = Pattern.compile("[ \t]*,[ \t]*");
 		Matcher matcher = pattern.matcher(lineToParse);
@@ -191,57 +208,33 @@ public class VariableParser extends SjavaParser {
 		if (!isOnlyInitialization) {
 			currentVariableNumber++;
 			variablesList.add(new Variable());
-		}
-		if (isFinal) {
-			theCurrentVariable().setType(splitLineArray[TYPE_AFTER_FINAL]);
+			if (isFinal) {
+				theCurrentVariable().setType(splitLineArray[TYPE_AFTER_FINAL]);
+			} else {
+				theCurrentVariable().setType(splitLineArray[TYPE_WITH_OUT_FINAL]);
+			}
+			setName();
+			if (suchVariableAlreadyDeclared(theCurrentVariable())) {
+				throw new IllegalLineException();
+			}
 		} else {
-			theCurrentVariable().setType(splitLineArray[TYPE_WITH_OUT_FINAL]);
+			setVariableNameForAssignment();
+			if (!suchVariableAlreadyDeclared(theCurrentVariable()) || !thereIsAssignment(false)) {
+				throw new IllegalLineException();
+			}
 		}
-		setName();
-		if (suchVariableAlreadyExist(theCurrentVariable())) {
-			throw new IllegalLineException();
-		}
-		if (thereIsAssignment()) {
+		if (thereIsAssignment(true)) {
 			setValue();
 			checkValue();
 		} else {
-			if (isFinal) {
+			if (isFinal) { //Final must be initialized.
 				throw new IllegalLineException();
 			}
 		}
 	}
 
 	/*
-	 * This method Continues the parsing in the case of multiple variables in one line.
-	 */
-	//	private void multipleVariables() throws IllegalLineException {
-	//		Pattern pattern = Pattern.compile("[ \t]*,[ \t]*");
-	//		Matcher matcher = pattern.matcher(lineToParse);
-	//		if (!matcher.lookingAt()) {
-	//			throw new IllegalLineException();
-	//		}
-	//		lineToParse = lineToParse.substring(matcher.end()); //Shortcut the line.
-	//		if (!isOnlyInitialization) {
-	//			currentVariableNumber++;
-	//			variablesList.add(new Variable());
-	//			if (isFinal) {
-	//				theCurrentVariable().setType(splitLineArray[TYPE_AFTER_FINAL]);
-	//			} else {
-	//				theCurrentVariable().setType(splitLineArray[TYPE_WITH_OUT_FINAL]);
-	//			}
-	//			setName();
-	//		} else {
-	//			setVariableNameForAssignment();
-	//			isValidVariableForAssignment(theCurrentVariable());
-	//		}
-	//		if (thereIsAssignment()) {
-	//			setValue();
-	//			checkValue();
-	//		}
-	//	}
-
-	/*
-	 * This method checks if a variable is already declared.
+	 * This method set the variable name for the coming assignment.
 	 */
 	private boolean setVariableNameForAssignment() throws IllegalLineException {
 		Pattern pattern = Pattern.compile(LEGAL_NAME);
@@ -271,36 +264,38 @@ public class VariableParser extends SjavaParser {
 	}
 
 	/*
-	 * This method add variable into the most inner map(same scope) which the variable is not already
-	 * contained.
+	 * Check if the same variable name has already been declared in the same scope.
+	 */
+	private boolean suchVariableAlreadyDeclared(Variable variableToCheck) {
+		if (variablesStack.peek().containsKey(variableToCheck.getName())) {
+			return true;
+		}
+		return false;
+	}
+
+	/*
+	 * This method return the current variable.
+	 */
+	private Variable theCurrentVariable() {
+		if (isOnlyInitialization) {
+			return getVariable(assignmentVariableName);
+		} else {
+			return variablesList.get(currentVariableNumber);
+		}
+	}
+
+	/*
+	 * This method add variable into the most inner map(same scope) in condition the variable is not already
+	 * contained in it.
 	 */
 	private void addVariableIntoMap() throws IllegalLineException {
 		for (Variable variable : variablesList) {
-			if (!suchVariableAlreadyExist(variable)) {
+			if (!suchVariableAlreadyDeclared(variable)) {
 				variablesStack.peek().put(variable.getName(), variable);
-			}
-			else
-				throw new IllegalLineException();
-		}
-	}
-
-	private boolean suchVariableAlreadyExist(Variable variableToCheck) {
-			// Check if the same name has already been declared in the same scope.
-			if (variablesStack.peek().containsKey(variableToCheck.getName())) {
-				return true;
-			}
-			return false;
-		}
-
-		/*
-		 * This method return the current and relevant variable.
-		 */
-		private Variable theCurrentVariable () {
-			if (isOnlyInitialization) {
-				return getVariable(assignmentVariableName);
 			} else {
-				return variablesList.get(currentVariableNumber);
+				throw new IllegalLineException();
 			}
 		}
 	}
+}
 

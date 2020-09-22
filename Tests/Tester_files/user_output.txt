@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 16:39:24
+=======
+16:36:24
+>>>>>>> 0cabeaa9c7be235b33e97fd1ebe067d6e7033f73
 
 school solution#User solution#result#Test name
 

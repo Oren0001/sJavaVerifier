@@ -1,0 +1,20 @@
+int a;
+
+void foo1() {
+    return;
+}
+
+void foo3(int a) {
+    return;
+}
+
+void foo4(int a) {
+    return;
+}
+
+void foo2(int a) {
+    foo3(a);
+    return;
+}
+
+a = 2;

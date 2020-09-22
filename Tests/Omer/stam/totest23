@@ -1,0 +1,10 @@
+int a;
+
+void foo1() {
+    foo2(a);
+    return;
+}
+
+void foo2(int a) {
+    return;
+}

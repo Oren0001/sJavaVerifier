@@ -16,7 +16,6 @@ public class Variable {
 	 */
 	public Variable() {}
 
-
 	/**
 	 * A copy constructor.
 	 * @param other A Variable object to copy.
@@ -29,7 +28,6 @@ public class Variable {
 		this.isFinal = other.isFinal;
 		this.isAssigned = other.isAssigned;
 	}
-
 
 	/**
 	 * @return the value of this variable.
