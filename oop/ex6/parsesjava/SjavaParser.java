@@ -21,22 +21,22 @@ public abstract class SjavaParser {
 	private static final String FALSE = "false";
 
 	/**
-	 * 	A stack of maps from a variable's name to it's class. Each map represents an independent scope.
- 	 */
+	 * A stack of maps from a variable's name to it's class. Each map represents an independent scope.
+	 */
 	protected static Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
 
 	/**
 	 * This method reset the variable stack.
 	 */
-	public static void resetVariableStack(){
-		variablesStack= new ArrayDeque<>();
+	public static void resetVariableStack() {
+		variablesStack = new ArrayDeque<>();
 		variablesStack.add(new HashMap<String, Variable>());
 	}
 
 	/**
 	 * Constructor which initializes the variables stack with a map (global variables map).
 	 */
-	protected SjavaParser() {
+	public SjavaParser() {
 		if (variablesStack.isEmpty()) {
 			variablesStack.add(new HashMap<>());
 		}
@@ -49,14 +49,15 @@ public abstract class SjavaParser {
 	protected abstract void parse() throws IllegalLineException;
 
 	/**
-	 * This method is given the name of a variable and returns it's corresponding Variable class.
+	 * This method receives name of a variable and returns it's corresponding Variable object.
 	 * @param variableName The name of the variable.
 	 * @return The Variable class which matches the variable name.
 	 */
 	protected Variable getVariable(String variableName) {
 		for (Map<String, Variable> variables : variablesStack) {
-			if (variables.containsKey(variableName))
+			if (variables.containsKey(variableName)) {
 				return variables.get(variableName);
+			}
 		}
 		return null;
 	}

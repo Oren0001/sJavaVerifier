@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- *
+ * This class is a Java verifier - a tool able to verify the validity of Java code.
  */
 public class Sjavac {
 
@@ -17,7 +17,8 @@ public class Sjavac {
 	private static final int IO_ERROR = 2;
 
 	/**
-	 * @param args
+	 * This method receives a sjava file and check its validity.
+	 * @param args Array which contained the sjava file.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -46,7 +47,7 @@ public class Sjavac {
 	}
 
 	/*
-	 *
+	 * This method check if the input is valid.
 	 */
 	private static void inputValidityCheck(String[] args) throws InvalidUsageException {
 		if (args.length != 1) {

@@ -25,7 +25,8 @@ public class SjavacReader {
 	}
 
 	/**
-	 * This methods gets a line of sjava file and redirects it to the appropriate parser...
+	 * This methods gets a line of sjava file and read it. In the case of global variables it calls
+	 * to VariablesParser. In addition it creates an array of methods.
 	 * @param scannedCode The file to read from.
 	 * @param lineToRead The line to decipher.
 	 * @throws IllegalLineException If the sjava file is invalid.
@@ -83,12 +84,10 @@ public class SjavacReader {
 	}
 
 	/*
-	 *
-	 * @param scannedCode
-	 * @return
+	 * This method copy lines of method into a list and return the list.
 	 */
 	private List<String> copyMethodIntoList(Scanner scannedCode) {
-		resetStack();
+		resetBracketStack();
 		List<String> methodsLinesList = new ArrayList<String>();
 		methodsLinesList.add(lineToRead);
 		while (scannedCode.hasNextLine()) {
@@ -128,7 +127,7 @@ public class SjavacReader {
 	/*
 	 * This method reset the bracket stack.
 	 */
-	private void resetStack() {
+	private void resetBracketStack() {
 		bracketStack.clear();
 		bracketStack.push('{');
 	}
