@@ -1,5 +1,6 @@
 package oop.ex6.main;
 
+import oop.ex6.parsesjava.IllegalLineException;
 import oop.ex6.parsesjava.MethodsParser;
 import oop.ex6.parsesjava.SjavaParser;
 

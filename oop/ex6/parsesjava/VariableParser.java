@@ -1,6 +1,6 @@
 package oop.ex6.parsesjava;
 
-import oop.ex6.main.IllegalLineException;
+import oop.ex6.main.Variable;
 
 import java.util.LinkedList;
 import java.util.List;

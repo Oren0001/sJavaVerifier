@@ -1,4 +1,4 @@
-package oop.ex6.main;
+package oop.ex6.parsesjava;
 
 /**
  * This class represent an illegal line exception.

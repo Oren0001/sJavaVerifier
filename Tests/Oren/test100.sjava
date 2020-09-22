@@ -1,9 +1,6 @@
-int a;
-void foo(){
-a = 7;
-return;
+void foo() {
+boolean b = true;
+if (b) {
 }
-void boo(){
-int b = a;
 return;
 }

@@ -1,7 +1,8 @@
 package oop.ex6.parsesjava;
 
-import oop.ex6.main.IllegalLineException;
 import oop.ex6.main.Method;
+import oop.ex6.main.Variable;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,6 +13,11 @@ import java.util.regex.Pattern;
  */
 public class MethodsParser extends SjavaParser {
 
+	private static final String LEGAL_METHOD_TYPE = "void";
+	private static final String LEGAL_METHOD_NAME = "([a-zA-Z]+[_0-9]*)";
+	private static final String LEGAL_RETURN_STATEMENT = "[ \t]*+return[ \t]*+";
+	private static final String LEGAL_IF_WHILE = "(?:if|while)";
+	private static final String LEGAL_CONDITIONS_SEPARATOR = "\\|\\||&&";
 	private List<Method> methods;
 	private List<MethodCall> methodsCalls = new ArrayList<>();
 	private int lineNumber;
@@ -71,7 +77,8 @@ public class MethodsParser extends SjavaParser {
 	 * @throws IllegalLineException if the method's signature is invalid.
 	 */
 	private void isSignatureValid(String signature) throws IllegalLineException {
-		Pattern p1 = Pattern.compile("[ \t]*+void[ \t]*([a-zA-Z]+[_0-9]*)[ \t]*+\\(");
+		Pattern p1 = Pattern.compile("[ \t]*+" + LEGAL_METHOD_TYPE + "[ \t]*+" +
+					                 LEGAL_METHOD_NAME + "[ \t]*+\\(");
 		Matcher m1 = p1.matcher(signature);
 		if (!m1.lookingAt())
 			throw new IllegalLineException();
@@ -172,7 +179,7 @@ public class MethodsParser extends SjavaParser {
 	 * @return True if the line contains a valid return statement, false otherwise.
 	 */
 	private boolean checkReturn(String line) {
-		Pattern p = Pattern.compile("[ \t]*+return[ \t]*+");
+		Pattern p = Pattern.compile(LEGAL_RETURN_STATEMENT);
 		Matcher m = p.matcher(line);
 		if (m.matches()) {
 			returnAt = lineNumber;
@@ -188,7 +195,7 @@ public class MethodsParser extends SjavaParser {
 	 * @throws IllegalLineException if the line is invalid.
 	 */
 	private boolean checkMethodCall(String line) throws IllegalLineException {
-		Pattern p1 = Pattern.compile("[ \t]*+([a-zA-Z]+[_0-9]*)[ \t]*+\\(");
+		Pattern p1 = Pattern.compile("[ \t]*+" + LEGAL_METHOD_NAME + "[ \t]*+\\(");
 		Matcher m1 = p1.matcher(line);
 		if (!m1.lookingAt())
 			return false;
@@ -256,7 +263,7 @@ public class MethodsParser extends SjavaParser {
 	 * @throws IllegalLineException if the if\while block is invalid.
 	 */
 	private boolean checkIfWhileBlock(List<String> lines, String line) throws IllegalLineException {
-		Pattern p1 = Pattern.compile("[ \t]*+(?:if|while)[ \t]*+\\(");
+		Pattern p1 = Pattern.compile("[ \t]*+" + LEGAL_IF_WHILE + "[ \t]*+\\(");
 		Matcher m1 = p1.matcher(line);
 		if (!m1.lookingAt())
 			return false;
@@ -279,19 +286,16 @@ public class MethodsParser extends SjavaParser {
 	 */
 	private void checkCondition(String conditions) throws IllegalLineException {
 		conditions = " " + conditions + " ";
-		String[] matches = conditions.split("\\|\\||&&");
+		String[] matches = conditions.split(LEGAL_CONDITIONS_SEPARATOR);
 		for (String condition : matches) {
 			String trimmedCondition = condition.trim();
 			Variable variable = getVariable(trimmedCondition);
 			if (variable != null) {
-				if (!variable.isAssigned() || (!"boolean".equals(variable.getType()) &&
-											  !"int".equals(variable.getType()) &&
-											  !"double".equals(variable.getType()))) {
+				if (!variable.isAssigned() || isBoolean(variable.getType()))
 					throw new IllegalLineException();
-				}
 			} else {
 				String type = getType(trimmedCondition);
-				if (!"boolean".equals(type) && !"int".equals(type) && !"double".equals(type))
+				if (isBoolean(type))
 					throw new IllegalLineException();
 			}
 		}
