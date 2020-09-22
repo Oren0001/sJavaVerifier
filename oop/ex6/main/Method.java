@@ -1,7 +1,5 @@
 package oop.ex6.main;
 
-import oop.ex6.parsesjava.Variable;
-
 import java.util.*;
 
 /**

@@ -1,4 +1,4 @@
-package oop.ex6.parsesjava;
+package oop.ex6.main;
 
 /**
  * This class represent a sjava variable.

@@ -1,6 +1,6 @@
 package oop.ex6.parsesjava;
 
-import oop.ex6.main.IllegalLineException;
+import oop.ex6.main.Variable;
 
 import java.util.*;
 
@@ -95,5 +95,14 @@ public abstract class SjavaParser {
 		} else {
 			return null;
 		}
+	}
+
+
+	/**
+	 * @param type A string to check.
+	 * @return true if the given type is boolean, false otherwise.
+	 */
+	protected boolean isBoolean(String type) {
+		return !BOOLEAN.equals(type) && !INT.equals(type) && !DOUBLE.equals(type);
 	}
 }

@@ -1,6 +1,6 @@
 package oop.ex6.parsesjava;
 
-import oop.ex6.main.IllegalLineException;
+import oop.ex6.main.Variable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +14,6 @@ public class VariableParser extends SjavaParser {
 
 	private static final int TYPE_WITH_OUT_FINAL = 0;
 	private static final int TYPE_AFTER_FINAL = 1;
-
 	private static final String LEGAL_NAME = "[ \t]*[a-zA-Z_][a-zA-Z0-9]+[\\w]*|[ \t]*[a-zA-Z][\\w]*";
 	private static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
 
