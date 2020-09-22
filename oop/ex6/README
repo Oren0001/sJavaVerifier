@@ -1,0 +1,64 @@
+oren503
+ogetzler
+
+
+
+=============================
+=      File description     =
+=============================
+oop.ex6/main/Sjavac:
+
+
+oop.ex6/main/SjavacReader.java:
+
+
+oop.ex6/main/Method.java:
+
+
+oop.ex6/main/Variable.java:
+
+
+oop.ex6/main/InvalidUsageException.java:
+
+
+oop.ex6/parsesjava/SjavaParser.java:
+
+
+oop.ex6/parsesjava/MethodsParser.java:
+
+
+oop.ex6/parsesjava/VariableParser.java:
+
+
+oop.ex6/parsesjava/IllegalLineException.java:
+
+
+
+
+=============================
+=          Design           =
+=============================
+
+
+
+
+
+=============================
+=  Implementation details   =
+=============================
+
+
+
+=============================
+=    Answers to questions   =
+=============================
+Q: How you handled s-Java code errors, and why you chose to do so?
+A: We handled s-Java code errors by using the exception mechanism. This way, we can easily propagate
+   errors up the call stack. In addition, it helps separating error handling code from the rest of the code.
+
+Q: How would you modify your code to add new types of variables (e.g. float)?
+A: We would add the new types to the field "LEGAL_TYPE" which belongs to the class "VariableParser".
+
+Q: Which modifications/extensions you would have to make in your code in order to support
+   the following features?
+A: Classes -
