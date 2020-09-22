@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * This class is a Java verifier - a tool able to verify the validity of Java code.
+ * This class is a s-Java verifier - a tool able to verify the validity of s-Java code.
  */
 public class Sjavac {
 

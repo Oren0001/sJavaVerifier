@@ -1,7 +1,7 @@
 package oop.ex6.main;
 
 /**
- * This class represent an invalid usage exception.
+ * This class represents an invalid usage exception, e.g. Sjavac receives more than one argument.
  */
 public class InvalidUsageException extends Exception {
 	private static final long SerialVersionUID = 1L;
