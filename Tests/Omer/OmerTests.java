@@ -16,13 +16,13 @@ public class OmerTests {
 		String[] test = new String[1];
 		Sjavac sjavac = new Sjavac();
 
-//		test[0] = "src/Tests/Omer/test.sjava";
-//		sjavac.main(test);
+		test[0] = "src/Tests/Omer/test.sjava";
+		sjavac.main(test);
 
-		for (int i=1;i<10;i++) {
-			test[0] = "src/Tests/Omer/stam/totest0"+i;
-			sjavac.main(test);
-		}
+//		for (int i=1;i<10;i++) {
+//			test[0] = "src/Tests/Omer/stam/totest0"+i;
+//			sjavac.main(test);
+//		}
 
 //		test[0] = "src/Tests/Omer/stam/02.sjava";
 //		sjavac.main(test);

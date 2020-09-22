@@ -24,7 +24,7 @@ public class SjavacReader {
 	}
 
 	/**
-	 * This methods gets a line of sjava file and redirects it to the appropriate parser.
+	 * This methods gets a line of sjava file and redirects it to the appropriate parser...
 	 * @param scannedCode The file to read from.
 	 * @param lineToRead The line to decipher.
 	 * @throws IllegalLineException If the sjava file is invalid.
@@ -41,13 +41,6 @@ public class SjavacReader {
 			throw new IllegalLineException();
 		}
 	}
-
-	//	/**
-	//	 * @return The global variable map of the sjava file.
-	//	 */
-	//	public Map<String, Variable> getGlobalVariablesMap() {
-	//		return globalVariablesMap;
-	//	}
 
 	/**
 	 * @return the methods list of the sjava file.
@@ -88,6 +81,11 @@ public class SjavacReader {
 		return (matcher.matches());
 	}
 
+	/*
+	 *
+	 * @param scannedCode
+	 * @return
+	 */
 	private List<String> copyMethodIntoList(Scanner scannedCode) {
 		resetStack();
 		List<String> methodsLinesList = new ArrayList<String>();

@@ -20,18 +20,26 @@ public abstract class SjavaParser {
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 
-	/* A stack of maps from a variable's name to it's class. Each map represents an independent scope. */
+	/**
+	 * 	A stack of maps from a variable's name to it's class. Each map represents an independent scope.
+ 	 */
 	protected static Deque<Map<String, Variable>> variablesStack = new ArrayDeque<>();
 
+	/**
+	 *
+	 */
+	public static void resetVariableStack(){
+		variablesStack= new ArrayDeque<>();
+		variablesStack.add(new HashMap<String, Variable>());
+	}
+
+	/**
+	 *
+	 */
 	protected SjavaParser() {
 		if (variablesStack.isEmpty()) {
 			variablesStack.add(new HashMap<>());
 		}
-	}
-
-	public static void resetVariableStack(){
-		variablesStack= new ArrayDeque<>();
-		variablesStack.add(new HashMap<String, Variable>());
 	}
 
 	/**
