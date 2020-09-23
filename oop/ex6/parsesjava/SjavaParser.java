@@ -30,7 +30,7 @@ public abstract class SjavaParser {
 	 */
 	public static void resetVariableStack() {
 		variablesStack = new ArrayDeque<>();
-		variablesStack.add(new HashMap<String, Variable>());
+		variablesStack.add(new HashMap<>());
 	}
 
 	/**
@@ -69,18 +69,18 @@ public abstract class SjavaParser {
 	 * @return true if both types are suitable. I.e. the second can be initialized in the first.
 	 */
 	protected boolean isTypeMatch(String referenceType, String contentType) {
-		if (contentType.equals(INT) && (referenceType.equals(INT) ||
-										referenceType.equals(DOUBLE) || referenceType.equals(BOOLEAN))) {
+		if (INT.equals(contentType) && (INT.equals(referenceType) ||
+										DOUBLE.equals(referenceType) || BOOLEAN.equals(referenceType))) {
 			return true;
-		} else if (contentType.equals(DOUBLE) &&
-				   (referenceType.equals(DOUBLE) || referenceType.equals(BOOLEAN))) {
+		} else if (DOUBLE.equals(contentType) &&
+				   (DOUBLE.equals(referenceType) || BOOLEAN.equals(referenceType))) {
 			return true;
-		} else if (contentType.equals(STRING) && referenceType.equals(STRING)) {
+		} else if (STRING.equals(contentType) && STRING.equals(referenceType)) {
 			return true;
-		} else if (contentType.equals(BOOLEAN) && referenceType.equals(BOOLEAN)) {
+		} else if (BOOLEAN.equals(contentType) && BOOLEAN.equals(referenceType)) {
 			return true;
 		} else {
-			return contentType.equals(CHAR) && referenceType.equals(CHAR);
+			return CHAR.equals(contentType) && CHAR.equals(referenceType);
 		}
 	}
 

@@ -117,7 +117,7 @@ public class MethodsParser extends SjavaParser {
 		if (parameters.matches("[ \t]*")) {
 			methodParameters = new Variable[0];
 		} else {
-			String[] parametersArray = parameters.split(",[ \t]*");
+			String[] parametersArray = parameters.split(",");
 			methodParameters = new Variable[parametersArray.length];
 			for (int i = 0; i < parametersArray.length; i++) {
 				VariableParser variableParser = new VariableParser(parametersArray[i] + ";");
@@ -336,7 +336,9 @@ public class MethodsParser extends SjavaParser {
 				throw new IllegalLineException();
 			}
 			for (int i = 0; i < methodVariables.length; i++) {
-				if (!methodVariables[i].getType().equals(methodCall.parameters[i])) {
+				String variableType = methodVariables[i].getType();
+				String assignmentType = methodCall.parameters[i];
+				if (!isTypeMatch(variableType, assignmentType)) {
 					throw new IllegalLineException();
 				}
 			}
