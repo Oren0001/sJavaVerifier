@@ -1,0 +1,4 @@
+void foo(int c){
+int c = 9;
+return;
+}

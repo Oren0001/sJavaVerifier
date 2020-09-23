@@ -1,0 +1,4 @@
+voif foo(){
+return;
+}
+foo();

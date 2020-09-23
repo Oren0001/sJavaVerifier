@@ -1,0 +1,7 @@
+void foo(int a){
+return;
+}
+void boo(){
+int a;
+foo(a);
+}

@@ -1,0 +1,8 @@
+void boo(){
+if (true){
+return;
+}
+if(false){
+
+return;
+}
