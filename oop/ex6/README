@@ -57,21 +57,22 @@ We thought that an abstract class would best fit our program for the following r
 * "MethodParser" and "VariableParser" are two kinds of the same thing - "SjavaParser".
 * "SjavaParser" uses an abstract method.
 * An instance of "SjavaParser" doesn't make any sense.
+* he two sub-classes have similar characteristics, and as a result they need similar and sometimes even
+ identical methods. An example of this is the abstract parse method we want to impose on every sub-class of
+ SjavaParser.
+* In addition, This design allows us to concentrate any implementation that contains specific types of
+ variables to one class (parent class). That is,the only class (except the constant LEGAL_TYPE) which is aware
+ of all the possibilities of the different types of variables is the class SjavaParser. This makes it easier
+ to extend the code to other types of variables and to debug.
 
 Because there are variable methods, and in order to prevent code recurrence we have chosen that the
 MethodsParser class will use the VariablesParser class, which is with it in the same package, whenever it
 encounters a variable. That is, the VariablesParser class stands on its own and the MethodsParser class uses
 it. This design allows for modularity and yet complementary work of the various components.
 
-In addition, in order to allow as many future extensions as possible with maximum ease, we tried to keep the
-principle of the only choice - the only class (except the constant LEGAL_TYPE) which is aware of all the
-possibilities of the different types of variables is the class SjavaParser. That is, we concentrated all the
-preoccupation with types of variables specific to one class.
 
 
-
-
-=============================
+============================
 =  Implementation details   =
 =============================
 1) We used a Deque - "variablesStack" to keep track of the different scopes. E.g. the first element
