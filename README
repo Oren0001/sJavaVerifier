@@ -72,7 +72,7 @@ it. This design allows for modularity and yet complementary work of the various 
 
 
 
-============================
+=============================
 =  Implementation details   =
 =============================
 1) We used a Deque - "variablesStack" to keep track of the different scopes. E.g. the first element
