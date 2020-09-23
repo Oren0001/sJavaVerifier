@@ -16,7 +16,6 @@ public class VariableParser extends SjavaParser {
 	private static final int TYPE_AFTER_FINAL = 1;
 	private static final String LEGAL_NAME = "[ \t]*+(?:[a-zA-Z_][a-zA-Z0-9]++|[a-zA-Z])[\\w]*+";
 	private static final String LEGAL_TYPE = "[ \t]*+(?:int|double|String|boolean|char)[ \t]++";
-
 	private int currentVariableNumber;
 	private boolean isFinal;
 	private boolean isOnlyInitialization;
