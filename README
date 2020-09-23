@@ -38,22 +38,48 @@ This class represent an illegal line exception.
 =============================
 =          Design           =
 =============================
+We chose to divide our code into two packages. The first is the main which contains the general departments
+of the program- Method, Varibles, Sjavc, SjavacReader, InvalidUsageException. And the second package is a
+package containing all the classes related to parsing- MethodsParser, VariablesParser,SjavaParser,
+IllegalLineException.
+
+We chose to divide the program into four main components: The first is the Sjavac class which contains the
+main method which is the manager of the program - it is the class that the user runs, it is responsible for
+running all the components, and it is the one that finally returns if the sjava code is valid. A second
+component is the SjavacReader class whose job is to read line by line from the sjavac file and depending on
+the content of the line it works: refers to the analysis of variables and collects the methods to the list. A
+third component is the VariablesParser class which is solely responsible for analyzing variables. A
+fourth component is the MethodsParser class which analyzes the methods.
+
 We used an abstract class named "SjavaParser" which is able to parse different components of
 the sjava file. The classes "MethodsParser" and "VariableParser" have a "is-a" relation with it.
 We thought that an abstract class would best fit our program for the following reasons:
 * "MethodParser" and "VariableParser" are two kinds of the same thing - "SjavaParser".
 * "SjavaParser" uses an abstract method.
 * An instance of "SjavaParser" doesn't make any sense.
+* he two sub-classes have similar characteristics, and as a result they need similar and sometimes even
+ identical methods. An example of this is the abstract parse method we want to impose on every sub-class of
+ SjavaParser.
+* In addition, This design allows us to concentrate any implementation that contains specific types of
+ variables to one class (parent class). That is,the only class (except the constant LEGAL_TYPE) which is aware
+ of all the possibilities of the different types of variables is the class SjavaParser. This makes it easier
+ to extend the code to other types of variables and to debug.
+
+Because there are variable methods, and in order to prevent code recurrence we have chosen that the
+MethodsParser class will use the VariablesParser class, which is with it in the same package, whenever it
+encounters a variable. That is, the VariablesParser class stands on its own and the MethodsParser class uses
+it. This design allows for modularity and yet complementary work of the various components.
 
 
 
-
-=============================
+============================
 =  Implementation details   =
 =============================
 1) We used a Deque - "variablesStack" to keep track of the different scopes. E.g. the first element
    represents the global scope, the second element represent a method's local scope, the third element
    can represent a while scope and so on.
+   In addition, We have chosen that the Deque be static in order to allow all the components of the
+   program to work together - all the components are exposed to the state of the Deque and can affect it.
 
 2) We used recursion in the "MethodsParser" class to handle the if\while block.
 

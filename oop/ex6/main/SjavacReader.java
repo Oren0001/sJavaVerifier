@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * This class reads a line of sjava file and redirects it to the appropriate parser.
+ * This class reads a line of sjava file and operates in accordance with the content.
  */
 public class SjavacReader {
 
@@ -25,8 +25,8 @@ public class SjavacReader {
 	}
 
 	/**
-	 * This methods gets a line of sjava file and read it. In the case of global variables it calls
-	 * to VariablesParser. In addition it creates an array of methods.
+	 * This methods gets a line of sjava file and read it. In the case of global variables it calls to
+	 * VariablesParser. In addition it creates an array of methods.
 	 * @param scannedCode The file to read from.
 	 * @param lineToRead The line to decipher.
 	 * @throws IllegalLineException If the sjava file is invalid.
